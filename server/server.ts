@@ -2,6 +2,9 @@ import dotenv from 'dotenv';
 // import 'dotenv/config'
 import express, { Express, Request, Response, RequestHandler } from 'express';
 // const path = require('path');
+import imageRouter from './routes/imageRoutes'
+import generalDockerRouter from './routes/generaldockerRoutes';
+import containerRouter from './routes/containerRoutes'
 
 const PORT = process.env.PORT || 3000;
 
@@ -10,7 +13,22 @@ const app: Express = express();
 
 app.use(express.json());
 
-// Routes
+//--------------- ROUTES  ---------------//
+
+//routes for handling image commands
+
+app.use('/image', imageRouter)
+
+//routes for hanlding container commands
+
+app.use('/container', containerRouter)
+
+//routes for handling all other docker commands
+
+app.use('/general', generalDockerRouter)
+
+
+
 // const route = require('./routes/<filename.js>')
 // app.use('path', route)
 

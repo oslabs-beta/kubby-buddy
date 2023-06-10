@@ -5,7 +5,9 @@ module.exports = {
   entry: './src/index.tsx',
   devServer: {
     proxy: {
-      // '/api/**': 'http://localhost:3000',
+      '/image/**': 'http://localhost:3000',
+      '/general/**': 'http://localhost:3000',
+      '/container/**': 'http://localhost:3000'
     },
     historyApiFallback: true,
   },
