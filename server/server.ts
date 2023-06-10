@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 // import 'dotenv/config'
 import express, { Express, Request, Response, RequestHandler } from 'express';
 // const path = require('path');
+import imageRouter from './routes/imageRoutes'
 
 const PORT = process.env.PORT || 3000;
 
@@ -11,6 +12,10 @@ const app: Express = express();
 app.use(express.json());
 
 // Routes
+
+//routes for handling image path
+
+app.use('/image', imageRouter)
 // const route = require('./routes/<filename.js>')
 // app.use('path', route)
 
