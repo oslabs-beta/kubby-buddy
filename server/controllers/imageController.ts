@@ -22,6 +22,27 @@ const imageController = {
             })
         }
         
+    },
+
+    runContainerFromImage: async (req: Request, res: Response, next: NextFunction) => {
+        const { name, image } = req.body
+        try {
+            const result = await exec(`docker run -d --name ${name} ${image}`, (error, _stdout, _stderr) => {
+                if (error) {
+                    next({
+                        log: 'error in the imageController.runContainerFromImage exec',
+                        err: error
+                    })
+                } 
+                next()
+            })
+        }
+        catch (error) {
+            next({
+                log: 'error in the imageController.runContainerFromImage middleware',
+                err: error
+            })
+        }
     }
 }
 
