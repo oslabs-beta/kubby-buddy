@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "concurrently \"webpack-dev-server --mode development --hot\" \"tsnd --respawn --transpile-only ./server/server.ts\"",
-    "test": "jest --verbose",
+    "test": "jest --verbose --passWithNoTests",
     "backend": "tsnd --respawn --transpile-only ./server/server.ts"
   },
   "author": "",
