@@ -6,6 +6,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/image/**': 'http://localhost:3000',
+      '/general/**': 'http://localhost:3000'
     },
     historyApiFallback: true,
   },
