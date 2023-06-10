@@ -5,6 +5,7 @@ import express, { Express, Request, Response, RequestHandler } from 'express';
 import imageRouter from './routes/imageRoutes'
 import generalDockerRouter from './routes/generaldockerRoutes';
 import containerRouter from './routes/containerRoutes'
+import volumeRouter from './routes/volumeRouter'
 
 const PORT = process.env.PORT || 3000;
 
@@ -19,9 +20,13 @@ app.use(express.json());
 
 app.use('/image', imageRouter)
 
-//routes for hanlding container commands
+//routes for handling container commands
 
 app.use('/container', containerRouter)
+
+//routes for handling volumes
+
+app.use('/volumes', volumeRouter)
 
 //routes for handling all other docker commands
 

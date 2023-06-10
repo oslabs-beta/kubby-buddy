@@ -7,7 +7,8 @@ module.exports = {
     proxy: {
       '/image/**': 'http://localhost:3000',
       '/general/**': 'http://localhost:3000',
-      '/container/**': 'http://localhost:3000'
+      '/container/**': 'http://localhost:3000',
+      '/volumes/**': 'http://localhost:3000'
     },
     historyApiFallback: true,
   },
