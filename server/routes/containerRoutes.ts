@@ -16,11 +16,13 @@ containerRouter.get(
 //stop a specific container
 
 containerRouter.post('/stop', containerController.stopASpecificContainer, (_req: Request, res: Response) => {
-	res.status(200).json('stop test worked');
+	res.status(200).json('stop route complete');
 });
 
-containerRouter.use('/start', (_req: Request, res: Response) => {
-	res.send('start test worked');
+//start a specific container
+
+containerRouter.post('/start', containerController.startASpecificContainer,(_req: Request, res: Response) => {
+	res.status(200).json('start route complete');
 });
 
 

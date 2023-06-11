@@ -34,19 +34,46 @@ const containerController = {
 	stopASpecificContainer: async (req: Request, _res: Response, next: NextFunction) => {
 		const { name } = req.body
 		try {
-			const result = await exec(`docker stop ${name}`, (error, stdout, _stderr) => {
+			await exec(`docker stop ${name}`, (error, stdout, stderr) => {
 				if (error) {
 					next({
 						log: 'error in the containerController.stopASpecificContainer exec',
 						message: error
 					})
 				}
-				return stdout
+				console.log(`stdout: ${stdout}`)
+				console.log(`stderr: ${stderr}`)
 			})
 			next()
 		}
 		catch (error) {
 
+		}
+	},
+
+	//middleware to start a specific container
+
+	startASpecificContainer: async (req: Request, _res: Response, next: NextFunction) => {
+		const { name } = req.body
+		try {
+			await exec(`docker start ${name}`, (error, stdout, stderr) => {
+				if (error) {
+					next({
+						log: `error in the containerController.startASpecificContainer exec`,
+						err: error
+					})
+				}
+				console.log(`stdout: ${stdout}`)
+				console.log(`stderr: ${stderr}`)
+			})
+			next()
+
+		}
+		catch (error) {
+			next({
+				log: `error in the containerController.startASpecificContainer`,
+				err: error
+			})
 		}
 	}
 };
