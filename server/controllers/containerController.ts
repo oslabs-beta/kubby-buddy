@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { exec } from 'node:child_process';
-import { promisify } from 'util'
-const execPromise = promisify(exec)
 
 
 const containerController = {

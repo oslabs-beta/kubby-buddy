@@ -29,34 +29,16 @@ const volumeController = {
 		next: NextFunction
 	) => {
 		try {
-			// await exec('docker volume prune', (error, _stdout, _stderr) => {
-			//     if (error) {
-			//         next({
-			//             log: 'error in the volumeController.deleteAll Volumes exec call',
-			//             message: error
-			//         })
-			//     }
-			//     if (_stdout) {
-			//         try {
-			//             exec('y', (error, stdout, _stderr) => {
-			//                 if (error) {
-			//                     next({
-			//                         log: 'error in exec, in exec of deleteAllVolumes',
-			//                         err: error
-			//                     })
-			//                 }
-			//                 res.locals.deleted = stdout
-			//                 next()
-			//             })
-			//          }
-			//         catch (error) {
-			//             next({
-			//                 log: 'error in second try block in deleteAllVolumes',
-			//                 err: error
-			//             })
-			//         }
-			//     }
-			// })
+			await exec('docker volume prune --force', (error, stdout, _stderr) => {
+				if (error) {
+					next({
+						log: 'error in the volumeController.deleteAll Volumes exec call',
+						message: error,
+					});
+				}
+				console.log(stdout.trim())
+				next()
+			});
 		} catch (error) {
 			next({
 				log: 'error in the volumeController.deleteAllVolumes middleware',
