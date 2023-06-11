@@ -25,6 +25,11 @@ containerRouter.post('/start', containerController.startASpecificContainer,(_req
 	res.status(200).json('start route complete');
 });
 
+//prune all stopped containers
+
+containerRouter.delete('/prune-stopped-containers', containerController.pruneStoppedContainers, (_req: Request, res: Response) => {
+	res.status(200).json('prune-container route')
+})
 
 containerRouter.use('/', (_req: Request, res: Response) => {
 	res.send('containerRouter test');
