@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { exec } from 'node:child_process';
+import { promisify } from 'util'
+const execPromise = promisify(exec)
+
 
 const containerController = {
 
@@ -72,6 +75,33 @@ const containerController = {
 		catch (error) {
 			next({
 				log: `error in the containerController.startASpecificContainer`,
+				err: error
+			})
+		}
+	},
+
+	//middleware to prune all stopped containers
+
+	pruneStoppedContainers: async (_req: Request, _res: Response, next: NextFunction) => {
+		console.log('prune')
+		try {
+			await exec(`docker container prune --force`, (error, stdout, _stderr) => {
+				if (error) {
+					console.log('error')
+
+					next({
+						log: `error in the containerController.pruneStoppedContainers exec`
+					})
+				}
+				//checking for deleted containers ids
+				console.log(stdout.trim())
+				next()
+			})
+
+		}
+		catch (error) {
+			next({
+				log: `error in the containerController.pruneStoppedContainers catch`,
 				err: error
 			})
 		}
