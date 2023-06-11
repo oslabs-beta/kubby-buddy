@@ -31,6 +31,12 @@ containerRouter.delete('/prune-stopped-containers', containerController.pruneSto
 	res.status(200).json('prune-container route')
 })
 
+//get logs for a specific container
+
+containerRouter.get('/log', containerController.getSpecificLog, (_req: Request, res: Response) => {
+	res.status(200).json(res.locals.log)
+})
+
 containerRouter.use('/', (_req: Request, res: Response) => {
 	res.send('containerRouter test');
 });

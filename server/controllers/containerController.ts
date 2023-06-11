@@ -103,6 +103,31 @@ const containerController = {
 				err: error
 			})
 		}
+	},
+
+	//get log for a specific container
+
+	getSpecificLog: async (req: Request, res: Response, next: NextFunction) => {
+		console.log(req.query)
+		const { name } = req.query
+		try {
+			await exec(`docker container logs ${name}`, (error, stdout, _stderr) => {
+				if (error) {
+					return next({
+						log: `error in the containerController.getSpecificLog`,
+						err: error
+					})
+				}
+				res.locals.log = stdout
+				next()
+			})
+		}
+		catch (error) {
+			next({
+				log: `error in the containerController.getSpecificLog catch`,
+				err: error
+			})
+		}
 	}
 };
 
