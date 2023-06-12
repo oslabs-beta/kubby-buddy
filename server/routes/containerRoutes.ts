@@ -28,7 +28,7 @@ containerRouter.post(
   "/stop",
   containerController.stopASpecificContainer,
   (_req: Request, res: Response) => {
-    res.status(200).json("stop route complete");
+    res.status(200).json(res.locals.stoppedContainer);
   }
 );
 
@@ -38,7 +38,7 @@ containerRouter.post(
   "/start",
   containerController.startASpecificContainer,
   (_req: Request, res: Response) => {
-    res.status(200).json("start route complete");
+    res.status(200).json(res.locals.startedContainer);
   }
 );
 
@@ -48,7 +48,7 @@ containerRouter.delete(
   "/prune-stopped-containers",
   containerController.pruneStoppedContainers,
   (_req: Request, res: Response) => {
-    res.status(200).json("prune-container route");
+    res.status(200).json(res.locals.deletedContainers);
   }
 );
 

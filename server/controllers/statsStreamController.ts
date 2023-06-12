@@ -8,7 +8,7 @@ const statsStreamController = {
 		next: NextFunction
 	) => {
 		try {
-			await exec('docker stats --no-stream', (error, stdout, stderr) => {
+			await exec('docker stats --no-stream --format json', (error, stdout, stderr) => {
 				if (error) {
 					return res.status(401);
 				}
