@@ -1,0 +1,19 @@
+div.dockercontainer{
+    p.imagename{
+        font-size:12px
+    }
+    div.container-info{
+        display:flex;
+        align-items: center;
+    }
+    div.cmdbutton{
+        display:flex;
+        gap: 15px;
+    }
+    div.othercmdbutton{
+        display:flex;
+        gap: 15px;
+        align-items: space-between;
+    }
+
+}
