@@ -6,6 +6,7 @@ import imageRouter from "./routes/imageRoutes";
 import generalDockerRouter from "./routes/generaldockerRoutes";
 import containerRouter from "./routes/containerRoutes";
 import volumeRouter from "./routes/volumeRouter";
+import { ServerError, GlobalErr } from "../types";
 
 const PORT = process.env.PORT || 3000;
 
@@ -40,17 +41,10 @@ app.use("*", (_req: Request, res: Response) => {
   res.status(404).send("Not Found");
 });
 
-interface ServerError {
-  log: string;
-  status: number;
-  message: {
-    err: string;
-  };
-}
 // Global error handler
 app.use(
   (err: ServerError, _req: Request, res: Response, _next: RequestHandler) => {
-    const defaultErr = {
+    const defaultErr: GlobalErr = {
       log: "Express error handler caught unknown middleware error",
       status: 500,
       message: {
