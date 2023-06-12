@@ -38,7 +38,7 @@ containerRouter.post(
   "/start",
   containerController.startASpecificContainer,
   (_req: Request, res: Response) => {
-    res.status(200).json("start route complete");
+    res.status(200).json(res.locals.startedContainer);
   }
 );
 

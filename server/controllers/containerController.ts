@@ -90,7 +90,7 @@ const containerController = {
 
 	startASpecificContainer: async (
 		req: Request,
-		_res: Response,
+		res: Response,
 		next: NextFunction
 	) => {
 		const { name } = req.body;
@@ -103,9 +103,11 @@ const containerController = {
 					});
 				}
 				console.log(`stdout: ${stdout}`);
-				console.log(`stderr: ${stderr}`);
+        console.log(`stderr: ${stderr}`);
+        res.locals.startedContainer = stdout
+        next();
 			});
-			next();
+			
 		} catch (error) {
 			next({
 				log: `error in the containerController.startASpecificContainer`,
