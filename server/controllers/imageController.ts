@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { exec, ExecException } from "child_process";
+import { ImageController } from "../../types";
 
 interface ErrorDetails {
   log: string;
@@ -7,7 +8,7 @@ interface ErrorDetails {
   message?: string;
 }
 
-const imageController = {
+const imageController: ImageController = {
   getAllImages: async (
     _req: Request,
     res: Response,
