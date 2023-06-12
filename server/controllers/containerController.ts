@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { exec } from "node:child_process";
+import { ContainerController } from "../../types";
 
-const containerController = {
+const containerController: ContainerController = {
   //middleware to run CLI command to get list of active containers
 
   getAllRunningContainers: async (
@@ -10,7 +11,7 @@ const containerController = {
     next: NextFunction
   ) => {
     try {
-      await exec("docker ps", (error, stdout, _stderr) => {
+      await exec("docker ps --format json", (error, stdout, _stderr) => {
         if (error) {
           next({
             log: "error in the exec call in containerController.getAllRunningContainers",
@@ -36,7 +37,7 @@ const containerController = {
   ) => {
     try {
       await exec(
-        `docker ps --format '{ "name": "{{ .Names }}"}'`,
+        `docker container ls --format='{{json .Names}}'`,
         (error, stdout, _stderr) => {
           if (error) {
             next({
@@ -60,30 +61,37 @@ const containerController = {
 
   stopASpecificContainer: async (
     req: Request,
-    _res: Response,
+    res: Response,
     next: NextFunction
   ) => {
+    console.log("stop");
     const { name } = req.body;
     try {
-      await exec(`docker stop ${name}`, (error, stdout, stderr) => {
+      await exec(`docker stop ${name}`, (error, stdout, _stderr) => {
+        console.log("exec");
+
         if (error) {
           next({
             log: "error in the containerController.stopASpecificContainer exec",
             message: error,
           });
         }
-        console.log(`stdout: ${stdout}`);
-        console.log(`stderr: ${stderr}`);
+        res.locals.stoppedContainer = stdout;
+        next();
       });
-      next();
-    } catch (error) {}
+    } catch (error) {
+      next({
+        log: `error in the containerController.stopASpecificContainer catch`,
+        err: error,
+      });
+    }
   },
 
   //middleware to start a specific container
 
   startASpecificContainer: async (
     req: Request,
-    _res: Response,
+    res: Response,
     next: NextFunction
   ) => {
     const { name } = req.body;
@@ -97,8 +105,9 @@ const containerController = {
         }
         console.log(`stdout: ${stdout}`);
         console.log(`stderr: ${stderr}`);
+        res.locals.startedContainer = stdout;
+        next();
       });
-      next();
     } catch (error) {
       next({
         log: `error in the containerController.startASpecificContainer`,
@@ -111,7 +120,7 @@ const containerController = {
 
   pruneStoppedContainers: async (
     _req: Request,
-    _res: Response,
+    res: Response,
     next: NextFunction
   ) => {
     console.log("prune");
@@ -125,7 +134,7 @@ const containerController = {
           });
         }
         //checking for deleted containers ids
-        console.log(stdout.trim());
+        res.locals.deletedContainers = stdout;
         next();
       });
     } catch (error) {

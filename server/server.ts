@@ -6,6 +6,7 @@ import imageRouter from "./routes/imageRoutes";
 import generalDockerRouter from "./routes/generaldockerRoutes";
 import containerRouter from "./routes/containerRoutes";
 import volumeRouter from "./routes/volumeRouter";
+import { ServerError, GlobalErr } from "../types";
 
 const PORT = process.env.PORT || 3000;
 
@@ -41,10 +42,19 @@ app.use("*", (_req: Request, res: Response) => {
 });
 
 // Global error handler
-app.use((err: Error, _req: Request, res: Response, _next: RequestHandler) => {
-  console.error(err);
-  res.status(500).json({ error: "Server Error" });
-});
+app.use(
+  (err: ServerError, _req: Request, res: Response, _next: RequestHandler) => {
+    const defaultErr: GlobalErr = {
+      log: "Express error handler caught unknown middleware error",
+      status: 500,
+      message: {
+        err: "An error occured",
+      },
+    };
+    const errorObj: ServerError = Object.assign(defaultErr, err);
+    return res.status(errorObj.status).json(errorObj.message);
+  }
+);
 
 app.listen(PORT, () => {
   console.log(`BEEP BOOP! Rockin' out on port ${PORT}`);

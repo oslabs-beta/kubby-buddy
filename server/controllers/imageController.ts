@@ -1,71 +1,122 @@
 import { Request, Response, NextFunction } from "express";
-import { exec } from "node:child_process";
+import { exec, ExecException } from "child_process";
+import { ImageController } from "../../types";
 
-const imageController = {
-  getAllImages: async (_req: Request, res: Response, next: NextFunction) => {
-    try {
-      await exec("docker images", (error, stdout, _stderr) => {
-        if (error) {
-          next({
-            log: "error in exec of imageController.getAllImages",
-            err: error,
-          });
-        }
-        res.locals.images = stdout;
-        next();
-      });
-    } catch (error) {
-      next({
-        log: "error in imageController.getAllImages",
-        err: error,
-      });
-    }
-  },
+interface ErrorDetails {
+  log: string;
+  err?: ExecException | Error | unknown;
+  message?: string;
+}
 
-  // get all images names
-  getAllImagesNames: async (
+const imageController: ImageController = {
+  getAllImages: async (
     _req: Request,
     res: Response,
     next: NextFunction
-  ) => {
+  ): Promise<void> => {
     try {
       await exec(
-        `docker image ls --format '{ "name": "{{ .Repository }}"}'`,
-        (error, stdout, _stderr) => {
+        "docker images --format json",
+        (error: ExecException | null, stdout: string, _stderr: string) => {
           if (error) {
-            next({
+            const errorDetails: ErrorDetails = {
               log: "error in exec of imageController.getAllImages",
               err: error,
-            });
+              message: `Failed to get all images`,
+            };
+            next(errorDetails);
           }
-          res.locals.imagesNames = stdout;
+          res.locals.images = stdout;
           next();
         }
       );
     } catch (error) {
-      next({
+      const errorDetails: ErrorDetails = {
         log: "error in imageController.getAllImages",
         err: error,
-      });
+      };
+      next(errorDetails);
     }
   },
 
   runContainerFromImage: async (
     req: Request,
-    _res: Response,
+    res: Response,
     next: NextFunction
-  ) => {
+  ): Promise<void> => {
     const { name, image } = req.body;
     try {
       await exec(
         `docker run -d --name ${name} ${image}`,
-        (error, _stdout, _stderr) => {
+        (error: ExecException | null, stdout: string, _stderr: string) => {
           if (error) {
             next({
               log: "error in the imageController.runContainerFromImage exec",
               err: error,
+              message: `Failed to run image: ${name} ${image}`,
             });
           }
+          res.locals.ranContainer = `Running Container ID: ${stdout}`;
+          next();
+        }
+      );
+    } catch (error) {
+      next({
+        log: "error in the imageController.runContainerFromImage middleware",
+        err: error,
+      });
+    }
+  },
+
+  // run container with remove when it stops
+  runContainerFromImageWithRemove: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    const { name, image } = req.body;
+    try {
+      await exec(
+        `docker run -d --rm --name ${name} ${image}`,
+        (error: ExecException | null, stdout: string, _stderr: string) => {
+          if (error) {
+            next({
+              log: "error in the imageController.runContainerFromImage exec",
+              err: error,
+              message: `Failed to run image: ${name} ${image}`,
+            });
+          }
+          res.locals.ranContainerWithRemove = `Running Container ID: ${stdout}`;
+          next();
+        }
+      );
+    } catch (error) {
+      next({
+        log: "error in the imageController.runContainerFromImage middleware",
+        err: error,
+      });
+    }
+  },
+
+  // run container with remove when it stops
+  deleteImage: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    const { image } = req.body;
+    try {
+      await exec(
+        `docker rmi ${image}`,
+        (error: ExecException | null, stdout: string, _stderr: string) => {
+          if (error) {
+            next({
+              log: "error in the imageController.runContainerFromImage exec",
+              err: error,
+              message: `Failed to delete image: ${image}`,
+            });
+          }
+          res.locals.imagesDeleted = `Removed Image: ${stdout}`;
           next();
         }
       );
