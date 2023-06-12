@@ -10,7 +10,7 @@ const containerController = {
     next: NextFunction
   ) => {
     try {
-      await exec("docker ps", (error, stdout, _stderr) => {
+      await exec("docker ps --format json", (error, stdout, _stderr) => {
         if (error) {
           next({
             log: "error in the exec call in containerController.getAllRunningContainers",
