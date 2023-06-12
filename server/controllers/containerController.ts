@@ -36,7 +36,7 @@ const containerController = {
   ) => {
     try {
       await exec(
-        `docker ps --format '{ "name": "{{ .Names }}"}'`,
+        `docker container ls --format='{{json .Names}}'`,
         (error, stdout, _stderr) => {
           if (error) {
             next({
