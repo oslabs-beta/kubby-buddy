@@ -15,7 +15,11 @@ volumeRouter.delete(
 	'/all-volumes',
 	volumeController.deleteAllVolumes,
 	(_req: Request, res: Response) => {
-		res.status(200).json('res.locals.deleted');
+		res.status(200)
 	}
 );
+
+volumeRouter.delete('/all-anonymous-volumes', volumeController.deleteAllAnonymousVolumes, (_req: Request, res: Response) => {
+	res.status(200)
+})
 export default volumeRouter;

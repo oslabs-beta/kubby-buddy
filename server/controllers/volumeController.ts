@@ -29,7 +29,7 @@ const volumeController = {
 		next: NextFunction
 	) => {
 		try {
-			await exec('docker volume prune --force', (error, stdout, _stderr) => {
+			await exec('docker volume prune -a --force', (error, stdout, _stderr) => {
 				if (error) {
 					next({
 						log: 'error in the volumeController.deleteAll Volumes exec call',
@@ -46,6 +46,31 @@ const volumeController = {
 			});
 		}
 	},
+
+	deleteAllAnonymousVolumes: async(	_req: Request,
+		_res: Response,
+		next: NextFunction) => {
+		console.log('delete')
+		try {
+			await exec('docker volume prune --force', (error, stdout, _stderr) => {
+				if (error) {
+					next({
+						log: 'volumeController',
+						err: error
+					})
+				}
+				console.log(stdout.trim())
+				next()
+			})
+
+		}
+		catch (error) {
+			next({
+				log: 'error in the volumeController.deleteAllAnonymousVolumes',
+				message: error
+			})
+		}
+		}
 };
 
 export default volumeController;
