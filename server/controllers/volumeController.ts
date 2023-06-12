@@ -54,7 +54,7 @@ const volumeController = {
 	//there's a work around for mac, but not sure about windows
 	deleteAllVolumes: async (
 		_req: Request,
-		_res: Response,
+		res: Response,
 		next: NextFunction
 	) => {
 		try {
@@ -66,6 +66,7 @@ const volumeController = {
 					});
 				}
 				console.log(stdout.trim());
+				res.locals.deletedVolumes = stdout.trim()
 				next();
 			});
 		} catch (error) {
