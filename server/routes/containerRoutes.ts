@@ -28,7 +28,7 @@ containerRouter.post(
   "/stop",
   containerController.stopASpecificContainer,
   (_req: Request, res: Response) => {
-    res.status(200).json("stop route complete");
+    res.status(200).json(res.locals.stoppedContainer);
   }
 );
 
