@@ -79,7 +79,7 @@ const volumeController = {
 
 	deleteAllAnonymousVolumes: async (
 		_req: Request,
-		_res: Response,
+		res: Response,
 		next: NextFunction
 	) => {
 		console.log('delete');
@@ -91,7 +91,7 @@ const volumeController = {
 						err: error,
 					});
 				}
-				console.log(stdout.trim());
+				res.locals.deletedAnonymous = stdout.trim()
 				next();
 			});
 		} catch (error) {
