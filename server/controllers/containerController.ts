@@ -120,7 +120,7 @@ const containerController = {
 
 	pruneStoppedContainers: async (
 		_req: Request,
-		_res: Response,
+		res: Response,
 		next: NextFunction
 	) => {
 		console.log('prune');
@@ -134,7 +134,7 @@ const containerController = {
 					});
 				}
 				//checking for deleted containers ids
-				console.log(stdout.trim());
+				res.locals.deletedContainers = stdout
 				next();
 			});
 		} catch (error) {

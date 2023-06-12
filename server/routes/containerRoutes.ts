@@ -48,7 +48,7 @@ containerRouter.delete(
   "/prune-stopped-containers",
   containerController.pruneStoppedContainers,
   (_req: Request, res: Response) => {
-    res.status(200).json("prune-container route");
+    res.status(200).json(res.locals.deletedContainers);
   }
 );
 
