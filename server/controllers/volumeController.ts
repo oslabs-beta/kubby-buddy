@@ -35,20 +35,19 @@ const volumeController: VolumeController = {
 		next: NextFunction
 	) => {
 		try {
-			await exec(
-				// `docker volume ls --format '{ "name": "{{ .Name }}"}'`,
-				`docker volume ls --format='{{json .Name}}'`,
-				(error, stdout, _stderr) => {
-					if (error) {
-						next({
-							log: 'error in the volumeController.getAllVolumes exec call',
-							message: error,
-						});
-					}
-					res.locals.volumesNames = stdout;
-					next();
-				}
+			const { stdout, stderr } = await promisifyExec(
+				`docker volume ls --format='{{json .Name}}'`
 			);
+			if (stderr) {
+				const errorDetails: ErrorDetails = {
+					log: 'error in the volumeController.getAllVolumes exec call',
+					err: stderr,
+					message: 'error in the volumeController.getAllVolumes exec call',
+				};
+				next(errorDetails);
+			}
+			res.locals.volumesNames = stdout;
+			next();
 		} catch (error) {
 			next({
 				log: 'error in the volumeController.getAllVolumes middleware',
