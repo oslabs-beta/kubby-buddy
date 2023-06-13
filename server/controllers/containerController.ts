@@ -14,7 +14,9 @@ const containerController: ContainerController = {
     next: NextFunction
   ) => {
     try {
-      const { stdout, stderr } = await promisifyExec("docker ps --format json");
+      const { stdout, stderr } = await promisifyExec(
+        "docker ps --format '{{json .}}'"
+      );
       if (stderr) {
         const errorDetails: ErrorDetails = {
           log: "error in the containerController.getAllRunningContainers exec",
@@ -24,9 +26,11 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      const objectStrings = stdout.split("\n");
-      const cleanedData = objectStrings.map((str) => str.replace(/\\/g, ""));
-      res.locals.containers = cleanedData;
+      const dataArray = stdout
+        .trim()
+        .split("\n")
+        .map((item) => JSON.parse(item, undefined)); // Use undefined as the reviver
+      res.locals.containers = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -46,7 +50,7 @@ const containerController: ContainerController = {
   ) => {
     try {
       const { stdout, stderr } = await promisifyExec(
-        `docker container ls --format='{ "CreatedAt": "{{ .CreatedAt }}", "Id": "{{ .ID }}"}, "Image": "{{ .Image }}"}'`
+        `docker ps --no-trunc --format '{"name":"{{.Names}}", "status":"{{.Status}}"}' -s | jq`
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
@@ -57,8 +61,13 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      const objectStrings = stdout.split("\n");
-      res.locals.containersNames = objectStrings;
+      // const objectStrings = stdout.split("\n");
+      // const formattedData = objectStrings.map((obj) =>
+      //   obj.replace(/^"(.*)"$/g, "$1")
+      // );
+      // const cleanedData = objectStrings.map((str) => str.replace(/\\/g, ""));
+
+      res.locals.containersNames = stdout;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
