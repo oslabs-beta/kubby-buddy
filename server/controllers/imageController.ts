@@ -117,6 +117,37 @@ const imageController: ImageController = {
 			});
 		}
 	},
+
+	// prune unused images (ones not actively connected with a container)
+
+	pruneUnusedImages: async (
+		req: Request,
+		res: Response,
+		next: NextFunction
+	): Promise<void> => {
+		try {
+			const { stdout, stderr } = await promisifyExec(
+				'docker image prune -a --force'
+			);
+			if (stderr) {
+				const errorDetails: ErrorDetails = {
+					log: 'error in the exec of imageController.pruneUnusedImages',
+					err: stderr,
+					message: 'error in the exec of imageController.pruneUnusedImages',
+				};
+				next(errorDetails);
+			}
+			res.locals.output = stdout;
+			next();
+		} catch (error) {
+			const errorDetails: ErrorDetails = {
+				log: '',
+				err: error,
+				message: '',
+			};
+			next(errorDetails);
+		}
+	},
 };
 
 export default imageController;

@@ -29,6 +29,8 @@ export interface ImageController {
   runContainerFromImageWithRemove: MiddleWare;
 
   deleteImage: MiddleWare;
+
+  pruneUnusedImages: MiddleWare;
 }
 
 export interface StatsStreamController {
