@@ -12,11 +12,6 @@
     "lint": "prettier --check .",
     "format": "prettier --write ."
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "concurrently \"run format\" \"git add -A .\""
-    }
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {

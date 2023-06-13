@@ -33,3 +33,18 @@ if [[ ! $LOCAL_BRANCH_NAME =~ $VALID_BRANCH_REGEX ]]; then
 fi
 
 echo "${Green}OK${Color_Off}"
+
+echo 'Formatting staged files...'
+
+FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+
+[ -z "$FILES" ] && echo 'No staged files, aborting...' && exit 0
+
+echo "$FILES" | xargs ./node_modules/.bin/prettier --ignore-unknown --write
+
+echo 'Adding formatted files back to staging...'
+echo "$FILES" | xargs git add
+
+echo "${Green}OK${Color_Off}"
+
+exit 0
