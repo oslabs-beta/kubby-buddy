@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# Reset
+Color_Off=$'\033[0m'       # Text Reset
+
+# Regular Colors
+Black=$'\033[0;30m'            # Black
+Red=$'\033[0;31m'              # Red
+Green=$'\033[0;32m'            # Green
+Yellow=$'\033[0;33m'           # Yellow
+Blue=$'\033[0;34m'             # Blue
+Purple=$'\033[0;35m'           # Purple
+Cyan=$'\033[0;36m'             # Cyan
+White=$'\033[0;37m'            # White
+
+# Variable to let the user know the commit has been aborted
+COMMIT_MSG_ERR="${Red}Aborting commit. Your Commit message is invalid.${Color_Off}" 
+
+# Variable to instruct a user on the proper commit message layout
+COMMIT_MSG_REQUIREMENTS="Please start your commit message with a ${Yellow}REQUIRED ${Green}feat, fix, chore, docs, test, style, refactor, perf, build, ci or revert${Color_Off}, followed by a ${Yellow}OPTIONAL ${Green}scope${Color_Off}, a ${Yellow}OPTIONAL ${Green}!${Color_Off} for ${Red}BREAKING CHANGE${Color_Off} and a ${Yellow}REQUIRED ${Green}terminal colon and space${Color_Off}, you may then write your commit message. ${Blue}Guidelines here: https://www.conventionalcommits.org/en/v1.0.0/${Color_Off}"
+
+# Variable to tell user how long a commit message can be
+COMMIT_MSG_LENGTH="Your Commit message may only be up to ${Green}88 characters${Color_Off} long. ${Blue}Guidelines here: https://www.conventionalcommits.org/en/v1.0.0/${Color_Off}"
+
+# Tell user script is running
+echo 'Verifying commit message...'
+
+# Check that users commit message has a valid format
+if ! head -1 "$1" | grep -qE "^(feat|fix|chore|docs|test|style|refactor|perf|build|ci|revert)(\(.+?\))?: .{1,}$"; then
+    # Tell user the commit is aborting
+    echo "$COMMIT_MSG_ERR\n\n" >&2
+    # Tell user for to format their commit message
+    echo $COMMIT_MSG_REQUIREMENTS >&2
+    # Abort commit
+    exit 1
+fi
+if ! head -1 "$1" | grep -qE "^.{1,88}$"; then
+    # Tell user the commit is aborting
+    echo "$COMMIT_MSG_ERR\n\n" >&2
+    # Tell user their commit message is too long
+    echo $COMMIT_MSG_LENGTH >&2
+    # Abort commit
+    exit 1
+fi
+
+# Tell user their commit message is valid
+echo "${Green}OK${Color_Off}"
+# Exit and continue to commit
+exit 0

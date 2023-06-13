@@ -1,4 +1,35 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm test
+# Reset
+Color_Off=$'\033[0m'       # Text Reset
+
+# Regular Colors
+Black=$'\033[0;30m'            # Black
+Red=$'\033[0;31m'              # Red
+Green=$'\033[0;32m'            # Green
+Yellow=$'\033[0;33m'           # Yellow
+Blue=$'\033[0;34m'             # Blue
+Purple=$'\033[0;35m'           # Purple
+Cyan=$'\033[0;36m'             # Cyan
+White=$'\033[0;37m'            # White
+
+LOCAL_BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
+
+VALID_BRANCH_REGEX='((bug|docs|fix|feat|merge|test|wip)\/[a-zA-Z0-9\-]+)'
+
+BRANCH_ERROR="${Red}Aborting commit. Branch name is invalid.${Color_Off}"
+
+FIX_MSG="Your branch name should start with ${Yellow}REQUIRED ${Green}feat, fix, bug, docs, test, wip or merge${Color_Off} followed by a ${Yellow}REQUIRED ${Green}/${Color_Off} then any ${Yellow}REQUIRED ${Green}alphanumeric${Color_Off} or ${Green}-${Color_Off} character to describe your branch. Use the command ${Yellow}git branch -m <new-branch-name>${Color_Off} to change your branch name."
+
+echo 'Validating branch name...'
+if [[ ! $LOCAL_BRANCH_NAME =~ $VALID_BRANCH_REGEX ]]; then
+    # Tell user their branch name is not valid
+    echo "$BRANCH_ERROR\n\n" >&2
+    # Tell user how to fix there branch name
+    echo "$FIX_MSG" >&2
+    # Abort commit
+    exit 1
+fi
+
+echo "${Green}OK${Color_Off}"
