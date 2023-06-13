@@ -70,20 +70,19 @@ const imageController: ImageController = {
 	): Promise<void> => {
 		const { name, image } = req.body;
 		try {
-			await exec(
-				`docker run -d --rm --name ${name} ${image}`,
-				(error: ExecException | null, stdout: string, _stderr: string) => {
-					if (error) {
-						next({
-							log: 'error in the imageController.runContainerFromImage exec',
-							err: error,
-							message: `Failed to run image: ${name} ${image}`,
-						});
-					}
-					res.locals.ranContainerWithRemove = `Running Container ID: ${stdout}`;
-					next();
-				}
+			const { stdout, stderr } = await promisifyExec(
+				`docker run -d --rm --name ${name} ${image}`
 			);
+			if (stderr) {
+				const errorDetails: ErrorDetails = {
+					log: 'error in the imageController.runContainerFromImage exec',
+					err: stderr,
+					message: 'error in the imageController.runContainerFromImage exec',
+				};
+				next(errorDetails);
+			}
+			res.locals.ranContainerWithRemove = `Running Container ID: ${stdout}`;
+			next();
 		} catch (error) {
 			next({
 				log: 'error in the imageController.runContainerFromImage middleware',
