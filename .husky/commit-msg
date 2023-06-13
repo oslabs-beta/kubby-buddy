@@ -26,7 +26,7 @@ COMMIT_MSG_LENGTH="Your Commit message may only be up to ${Green}88 characters${
 echo 'Verifying commit message...'
 
 # Check that users commit message has a valid format
-if ! head -1 "$1" | grep -qE "^(feat|fix|chore|docs|test|style|refactor|perf|build|ci|revert)(\(.+?\))?: .{1,}$"; then
+if ! head -1 "$1" | grep -qE "^(feat|fix|chore|docs|test|style|refactor|perf|build|ci|revert)(\(.+?\))?!?: .{1,}$"; then
     # Tell user the commit is aborting
     echo "$COMMIT_MSG_ERR\n\n" >&2
     # Tell user for to format their commit message
