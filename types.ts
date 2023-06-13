@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { ExecException } from "child_process";
 
 export type MiddleWare = (
   req: Request,
@@ -58,4 +59,10 @@ export interface GlobalErr {
   message: {
     err: string;
   };
+}
+
+export interface ErrorDetails {
+  log: string;
+  err?: ExecException | Error | unknown;
+  message?: string;
 }
