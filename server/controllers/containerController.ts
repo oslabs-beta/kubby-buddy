@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { exec } from "node:child_process";
 import { ContainerController } from "../../types";
 import { promisify } from "util";
+import { ErrorDetails } from "../../types";
 const promisifyExec = promisify(exec);
 
 const containerController: ContainerController = {
@@ -13,22 +14,25 @@ const containerController: ContainerController = {
     next: NextFunction
   ) => {
     try {
-      console.log("before");
       const { stdout, stderr } = await promisifyExec("docker ps --format json");
-      console.log("after", stdout, stderr);
       if (stderr) {
-        next({
+        const errorDetails: ErrorDetails = {
           log: "error in the containerController.getAllRunningContainers exec",
           err: stderr,
-        });
+          message:
+            "error in the containerController.getAllRunningContainers exec",
+        };
+        next(errorDetails);
       }
-      res.locals.containers = stdout || stderr;
+      res.locals.containers = stdout;
       next();
     } catch (error) {
-      next({
-        log: "error in the containerController.getAllRunningContainers",
+      const errorDetails: ErrorDetails = {
+        log: "error in containerController.getAllRunningContainers",
         err: error,
-      });
+        message: "failed to get all running containers",
+      };
+      next(errorDetails);
     }
   },
 
@@ -39,24 +43,27 @@ const containerController: ContainerController = {
     next: NextFunction
   ) => {
     try {
-      await exec(
-        `docker container ls --format='{{json .Names}}'`,
-        (error, stdout, _stderr) => {
-          if (error) {
-            next({
-              log: "error in the exec call in containerController.getAllRunningContainers",
-              err: error,
-            });
-          }
-          res.locals.containersNames = stdout;
-          next();
-        }
+      const { stdout, stderr } = await promisifyExec(
+        `docker container ls --format='{{json .Names}}'`
       );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: "error in the containerController.getAllRunningContainersNames exec",
+          err: stderr,
+          message:
+            "error in the containerController.getAllRunningContainersNames exec",
+        };
+        next(errorDetails);
+      }
+      res.locals.containersNames = stdout;
+      next();
     } catch (error) {
-      next({
-        log: "error in the containerController.getAllRunningContainers",
+      const errorDetails: ErrorDetails = {
+        log: "error in containerController.getAllRunningContainersNames",
         err: error,
-      });
+        message: "failed to get all running container names",
+      };
+      next(errorDetails);
     }
   },
 
@@ -67,26 +74,27 @@ const containerController: ContainerController = {
     res: Response,
     next: NextFunction
   ) => {
-    console.log("stop");
     const { name } = req.body;
     try {
-      await exec(`docker stop ${name}`, (error, stdout, _stderr) => {
-        console.log("exec");
-
-        if (error) {
-          next({
-            log: "error in the containerController.stopASpecificContainer exec",
-            message: error,
-          });
-        }
-        res.locals.stoppedContainer = stdout;
-        next();
-      });
+      const { stdout, stderr } = await promisifyExec(`docker stop ${name}`);
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: "error in the containerController.stopASpecificContainer exec",
+          err: stderr,
+          message:
+            "error in the containerController.stopASpecificContainer exec",
+        };
+        next(errorDetails);
+      }
+      res.locals.stoppedContainer = `Stopped container: ${stdout}`;
+      next();
     } catch (error) {
-      next({
-        log: `error in the containerController.stopASpecificContainer catch`,
+      const errorDetails: ErrorDetails = {
+        log: "error in containerController.stopASpecificContainer",
         err: error,
-      });
+        message: `failed to stop container: ${name}`,
+      };
+      next(errorDetails);
     }
   },
 
@@ -99,23 +107,25 @@ const containerController: ContainerController = {
   ) => {
     const { name } = req.body;
     try {
-      await exec(`docker start ${name}`, (error, stdout, stderr) => {
-        if (error) {
-          next({
-            log: `error in the containerController.startASpecificContainer exec`,
-            err: error,
-          });
-        }
-        console.log(`stdout: ${stdout}`);
-        console.log(`stderr: ${stderr}`);
-        res.locals.startedContainer = stdout;
-        next();
-      });
+      const { stdout, stderr } = await promisifyExec(`docker start ${name}`);
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: "error in the containerController.startASpecificContainer exec",
+          err: stderr,
+          message:
+            "error in the containerController.startASpecificContainer exec",
+        };
+        next(errorDetails);
+      }
+      res.locals.startedContainer = `Started container: ${stdout}`;
+      next();
     } catch (error) {
-      next({
-        log: `error in the containerController.startASpecificContainer`,
+      const errorDetails: ErrorDetails = {
+        log: "error in containerController.startASpecificContainer",
         err: error,
-      });
+        message: `failed to start container: ${name}`,
+      };
+      next(errorDetails);
     }
   },
 
@@ -126,25 +136,28 @@ const containerController: ContainerController = {
     res: Response,
     next: NextFunction
   ) => {
-    console.log("prune");
     try {
-      await exec(`docker container prune --force`, (error, stdout, _stderr) => {
-        if (error) {
-          console.log("error");
-
-          next({
-            log: `error in the containerController.pruneStoppedContainers exec`,
-          });
-        }
-        //checking for deleted containers ids
-        res.locals.deletedContainers = stdout;
-        next();
-      });
+      const { stdout, stderr } = await promisifyExec(
+        `docker container prune --force`
+      );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: "error in the containerController.pruneStoppedContainers exec",
+          err: stderr,
+          message:
+            "error in the containerController.pruneStoppedContainers exec",
+        };
+        next(errorDetails);
+      }
+      res.locals.deletedContainers = stdout;
+      next();
     } catch (error) {
-      next({
-        log: `error in the containerController.pruneStoppedContainers catch`,
+      const errorDetails: ErrorDetails = {
+        log: "error in containerController.pruneStoppedContainers",
         err: error,
-      });
+        message: "failed to prune stopped containers",
+      };
+      next(errorDetails);
     }
   },
 
@@ -154,21 +167,26 @@ const containerController: ContainerController = {
     console.log(req.query);
     const { name } = req.query;
     try {
-      await exec(`docker container logs ${name}`, (error, stdout, _stderr) => {
-        if (error) {
-          return next({
-            log: `error in the containerController.getSpecificLog`,
-            err: error,
-          });
-        }
-        res.locals.log = stdout;
-        next();
-      });
+      const { stdout, stderr } = await promisifyExec(
+        `docker container logs ${name}`
+      );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: "error in the containerController.getSpecificLog exec",
+          err: stderr,
+          message: "error in the containerController.getSpecificLog exec",
+        };
+        next(errorDetails);
+      }
+      res.locals.log = stdout;
+      next();
     } catch (error) {
-      next({
-        log: `error in the containerController.getSpecificLog catch`,
+      const errorDetails: ErrorDetails = {
+        log: "error in containerController.getSpecificLog",
         err: error,
-      });
+        message: `failed to get logs for container: ${name}`,
+      };
+      next(errorDetails);
     }
   },
 };
