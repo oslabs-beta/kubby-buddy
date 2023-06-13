@@ -120,7 +120,7 @@ const imageController: ImageController = {
 	// prune unused images (ones not actively connected with a container)
 
 	pruneUnusedImages: async (
-		req: Request,
+		_req: Request,
 		res: Response,
 		next: NextFunction
 	): Promise<void> => {
@@ -150,7 +150,7 @@ const imageController: ImageController = {
 
 	//prune only dangling images (ones without a tag)
 	pruneDanglingImages: async(
-		req: Request,
+		_req: Request,
 		res: Response,
 		next: NextFunction
 	): Promise<void> => {
@@ -173,6 +173,7 @@ const imageController: ImageController = {
 				err: error,
 				message: 'error in the imageController.pruneDanglingImages catch'
 			}
+			next(errorDetails)
 		}
 	}
 };
