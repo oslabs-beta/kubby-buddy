@@ -57,6 +57,14 @@ imageRouter.delete(
     res.status(200).json(res.locals.output)
   }
 )
+
+// remove image by name
+
+imageRouter.delete(
+  '/remove-image-by-name', imageController.removeSingleImage, (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.output)
+  }
+)
 //test route
 imageRouter.use('/', (_req: Request, res: Response) => {
 	res.send('imageRouter Test');

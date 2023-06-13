@@ -149,33 +149,65 @@ const imageController: ImageController = {
 	},
 
 	//prune only dangling images (ones without a tag)
-	pruneDanglingImages: async(
+	pruneDanglingImages: async (
 		_req: Request,
 		res: Response,
 		next: NextFunction
 	): Promise<void> => {
 		try {
-			const { stdout, stderr } = await promisifyExec('docker image prune --force')
+			const { stdout, stderr } = await promisifyExec(
+				'docker image prune --force'
+			);
 			if (stderr) {
 				const errorDetails: ErrorDetails = {
 					log: 'error in the exec of imageController.pruneDanglingImages',
 					err: stderr,
-					message: 'error in the exec of imageController.pruneDanglingImages'
+					message: 'error in the exec of imageController.pruneDanglingImages',
+				};
+				next(errorDetails);
+			}
+			res.locals.output = stdout;
+			next();
+		} catch (error) {
+			const errorDetails: ErrorDetails = {
+				log: 'error in the imageController.pruneDanglingImages catch',
+				err: error,
+				message: 'error in the imageController.pruneDanglingImages catch',
+			};
+			next(errorDetails)
+		}
+	},
+
+	//remove single image
+
+	removeSingleImage: async (
+		req: Request,
+		res: Response,
+		next: NextFunction
+	): Promise<void> => {
+		const { name } = req.body
+		try {
+			const { stdout, stderr }
+				= await promisifyExec(`docker image rm ${name}`)
+			if (stderr) {
+				const errorDetails: ErrorDetails = {
+					log: 'error in the imageController.removeSingleImage exec',
+					err: stderr,
+					message: 'error in the imageController.removeSingleImage exec'
 				}
 				next(errorDetails)
 			}
 			res.locals.output = stdout
 			next()
-		}
-		catch (error) {
+		} catch (error) {
 			const errorDetails: ErrorDetails = {
-				log: 'error in the imageController.pruneDanglingImages catch',
+				log: '',
 				err: error,
 				message: 'error in the imageController.pruneDanglingImages catch'
 			}
 			next(errorDetails)
 		}
-	}
+	},
 };
 
 export default imageController;
