@@ -1,0 +1,19 @@
+
+.quickview-container{
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+
+}
+
+.quickview-header{
+    align-self: center;
+}
+.quickview-item{
+    list-style: none;
+    background-color: white;
+    width: 100%;
+    height: 2em;
+    border: orange 1px solid;
+    margin-bottom: .3em;
+}
