@@ -1,12 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { exec, ExecException } from "child_process";
 import { ImageController } from "../../types";
-
-interface ErrorDetails {
-  log: string;
-  err?: ExecException | Error | unknown;
-  message?: string;
-}
+import { ErrorDetails } from "../../types";
 
 const imageController: ImageController = {
   getAllImages: async (
