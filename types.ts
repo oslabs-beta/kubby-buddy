@@ -33,7 +33,7 @@ export interface ImageController {
   pruneUnusedImages: MiddleWare;
 
   pruneDanglingImages: MiddleWare;
-  
+
   removeSingleImage: MiddleWare;
 }
 
