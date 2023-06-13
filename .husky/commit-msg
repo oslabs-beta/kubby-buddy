@@ -44,6 +44,6 @@ if ! head -1 "$1" | grep -qE "^.{1,88}$"; then
 fi
 
 # Tell user their commit message is valid
-echo "${Green}OK${Color_Off}"
+echo "${Green}Pre-flight done, commiting files...${Color_Off}"
 # Exit and continue to commit
 exit 0

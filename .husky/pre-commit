@@ -14,12 +14,16 @@ Purple=$'\033[0;35m'           # Purple
 Cyan=$'\033[0;36m'             # Cyan
 White=$'\033[0;37m'            # White
 
+# Grab the name of the working branch
 LOCAL_BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
 
+# Regex to ensure proper branch naming
 VALID_BRANCH_REGEX='((bug|docs|fix|feat|merge|test|wip)\/[a-zA-Z0-9\-]+)'
 
-BRANCH_ERROR="${Red}Aborting commit. Branch name is invalid.${Color_Off}"
+# Message to tell user the commit is being aborted
+BRANCH_ERROR="${Red}Aborting commit, branch name is invalid.${Color_Off}"
 
+# Instructions on how to fix the branch name
 FIX_MSG="Your branch name should start with ${Yellow}REQUIRED ${Green}feat, fix, bug, docs, test, wip or merge${Color_Off} followed by a ${Yellow}REQUIRED ${Green}/${Color_Off} then any ${Yellow}REQUIRED ${Green}alphanumeric${Color_Off} or ${Green}-${Color_Off} character to describe your branch. Use the command ${Yellow}git branch -m <new-branch-name>${Color_Off} to change your branch name."
 
 echo 'Validating branch name...'
@@ -35,14 +39,16 @@ fi
 echo "${Green}OK${Color_Off}"
 
 echo 'Formatting staged files...'
-
+# Grab the file names of staged files
 FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
 
+# If there are no staged files, aborts the formatting
 [ -z "$FILES" ] && echo 'No staged files, aborting...' && exit 0
-
+# Using the stages file names as args, run the prettier script on each of them
 echo "$FILES" | xargs ./node_modules/.bin/prettier --ignore-unknown --write
 
 echo 'Adding formatted files back to staging...'
+# Add files back after formatting them so the commit properly
 echo "$FILES" | xargs git add
 
 echo "${Green}OK${Color_Off}"
