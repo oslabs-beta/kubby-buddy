@@ -89,18 +89,20 @@ const volumeController: VolumeController = {
 		res: Response,
 		next: NextFunction
 	) => {
-		console.log('delete');
 		try {
-			await exec('docker volume prune --force', (error, stdout, _stderr) => {
-				if (error) {
-					next({
-						log: 'volumeController',
-						err: error,
-					});
-				}
-				res.locals.deletedAnonymous = stdout.trim();
-				next();
-			});
+			const { stdout, stderr } = await promisifyExec(
+				'docker volume prune --force'
+			);
+			if (stderr) {
+				const errorDetails: ErrorDetails = {
+					log: 'error in the volumeController.deleteAllAnonymousVolumes',
+					err: stderr,
+					message: 'error in the volumeController.deleteAllAnonymousVolumes',
+				};
+				next(errorDetails);
+			}
+			res.locals.deletedAnonymous = stdout.trim();
+			next();
 		} catch (error) {
 			next({
 				log: 'error in the volumeController.deleteAllAnonymousVolumes',
