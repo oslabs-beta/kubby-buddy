@@ -40,6 +40,35 @@ imageRouter.delete(
   }
 );
 
+//prune all unused images (ones not acively connected witha container)
+
+imageRouter.delete(
+  "/prune-all-unused",
+  imageController.pruneUnusedImages,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.output);
+  }
+);
+
+//prune only dangling images (ones without a tag/name)
+
+imageRouter.delete(
+  "/prune-dangling",
+  imageController.pruneDanglingImages,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.output);
+  }
+);
+
+// remove image by name
+
+imageRouter.delete(
+  "/remove-image-by-name",
+  imageController.removeSingleImage,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.output);
+  }
+);
 //test route
 imageRouter.use("/", (_req: Request, res: Response) => {
   res.send("imageRouter Test");
