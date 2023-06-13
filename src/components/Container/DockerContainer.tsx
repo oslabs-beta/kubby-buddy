@@ -1,5 +1,6 @@
 import React, { FC} from 'react'
 import './Container.scss'
+import {StartButton} from '../Button/Start'
 
 export const DockerContainer: FC = () => {
 
@@ -24,14 +25,16 @@ export const DockerContainer: FC = () => {
     return (
         <div className='dockercontainer'>
            {testArray.map((el,index)=>(
-            <li key={index}> 
+
+            <li className="list" key={index}> 
+            
             <div className='container-info'>
                 <p>{el.name}</p>
                 <p className='imagename'>{el.image}</p>
             </div>
 
             <div className="cmdbutton">
-                <button>Start</button>
+                <StartButton />
                 <button>Stop</button>
                 <button>Delete</button>
                 <button>Logs</button>
@@ -45,7 +48,7 @@ export const DockerContainer: FC = () => {
                 <button>stats</button>
             </div>
 
-            <div>
+            <div className='graph'>
                 <p>what is going on here image here</p>
             </div>
             
