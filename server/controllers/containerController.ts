@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { exec } from "node:child_process";
 import { ContainerController } from "../../types";
+import { promisify } from "util";
+const promisifyExec = promisify(exec);
 
 const containerController: ContainerController = {
   //middleware to run CLI command to get list of active containers
@@ -11,16 +13,17 @@ const containerController: ContainerController = {
     next: NextFunction
   ) => {
     try {
-      await exec("docker ps --format json", (error, stdout, _stderr) => {
-        if (error) {
-          next({
-            log: "error in the exec call in containerController.getAllRunningContainers",
-            err: error,
-          });
-        }
-        res.locals.containers = stdout;
-        next();
-      });
+      console.log("before");
+      const { stdout, stderr } = await promisifyExec("docker ps --format json");
+      console.log("after", stdout, stderr);
+      if (stderr) {
+        next({
+          log: "error in the containerController.getAllRunningContainers exec",
+          err: stderr,
+        });
+      }
+      res.locals.containers = stdout || stderr;
+      next();
     } catch (error) {
       next({
         log: "error in the containerController.getAllRunningContainers",
