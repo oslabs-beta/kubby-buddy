@@ -6,6 +6,7 @@
 import React, { FC, useContext, useEffect} from 'react'
 import './SideNav.scss'
 import { Quickview } from '../Quickview/Quickview'
+// import { GlobalCommands } from '../GlobalCommands/GlobalCommands'
 import { UserContext } from '../../UserContext';
 // import photo from '../../assests/logo.png'
 //container/all-active-containers
@@ -22,7 +23,7 @@ export const SideNav : FC = () => {
                 const fetchResponse = await fetch(getURL)
                 const data = await fetchResponse.json();
                 console.log(data)
-                setRunningContainers([...data.split('}')])
+                setRunningContainers(data)
             } catch (error){
                 console.log(error)
             }
@@ -33,7 +34,7 @@ export const SideNav : FC = () => {
 
     return(
         <div className='side-nav'>
-
+        {/* <GlobalCommands/> */}
         <Quickview/>
         </div>
     )

@@ -22,6 +22,12 @@ export interface Container {
     Size:String;
     State:String;
     Status:String;
-    
+
 
 }
+
+export interface CommandButtonProps {
+    name: string;
+    cmdRoute: URL;
+    fetchMethod: string;
+  }
