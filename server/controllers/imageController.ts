@@ -141,13 +141,41 @@ const imageController: ImageController = {
 			next();
 		} catch (error) {
 			const errorDetails: ErrorDetails = {
-				log: '',
+				log: 'error in the imageController.pruneUnusedImages catch',
 				err: error,
-				message: '',
+				message: 'error in the imageController.pruneUnusedImages catch',
 			};
 			next(errorDetails);
 		}
 	},
+
+	//prune only dangling images (ones without a tag)
+	pruneDanglingImages: async(
+		req: Request,
+		res: Response,
+		next: NextFunction
+	): Promise<void> => {
+		try {
+			const { stdout, stderr } = await promisifyExec('docker image prune --force')
+			if (stderr) {
+				const errorDetails: ErrorDetails = {
+					log: 'error in the exec of imageController.pruneDanglingImages',
+					err: stderr,
+					message: 'error in the exec of imageController.pruneDanglingImages'
+				}
+				next(errorDetails)
+			}
+			res.locals.output = stdout
+			next()
+		}
+		catch (error) {
+			const errorDetails: ErrorDetails = {
+				log: 'error in the imageController.pruneDanglingImages catch',
+				err: error,
+				message: 'error in the imageController.pruneDanglingImages catch'
+			}
+		}
+	}
 };
 
 export default imageController;

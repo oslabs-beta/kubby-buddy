@@ -49,6 +49,14 @@ imageRouter.delete(
 		res.status(200).json(res.locals.output);
 	}
 );
+
+//prune only dangling images (ones without a tag/name)
+
+imageRouter.delete(
+  '/prune-dangling', imageController.pruneDanglingImages, (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.output)
+  }
+)
 //test route
 imageRouter.use('/', (_req: Request, res: Response) => {
 	res.send('imageRouter Test');
