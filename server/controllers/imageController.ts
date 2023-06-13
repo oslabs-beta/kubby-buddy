@@ -99,20 +99,17 @@ const imageController: ImageController = {
 	): Promise<void> => {
 		const { image } = req.body;
 		try {
-			await exec(
-				`docker rmi ${image}`,
-				(error: ExecException | null, stdout: string, _stderr: string) => {
-					if (error) {
-						next({
-							log: 'error in the imageController.runContainerFromImage exec',
-							err: error,
-							message: `Failed to delete image: ${image}`,
-						});
-					}
-					res.locals.imagesDeleted = `Removed Image: ${stdout}`;
-					next();
-				}
-			);
+			const { stdout, stderr } = await promisifyExec(`docker rmi ${image}`);
+			if (stderr) {
+				const errorDetails: ErrorDetails = {
+					log: 'error in the imageController.runContainerFromImage exec',
+					err: stderr,
+					message: `Failed to delete image: ${image}`,
+				};
+				next(errorDetails);
+			}
+			res.locals.imagesDeleted = `Removed Image: ${stdout}`;
+			next();
 		} catch (error) {
 			next({
 				log: 'error in the imageController.runContainerFromImage middleware',
