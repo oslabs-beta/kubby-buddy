@@ -24,7 +24,8 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.containers = stdout;
+      const objectStrings = stdout.split("\n");
+      res.locals.containers = objectStrings;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
