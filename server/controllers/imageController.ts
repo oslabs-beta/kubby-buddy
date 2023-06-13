@@ -203,9 +203,9 @@ const imageController: ImageController = {
 			const errorDetails: ErrorDetails = {
 				log: '',
 				err: error,
-				message: '',
-			};
-			next(errorDetails);
+				message: 'error in the imageController.pruneDanglingImages catch'
+			}
+			next(errorDetails)
 		}
 	},
 };
