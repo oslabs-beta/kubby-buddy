@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { exec, ExecException } from 'child_process';
+import { exec } from 'child_process';
 import { ImageController, ErrorDetails } from '../../types';
 import { promisify } from 'node:util';
-import { error } from 'console';
 const promisifyExec = promisify(exec);
 
 const imageController: ImageController = {
