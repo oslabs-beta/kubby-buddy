@@ -25,7 +25,8 @@ const containerController: ContainerController = {
         next(errorDetails);
       }
       const objectStrings = stdout.split("\n");
-      res.locals.containers = objectStrings;
+      const cleanedData = objectStrings.map((str) => str.replace(/\\/g, ""));
+      res.locals.containers = cleanedData;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -45,7 +46,7 @@ const containerController: ContainerController = {
   ) => {
     try {
       const { stdout, stderr } = await promisifyExec(
-        `docker container ls --format='{{json .Names}}'`
+        `docker container ls --format='{ "CreatedAt": "{{ .CreatedAt }}", "Id": "{{ .ID }}"}, "Image": "{{ .Image }}"}'`
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
@@ -56,7 +57,8 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.containersNames = stdout;
+      const objectStrings = stdout.split("\n");
+      res.locals.containersNames = objectStrings;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
