@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { exec, ExecException } from 'child_process';
+import { exec } from 'child_process';
 import { ImageController, ErrorDetails } from '../../types';
 import { promisify } from 'node:util';
-import { error } from 'console';
 const promisifyExec = promisify(exec);
 
 const imageController: ImageController = {
@@ -121,7 +120,7 @@ const imageController: ImageController = {
 	// prune unused images (ones not actively connected with a container)
 
 	pruneUnusedImages: async (
-		req: Request,
+		_req: Request,
 		res: Response,
 		next: NextFunction
 	): Promise<void> => {
@@ -151,7 +150,7 @@ const imageController: ImageController = {
 
 	//prune only dangling images (ones without a tag)
 	pruneDanglingImages: async (
-		req: Request,
+		_req: Request,
 		res: Response,
 		next: NextFunction
 	): Promise<void> => {
@@ -175,6 +174,7 @@ const imageController: ImageController = {
 				err: error,
 				message: 'error in the imageController.pruneDanglingImages catch',
 			};
+			next(errorDetails)
 		}
 	},
 
