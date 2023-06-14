@@ -64,7 +64,10 @@ const containerController: ContainerController = {
       const parsedOutput = stdout
         .trim()
         .split("\n")
-        .map((item) => JSON.parse(item, undefined)); // Use undefined as the reviver
+        .map((item) => {
+          const name = JSON.parse(item, undefined);
+          return { name };
+        }); // Use undefined as the reviver
       res.locals.containersNames = parsedOutput;
       next();
     } catch (error) {

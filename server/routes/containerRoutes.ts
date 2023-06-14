@@ -14,7 +14,7 @@ containerRouter.get(
 );
 
 //get active container names
-//OUTPUT: array of strings
+//OUTPUT: array of objects
 containerRouter.get(
   "/all-active-containers-names",
   containerController.getAllRunningContainersNames,
@@ -24,7 +24,7 @@ containerRouter.get(
 );
 
 //stop a specific container
-
+//OUTPUT: array of object
 containerRouter.post(
   "/stop",
   containerController.stopASpecificContainer,
