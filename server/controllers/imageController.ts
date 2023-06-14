@@ -22,7 +22,11 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      res.locals.images = stdout;
+      const dataArray = stdout
+        .trim()
+        .split("\n")
+        .map((item) => JSON.parse(item, undefined)); // Use undefined as the reviver
+      res.locals.images = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -51,7 +55,8 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      res.locals.ranContainer = `Running Container ID: ${stdout}`;
+      const output = stdout.trim();
+      res.locals.ranContainer = [{ message: output }];
       next();
     } catch (error) {
       next({
@@ -80,34 +85,7 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      res.locals.ranContainerWithRemove = `Running Container ID: ${stdout}`;
-      next();
-    } catch (error) {
-      next({
-        log: "error in the imageController.runContainerFromImage middleware",
-        err: error,
-      });
-    }
-  },
-
-  // run container with remove when it stops
-  deleteImage: async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    const { image } = req.body;
-    try {
-      const { stdout, stderr } = await promisifyExec(`docker rmi ${image}`);
-      if (stderr) {
-        const errorDetails: ErrorDetails = {
-          log: "error in the imageController.runContainerFromImage exec",
-          err: stderr,
-          message: `Failed to delete image: ${image}`,
-        };
-        next(errorDetails);
-      }
-      res.locals.imagesDeleted = `Removed Image: ${stdout}`;
+      res.locals.ranContainerWithRemove = [{ message: stdout.trim() }];
       next();
     } catch (error) {
       next({
@@ -136,7 +114,8 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      res.locals.output = stdout;
+      const dataArray = stdout.trim().split("\n");
+      res.locals.output = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -166,7 +145,8 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      res.locals.output = stdout;
+      const dataArray = stdout.trim().split("\n");
+      res.locals.output = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -196,13 +176,15 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      res.locals.output = stdout;
+      const dataArray = stdout.trim().split("\n");
+      // .map((item) => JSON.parse(item, undefined));
+      res.locals.output = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
         log: "",
         err: error,
-        message: "error in the imageController.pruneDanglingImages catch",
+        message: "error in the imageController.removeSingleImage catch",
       };
       next(errorDetails);
     }
