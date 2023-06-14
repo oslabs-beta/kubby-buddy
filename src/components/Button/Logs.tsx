@@ -1,5 +1,5 @@
 import React from "react";
-
+import logs from '../../assets/memo-pad.png'
 export const LogButton: React.FC = () => {
 
     const handleLog = async () => {
@@ -13,6 +13,6 @@ export const LogButton: React.FC = () => {
     }
 
     return(
-        <button onClick={handleLog}>Get Log</button>
+        <button style={{backgroundImage:`url(${logs})`}} onClick={handleLog}></button>
     )
 }

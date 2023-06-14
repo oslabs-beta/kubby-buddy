@@ -1,4 +1,5 @@
 import React from 'react'
+import start from '../../assets/play.png'
 
 export const StartButton: React.FC = () =>{
     
@@ -19,7 +20,7 @@ export const StartButton: React.FC = () =>{
     }
 
     return (
-        <button onClick={handleStart}>Start Container</button>
+        <button style={{backgroundImage:`url(${start})`}} onClick={handleStart}></button>
     )
 }
 

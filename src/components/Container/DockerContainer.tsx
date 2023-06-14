@@ -4,6 +4,8 @@ import {StartButton} from '../Button/Start'
 import {StopButton} from '../Button/Stop'
 import { DeleteButton } from '../Button/Delete'
 import { LogButton } from '../Button/Logs'
+import { Graph } from '../Graph/Graph'
+
 
 export const DockerContainer: FC = () => {
 
@@ -15,7 +17,7 @@ export const DockerContainer: FC = () => {
 
     //testJSONobject 
     const testArray: TestContainer[] = [
-        {name: 'container1', id: 12345, image: 'Alpine1', },
+        {name: 'container1THISISAREALLYREALLYLONGNAME', id: 12345, image: 'Alpine1', },
         {name: 'container2', id: 12345, image: 'Alpine2', },
         {name: 'container3', id: 12345, image: 'Alpine3', },
         {name: 'container4', id: 12345, image: 'Alpine4', },
@@ -37,7 +39,8 @@ export const DockerContainer: FC = () => {
             </div>
         
             <div className="cmdbutton">
-                <StartButton  />
+                
+                <StartButton />
                 <StopButton />
                 <DeleteButton />
                 <LogButton />
@@ -51,9 +54,7 @@ export const DockerContainer: FC = () => {
                 <button>stats</button>
             </div>
 
-            <div className='graph'>
-                <p>what is going on here image here</p>
-            </div>
+            <Graph />
             
             </li>
            ))}

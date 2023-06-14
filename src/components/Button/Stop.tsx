@@ -1,4 +1,5 @@
 import React from "react";
+import stop from '../../assets/stop.png' 
 
 // import { CommandButtonProps } from "../../types";
 
@@ -40,7 +41,7 @@ export const StopButton: React.FC = () =>{
 
 
     return (
-        <button onClick={handleStop}>Stop Container</button>
+        <button style={{backgroundImage:`url(${stop})`}} onClick={handleStop}></button>
     )
 
 }

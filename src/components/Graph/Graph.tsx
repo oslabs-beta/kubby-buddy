@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import './Graph.scss'
 
 
-export const MainNav : FC = () => {
+export const Graph : FC = () => {
 
     return (
         <div className='graph'>

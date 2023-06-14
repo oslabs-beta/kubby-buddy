@@ -1,6 +1,7 @@
 // /prune-stopped-containers
 
 import React from "react";
+import trash from '../../assets/trash.png'
 
 
 export const DeleteButton: React.FC = () => {
@@ -23,7 +24,7 @@ export const DeleteButton: React.FC = () => {
     }
 
     return (
-        <button onClick={handleDelete}>Delete Container</button>
+        <button style={{backgroundImage:`url(${trash})`}} onClick={handleDelete}></button>
     )
 
 }
