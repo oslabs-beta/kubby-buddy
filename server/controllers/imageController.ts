@@ -22,7 +22,11 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      res.locals.images = stdout;
+      const dataArray = stdout
+        .trim()
+        .split("\n")
+        .map((item) => JSON.parse(item, undefined)); // Use undefined as the reviver
+      res.locals.images = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
