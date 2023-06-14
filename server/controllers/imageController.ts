@@ -30,8 +30,9 @@ const imageController: ImageController = {
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in imageController.getAllImages",
+        log: "error in imageController.getAllImages catch",
         err: error,
+        message: `error in exec of imageController.getAllImages catch`,
       };
       next(errorDetails);
     }
@@ -59,10 +60,12 @@ const imageController: ImageController = {
       res.locals.ranContainer = [{ message: output }];
       next();
     } catch (error) {
-      next({
-        log: "error in the imageController.runContainerFromImage middleware",
+      const errorDetails: ErrorDetails = {
+        log: "error in imageController.runContainerFromImage catch",
         err: error,
-      });
+        message: `error in exec of imageController.runContainerFromImage catch`,
+      };
+      next(errorDetails);
     }
   },
 
@@ -88,10 +91,12 @@ const imageController: ImageController = {
       res.locals.ranContainerWithRemove = [{ message: stdout.trim() }];
       next();
     } catch (error) {
-      next({
-        log: "error in the imageController.runContainerFromImage middleware",
+      const errorDetails: ErrorDetails = {
+        log: "error in imageController.runContainerFromImageWithRemove catch",
         err: error,
-      });
+        message: `error in exec of imageController.runContainerFromImageWithRemove catch`,
+      };
+      next(errorDetails);
     }
   },
 
