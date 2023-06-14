@@ -1,5 +1,9 @@
 import React, { FC} from 'react'
 import './Container.scss'
+import {StartButton} from '../Button/Start'
+import {StopButton} from '../Button/Stop'
+import { DeleteButton } from '../Button/Delete'
+import { LogButton } from '../Button/Logs'
 
 export const DockerContainer: FC = () => {
 
@@ -20,32 +24,34 @@ export const DockerContainer: FC = () => {
         {name: 'container4', id: 12345, image: 'Alpine4', },
     ]
 
-
+    //pass down necessary props to buttons for their relevant fetch requests
     return (
         <div className='dockercontainer'>
            {testArray.map((el,index)=>(
-            <li key={index}> 
+
+            <li className="list" key={index}> 
+            
             <div className='container-info'>
                 <p>{el.name}</p>
                 <p className='imagename'>{el.image}</p>
             </div>
-
+        
             <div className="cmdbutton">
-                <button>Start</button>
-                <button>Stop</button>
-                <button>Delete</button>
-                <button>Logs</button>
+                <StartButton  />
+                <StopButton />
+                <DeleteButton />
+                <LogButton />
             </div>
             
             
-            <div className="othercmdbutton">
+            <div className="dropdown">
                 <button>container</button>
                 <button>volumes</button>
                 <button>image</button>
                 <button>stats</button>
             </div>
 
-            <div>
+            <div className='graph'>
                 <p>what is going on here image here</p>
             </div>
             

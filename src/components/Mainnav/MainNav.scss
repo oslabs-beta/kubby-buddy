@@ -7,10 +7,11 @@ div.main-nav{
     overflow-x: hidden;
 
     ul{
-
+        padding-right:2em;
         li{
             border: 1px solid black;
-            padding: 100px;
+            padding: 20px;
+            scrollbar-gutter: stable both;
             margin: 1em 1em 1em 1em;
             margin-bottom: 5px;
             list-style-type: none;
