@@ -27,7 +27,7 @@ app.use("/container", containerRouter);
 
 //routes for handling volumes
 
-app.use("/volumes", volumeRouter);
+app.use("/volume", volumeRouter);
 
 //routes for handling all other docker commands
 
