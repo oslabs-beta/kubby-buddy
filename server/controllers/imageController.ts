@@ -55,7 +55,8 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      res.locals.ranContainer = `Running Container ID: ${stdout}`;
+      const output = stdout.trim();
+      res.locals.ranContainer = [{ message: output }];
       next();
     } catch (error) {
       next({

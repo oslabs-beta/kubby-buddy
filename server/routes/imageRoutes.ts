@@ -6,7 +6,7 @@ const imageRouter: Router = express.Router();
 
 //get route to retrieve all images
 //input: nothing
-//output: jsonified array of objects
+//OUTPUT: array of ojbects
 imageRouter.get(
   "/all-images",
   imageController.getAllImages,
@@ -15,7 +15,7 @@ imageRouter.get(
   }
 );
 //input: object with name and image value, {"name": "mongodb", "image": "mongo"}
-//output: json array of running container
+//OUTPUT: json array of running container
 //other tests: container actually runs
 
 //post route to run a single container from an image
