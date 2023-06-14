@@ -99,8 +99,8 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      console.log([{ message: stdout }]);
-      res.locals.stoppedContainer = [{ message: stdout }];
+      const output = { message: stdout.replace(/[\r\n]+/gm, "") };
+      res.locals.stoppedContainer = output;
       // res.locals.stoppedContainer = `Stopped container: ${stdout}`;
       next();
     } catch (error) {
@@ -132,7 +132,7 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.startedContainer = `Started container: ${stdout}`;
+      res.locals.startedContainer = [{ message: stdout }];
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
