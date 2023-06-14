@@ -132,7 +132,8 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.startedContainer = [{ message: stdout }];
+      const output = { message: stdout.replace(/[\r\n]+/gm, "") };
+      res.locals.startedContainer = output;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
