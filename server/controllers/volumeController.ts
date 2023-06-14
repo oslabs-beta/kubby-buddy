@@ -25,10 +25,12 @@ const volumeController: VolumeController = {
       res.locals.volumes = dataArray;
       next();
     } catch (error) {
-      next({
-        log: "error in the volumeController.getAllVolumes middleware",
-        message: error,
-      });
+      const errorDetails: ErrorDetails = {
+        log: "error in the volumeController.getAllVolumes catch",
+        err: error,
+        message: "error in the volumeController.getAllVolumes catch",
+      };
+      next(errorDetails);
     }
   },
 
@@ -60,10 +62,12 @@ const volumeController: VolumeController = {
       res.locals.volumesNames = parsedOutput;
       next();
     } catch (error) {
-      next({
-        log: "error in the volumeController.getAllVolumes middleware",
-        message: error,
-      });
+      const errorDetails: ErrorDetails = {
+        log: "error in the volumeController.getAllVolumesNames catch",
+        err: error,
+        message: "error in the volumeController.getAllVolumesNames catch",
+      };
+      next(errorDetails);
     }
   },
 
@@ -111,10 +115,12 @@ const volumeController: VolumeController = {
       res.locals.deletedVolumes = output;
       next();
     } catch (error) {
-      next({
-        log: "error in the volumeController.deleteAllVolumes middleware",
-        message: error,
-      });
+      const errorDetails: ErrorDetails = {
+        log: "error in the volumeController.deleteAllVolumes catch",
+        err: error,
+        message: "error in the volumeController.deleteAllVolumes catch",
+      };
+      next(errorDetails);
     }
   },
 
@@ -162,10 +168,13 @@ const volumeController: VolumeController = {
       res.locals.deletedAnonymous = output;
       next();
     } catch (error) {
-      next({
-        log: "error in the volumeController.deleteAllAnonymousVolumes",
-        message: error,
-      });
+      const errorDetails: ErrorDetails = {
+        log: "error in the volumeController.deleteAllAnonymousVolumes catch",
+        err: error,
+        message:
+          "error in the volumeController.deleteAllAnonymousVolumes catch",
+      };
+      next(errorDetails);
     }
   },
 };
