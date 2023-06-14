@@ -61,7 +61,11 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.containersNames = stdout;
+      const parsedOutput = stdout
+        .trim()
+        .split("\n")
+        .map((item) => JSON.parse(item, undefined)); // Use undefined as the reviver
+      res.locals.containersNames = parsedOutput;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {

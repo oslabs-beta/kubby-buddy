@@ -4,7 +4,7 @@ import containerController from "../controllers/containerController";
 const containerRouter = express.Router();
 
 //get info about all active ontainers
-
+//OUTPUT: array of objects
 containerRouter.get(
   "/all-active-containers",
   containerController.getAllRunningContainers,
@@ -14,6 +14,7 @@ containerRouter.get(
 );
 
 //get active container names
+//OUTPUT: array of strings
 containerRouter.get(
   "/all-active-containers-names",
   containerController.getAllRunningContainersNames,
