@@ -67,6 +67,7 @@ const volumeController: VolumeController = {
         err: error,
         message: "error in the volumeController.getAllVolumesNames catch",
       };
+      next(errorDetails);
     }
   },
 
