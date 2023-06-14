@@ -18,18 +18,10 @@ const statsStreamController: StatsStreamController = {
 
       const interval = setInterval(async () => {
         try {
-          const { stdout, stderr } = await promisifyExec(
+          const { stdout } = await promisifyExec(
             "docker stats --no-stream --format json"
           );
-          if (stderr) {
-            const errorDetails: ErrorDetails = {
-              log: "error in the statsStreamController.getAllContainerStats exec call",
-              err: stderr,
-              message:
-                "error in the statsStreamController.getAllContainerStats exec call",
-            };
-            next(errorDetails);
-          }
+
           res.status(200);
           const newData: string = JSON.stringify(stdout.trim().split("\n"));
           console.log(newData);
