@@ -18,13 +18,19 @@ const volumeController: VolumeController = {
         };
         next(errorDetails);
       }
-      res.locals.volumes = stdout;
+      const dataArray = stdout
+        .trim()
+        .split("\n")
+        .map((item) => JSON.parse(item, undefined));
+      res.locals.volumes = dataArray;
       next();
     } catch (error) {
-      next({
-        log: "error in the volumeController.getAllVolumes middleware",
-        message: error,
-      });
+      const errorDetails: ErrorDetails = {
+        log: "error in the volumeController.getAllVolumes catch",
+        err: error,
+        message: "error in the volumeController.getAllVolumes catch",
+      };
+      next(errorDetails);
     }
   },
 
@@ -46,13 +52,22 @@ const volumeController: VolumeController = {
         };
         next(errorDetails);
       }
-      res.locals.volumesNames = stdout;
+      const parsedOutput = stdout
+        .trim()
+        .split("\n")
+        .map((item) => {
+          const name = JSON.parse(item, undefined);
+          return { name };
+        });
+      res.locals.volumesNames = parsedOutput;
       next();
     } catch (error) {
-      next({
-        log: "error in the volumeController.getAllVolumes middleware",
-        message: error,
-      });
+      const errorDetails: ErrorDetails = {
+        log: "error in the volumeController.getAllVolumesNames catch",
+        err: error,
+        message: "error in the volumeController.getAllVolumesNames catch",
+      };
+      next(errorDetails);
     }
   },
 
@@ -74,13 +89,38 @@ const volumeController: VolumeController = {
         };
         next(errorDetails);
       }
-      res.locals.deletedVolumes = stdout.trim();
+      const dataArray = stdout.trim().split("\n");
+      const deletedVolumesIndex = dataArray.findIndex(
+        (item) => item === "Deleted Volumes:"
+      );
+      const reclaimedSpaceIndex = dataArray.findIndex((item) =>
+        item.startsWith("Total reclaimed space:")
+      );
+
+      const deletedVolumes = dataArray
+        .slice(deletedVolumesIndex + 1, reclaimedSpaceIndex)
+        .map((item) => item.trim())
+        .filter((item) => item !== ""); // Filter out empty strings
+
+      const reclaimedSpace = dataArray
+        .slice(reclaimedSpaceIndex)
+        .map((item) => item.trim());
+
+      const output = [
+        {
+          "Deleted Volumes:": deletedVolumes,
+          "Total reclaimed space:": reclaimedSpace,
+        },
+      ];
+      res.locals.deletedVolumes = output;
       next();
     } catch (error) {
-      next({
-        log: "error in the volumeController.deleteAllVolumes middleware",
-        message: error,
-      });
+      const errorDetails: ErrorDetails = {
+        log: "error in the volumeController.deleteAllVolumes catch",
+        err: error,
+        message: "error in the volumeController.deleteAllVolumes catch",
+      };
+      next(errorDetails);
     }
   },
 
@@ -101,13 +141,40 @@ const volumeController: VolumeController = {
         };
         next(errorDetails);
       }
-      res.locals.deletedAnonymous = stdout.trim();
+
+      const dataArray = stdout.trim().split("\n");
+      const deletedVolumesIndex = dataArray.findIndex(
+        (item) => item === "Deleted Volumes:"
+      );
+      const reclaimedSpaceIndex = dataArray.findIndex((item) =>
+        item.startsWith("Total reclaimed space:")
+      );
+
+      const deletedVolumes = dataArray
+        .slice(deletedVolumesIndex + 1, reclaimedSpaceIndex)
+        .map((item) => item.trim())
+        .filter((item) => item !== ""); // Filter out empty strings
+
+      const reclaimedSpace = dataArray
+        .slice(reclaimedSpaceIndex)
+        .map((item) => item.trim());
+
+      const output = [
+        {
+          "Deleted Volumes:": deletedVolumes,
+          "Total reclaimed space:": reclaimedSpace,
+        },
+      ];
+      res.locals.deletedAnonymous = output;
       next();
     } catch (error) {
-      next({
-        log: "error in the volumeController.deleteAllAnonymousVolumes",
-        message: error,
-      });
+      const errorDetails: ErrorDetails = {
+        log: "error in the volumeController.deleteAllAnonymousVolumes catch",
+        err: error,
+        message:
+          "error in the volumeController.deleteAllAnonymousVolumes catch",
+      };
+      next(errorDetails);
     }
   },
 };

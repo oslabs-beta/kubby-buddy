@@ -1,12 +1,12 @@
 import express, { Request, Response, Router } from "express";
 import imageController from "../controllers/imageController";
 
-//create router for image path
+// create router for image path
 const imageRouter: Router = express.Router();
 
-//get route to retrieve all images
-//input: nothing
-//output: jsonified array of objects
+// get route to retrieve all images
+// INPUT: nothing
+// OUTPUT: array of objects [{},{}]
 imageRouter.get(
   "/all-images",
   imageController.getAllImages,
@@ -14,11 +14,11 @@ imageRouter.get(
     res.status(200).json(res.locals.images);
   }
 );
-//input: object with name and image value, {"name": "mongodb", "image": "mongo"}
-//output: json array of running container
-//other tests: container actually runs
 
-//post route to run a single container from an image
+// post route to run a single container from an image
+// INPUT: object with name and image value, {"name": "mongodb", "image": "mongo"}
+// OUTPUT: array of object containing ID of container [{"message": "cf29432706cdabfd550b37561311d8f56fe18c8de25ae0f1069d501900ecc49a"}]
+// other tests: container actually runs... maybe you can use another route to test?
 imageRouter.post(
   "/run-images",
   imageController.runContainerFromImage,
@@ -27,7 +27,10 @@ imageRouter.post(
   }
 );
 
-//post route to run a continer from an image with container removal
+// post route to run a container from an image with container removal
+// INPUT: object with name and image value, {"name": "mongodb", "image": "mongo"}
+// OUTPUT: array of object containing ID of container [{"message": "cf29432706cdabfd550b37561311d8f56fe18c8de25ae0f1069d501900ecc49a"}]
+// other tests: container actually runs... maybe you can use another route to test?
 imageRouter.post(
   "/run-images-with-remove",
   imageController.runContainerFromImageWithRemove,
@@ -36,17 +39,9 @@ imageRouter.post(
   }
 );
 
-//delete an image
-imageRouter.delete(
-  "/delete",
-  imageController.deleteImage,
-  (_req: Request, res: Response) => {
-    res.status(200).json(res.locals.imagesDeleted);
-  }
-);
-
-//prune all unused images (ones not acively connected witha container)
-
+// delete all unused images (ones not acively connected with a container)
+// INPUT: nothing
+// OUTPUT: Not finalized: WORK IN PROGRESS
 imageRouter.delete(
   "/prune-all-unused",
   imageController.pruneUnusedImages,
@@ -55,8 +50,9 @@ imageRouter.delete(
   }
 );
 
-//prune only dangling images (ones without a tag/name)
-
+// delete only dangling images (ones without a tag/name)
+// INPUT: nothing
+// OUTPUT: Not finalized: WORK IN PROGRESS
 imageRouter.delete(
   "/prune-dangling",
   imageController.pruneDanglingImages,
@@ -66,7 +62,8 @@ imageRouter.delete(
 );
 
 // remove image by name
-
+// INPUT: nothing
+// OUTPUT: Not finalized: WORK IN PROGRESS
 imageRouter.delete(
   "/remove-image-by-name",
   imageController.removeSingleImage,

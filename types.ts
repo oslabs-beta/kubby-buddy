@@ -19,6 +19,8 @@ export interface ContainerController {
   pruneStoppedContainers: MiddleWare;
 
   getSpecificLog: MiddleWare;
+
+  removeSpecificContainer: MiddleWare;
 }
 
 export interface ImageController {
@@ -27,8 +29,6 @@ export interface ImageController {
   runContainerFromImage: MiddleWare;
 
   runContainerFromImageWithRemove: MiddleWare;
-
-  deleteImage: MiddleWare;
 
   pruneUnusedImages: MiddleWare;
 

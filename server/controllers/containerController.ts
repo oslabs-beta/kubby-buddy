@@ -99,7 +99,7 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      const output = { message: stdout.replace(/[\r\n]+/gm, "") };
+      const output = [{ message: stdout.replace(/[\r\n]+/gm, "") }];
       res.locals.stoppedContainer = output;
       // res.locals.stoppedContainer = `Stopped container: ${stdout}`;
       next();
@@ -132,7 +132,7 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      const output = { message: stdout.replace(/[\r\n]+/gm, "") };
+      const output = [{ message: stdout.replace(/[\r\n]+/gm, "") }];
       res.locals.startedContainer = output;
       next();
     } catch (error) {
@@ -166,7 +166,30 @@ const containerController: ContainerController = {
         next(errorDetails);
       }
       const dataArray = stdout.trim().split("\n");
-      res.locals.deletedContainers = [{ message: dataArray }];
+      const deletedContainersIndex = dataArray.findIndex(
+        (item) => item === "Deleted Containers:"
+      );
+      const reclaimedSpaceIndex = dataArray.findIndex((item) =>
+        item.startsWith("Total reclaimed space:")
+      );
+
+      const deletedContainers = dataArray
+        .slice(deletedContainersIndex + 1, reclaimedSpaceIndex)
+        .map((item) => item.trim())
+        .filter((item) => item !== ""); // Filter out empty strings
+
+      const reclaimedSpace = dataArray
+        .slice(reclaimedSpaceIndex)
+        .map((item) => item.trim());
+
+      const output = [
+        {
+          "Deleted Containers:": deletedContainers,
+          "Total reclaimed space:": reclaimedSpace,
+        },
+      ];
+
+      res.locals.deletedContainers = output;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -206,6 +229,35 @@ const containerController: ContainerController = {
         log: "error in containerController.getSpecificLog",
         err: error,
         message: `failed to get logs for container: ${name}`,
+      };
+      next(errorDetails);
+    }
+  },
+
+  removeSpecificContainer: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    const { name } = req.body;
+    try {
+      const { stdout, stderr } = await promisifyExec(`docker rm ${name}`);
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: "error in the containerController.removeSpecificContainer exec",
+          err: stderr,
+          message: `failed to finish delete route for ${name} in exec`,
+        };
+        next(errorDetails);
+      }
+      console.log(stdout.trim());
+      res.locals.removedContainer = [{ message: stdout.trim() }];
+      next();
+    } catch (error) {
+      const errorDetails: ErrorDetails = {
+        log: "error in containerController.removeSpecificContainer catch",
+        err: error,
+        message: `failed to finish delete route for ${name}`,
       };
       next(errorDetails);
     }

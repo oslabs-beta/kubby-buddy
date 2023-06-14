@@ -16,18 +16,22 @@ const statsStreamController: StatsStreamController = {
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the generalDockerMiddleware exec call",
+          log: "error in the statsStreamController.getAllContainerStats exec call",
           err: stderr,
-          message: "error in the generalDockerMiddleware exec call",
+          message:
+            "error in the statsStreamController.getAllContainerStats exec call",
         };
         next(errorDetails);
       }
       return res.status(200).json(stdout);
     } catch (error) {
-      next({
-        log: "error in the generalDockerMiddleware",
+      const errorDetails: ErrorDetails = {
+        log: "error in the statsStreamController.getAllContainerStats catch",
         err: error,
-      });
+        message:
+          "error in the statsStreamController.getAllContainerStats catch",
+      };
+      next(errorDetails);
     }
   },
 };
