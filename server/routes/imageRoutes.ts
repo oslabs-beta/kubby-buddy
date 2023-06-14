@@ -39,6 +39,8 @@ imageRouter.post(
   }
 );
 
+//INPUT: nothing
+//OUTPUT: array... this needs to be refactored to put out an array of objects
 //prune all unused images (ones not acively connected witha container)
 
 imageRouter.delete(
@@ -49,6 +51,8 @@ imageRouter.delete(
   }
 );
 
+//INPUT: nothing
+//OUTPUT: array... this needs to be refactored to put out an array of objects
 //prune only dangling images (ones without a tag/name)
 
 imageRouter.delete(
@@ -59,6 +63,8 @@ imageRouter.delete(
   }
 );
 
+//INPUT: nothing
+//OUTPUT: array... this needs to be refactored to put out an array of objects
 // remove image by name
 
 imageRouter.delete(

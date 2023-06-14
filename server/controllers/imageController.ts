@@ -114,7 +114,8 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      res.locals.output = stdout;
+      const dataArray = stdout.trim().split("\n");
+      res.locals.output = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -144,7 +145,8 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      res.locals.output = stdout;
+      const dataArray = stdout.trim().split("\n");
+      res.locals.output = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -174,13 +176,15 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      res.locals.output = stdout;
+      const dataArray = stdout.trim().split("\n");
+      // .map((item) => JSON.parse(item, undefined));
+      res.locals.output = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
         log: "",
         err: error,
-        message: "error in the imageController.pruneDanglingImages catch",
+        message: "error in the imageController.removeSingleImage catch",
       };
       next(errorDetails);
     }
