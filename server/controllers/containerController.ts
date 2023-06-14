@@ -185,7 +185,7 @@ const containerController: ContainerController = {
     const { name } = req.query;
     try {
       const { stdout, stderr } = await promisifyExec(
-        `docker container logs ${name}`
+        `docker container logs ${name} `
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
@@ -195,7 +195,11 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.log = stdout;
+      const dataArray = stdout
+        .trim()
+        .split("\n")
+        .map((item) => JSON.parse(item, undefined));
+      res.locals.log = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
