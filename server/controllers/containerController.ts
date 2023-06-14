@@ -165,7 +165,8 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.deletedContainers = stdout;
+      const dataArray = stdout.trim().split("\n");
+      res.locals.deletedContainers = [{ message: dataArray }];
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
