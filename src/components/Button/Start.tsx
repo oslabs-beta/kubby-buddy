@@ -8,7 +8,7 @@ export const StartButton: React.FC = () =>{
             const response = await fetch('/container/start', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({name: 'container-name'})
+                body: JSON.stringify({name: `container-name`})
             })
             const data = await response.json()
             console.log(data)

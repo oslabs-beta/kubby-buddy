@@ -1,6 +1,9 @@
 import React, { FC} from 'react'
 import './Container.scss'
 import {StartButton} from '../Button/Start'
+import {StopButton} from '../Button/Stop'
+import { DeleteButton } from '../Button/Delete'
+import { LogButton } from '../Button/Logs'
 
 export const DockerContainer: FC = () => {
 
@@ -35,9 +38,9 @@ export const DockerContainer: FC = () => {
 
             <div className="cmdbutton">
                 <StartButton />
-                <button>Stop</button>
-                <button>Delete</button>
-                <button>Logs</button>
+                <StopButton />
+                <DeleteButton />
+                <LogButton />
             </div>
             
             

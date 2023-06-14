@@ -4,10 +4,12 @@ import { UserProvider } from './UserContext'
 import './App.scss'
 import { SideNav } from './components/Sidenav/SideNav'
 import { MainNav} from './components/Mainnav/MainNav'
+
 // import logo from './assests/test.png'
 
 // sidenav on the side, and centered vertically to mainnav 
 const App: FC = () => {
+
   return (
     <UserProvider>
       <div className='mainpage'>

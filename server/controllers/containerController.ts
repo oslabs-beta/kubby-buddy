@@ -130,7 +130,7 @@ const containerController: ContainerController = {
   },
 
   //middleware to prune all stopped containers
-
+ 
   pruneStoppedContainers: async (
     _req: Request,
     res: Response,
@@ -149,6 +149,7 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
+      console.log('--->' + stdout)
       res.locals.deletedContainers = stdout;
       next();
     } catch (error) {

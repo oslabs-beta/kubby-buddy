@@ -7,8 +7,21 @@ export interface Context {
 }
 
 export interface Container {
-    name: String;
-    id: String;
-    port: Number;
+    Command: String;
+    CreatedAt: String;
+    ID: String;
     volume?: Object;
+    Image: String;
+    Labels: String[];
+    LocalVolumes: String;
+    Mounts: String;
+    Names: String;
+    Networks: String;
+    Ports: String;
+    RunningFor:String;
+    Size:String;
+    State:String;
+    Status:String;
+    
+
 }
