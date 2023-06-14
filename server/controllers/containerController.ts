@@ -14,7 +14,9 @@ const containerController: ContainerController = {
     next: NextFunction
   ) => {
     try {
-      const { stdout, stderr } = await promisifyExec("docker ps --format json");
+      const { stdout, stderr } = await promisifyExec(
+        "docker ps --format '{{json .}}'"
+      );
       if (stderr) {
         const errorDetails: ErrorDetails = {
           log: "error in the containerController.getAllRunningContainers exec",
@@ -24,7 +26,11 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.containers = stdout;
+      const dataArray = stdout
+        .trim()
+        .split("\n")
+        .map((item) => JSON.parse(item, undefined)); // Use undefined as the reviver
+      res.locals.containers = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -86,7 +92,9 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.stoppedContainer = `Stopped container: ${stdout}`;
+      console.log([{ message: stdout }]);
+      res.locals.stoppedContainer = [{ message: stdout }];
+      // res.locals.stoppedContainer = `Stopped container: ${stdout}`;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {

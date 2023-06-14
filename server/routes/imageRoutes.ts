@@ -5,6 +5,8 @@ import imageController from "../controllers/imageController";
 const imageRouter: Router = express.Router();
 
 //get route to retrieve all images
+//input: nothing
+//output: jsonified array of objects
 imageRouter.get(
   "/all-images",
   imageController.getAllImages,
@@ -12,6 +14,9 @@ imageRouter.get(
     res.status(200).json(res.locals.images);
   }
 );
+//input: object with name and image value, {"name": "mongodb", "image": "mongo"}
+//output: json array of running container
+//other tests: container actually runs
 
 //post route to run a single container from an image
 imageRouter.post(
