@@ -1,12 +1,12 @@
 import express, { Request, Response, Router } from "express";
 import imageController from "../controllers/imageController";
 
-//create router for image path
+// create router for image path
 const imageRouter: Router = express.Router();
 
-//get route to retrieve all images
-//INPUT: nothing
-//OUTPUT: array of objects
+// get route to retrieve all images
+// INPUT: nothing
+// OUTPUT: array of objects [{},{}]
 imageRouter.get(
   "/all-images",
   imageController.getAllImages,
@@ -15,10 +15,10 @@ imageRouter.get(
   }
 );
 
-//post route to run a single container from an image
-//INPUT: array of object with name and image value, [{"name": "mongodb", "image": "mongo"}]
-//OUTPUT: json array of running container
-//other tests: container actually runs... maybe you can use another route to test?
+// post route to run a single container from an image
+// INPUT: object with name and image value, {"name": "mongodb", "image": "mongo"}
+// OUTPUT: array of object containing ID of container [{"message": "cf29432706cdabfd550b37561311d8f56fe18c8de25ae0f1069d501900ecc49a"}]
+// other tests: container actually runs... maybe you can use another route to test?
 imageRouter.post(
   "/run-images",
   imageController.runContainerFromImage,
@@ -27,10 +27,10 @@ imageRouter.post(
   }
 );
 
-//post route to run a container from an image with container removal
-//INPUT: array of object with name and image value, [{"name": "mongodb", "image": "mongo"}]
-//OUTPUT: json array of running container
-//other tests: container actually runs... maybe you can use another route to test?
+// post route to run a container from an image with container removal
+// INPUT: object with name and image value, {"name": "mongodb", "image": "mongo"}
+// OUTPUT: array of object containing ID of container [{"message": "cf29432706cdabfd550b37561311d8f56fe18c8de25ae0f1069d501900ecc49a"}]
+// other tests: container actually runs... maybe you can use another route to test?
 imageRouter.post(
   "/run-images-with-remove",
   imageController.runContainerFromImageWithRemove,
@@ -39,10 +39,9 @@ imageRouter.post(
   }
 );
 
-//INPUT: nothing
-//OUTPUT: array... this needs to be refactored to put out an array of objects
-//prune all unused images (ones not acively connected witha container)
-
+// delete all unused images (ones not acively connected with a container)
+// INPUT: nothing
+// OUTPUT: Not finalized: WORK IN PROGRESS
 imageRouter.delete(
   "/prune-all-unused",
   imageController.pruneUnusedImages,
@@ -51,10 +50,9 @@ imageRouter.delete(
   }
 );
 
-//INPUT: nothing
-//OUTPUT: array... this needs to be refactored to put out an array of objects
-//prune only dangling images (ones without a tag/name)
-
+// delete only dangling images (ones without a tag/name)
+// INPUT: nothing
+// OUTPUT: Not finalized: WORK IN PROGRESS
 imageRouter.delete(
   "/prune-dangling",
   imageController.pruneDanglingImages,
@@ -63,10 +61,9 @@ imageRouter.delete(
   }
 );
 
-//INPUT: nothing
-//OUTPUT: array... this needs to be refactored to put out an array of objects
 // remove image by name
-
+// INPUT: nothing
+// OUTPUT: Not finalized: WORK IN PROGRESS
 imageRouter.delete(
   "/remove-image-by-name",
   imageController.removeSingleImage,
