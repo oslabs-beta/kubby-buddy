@@ -19,6 +19,8 @@ export interface ContainerController {
   pruneStoppedContainers: MiddleWare;
 
   getSpecificLog: MiddleWare;
+
+  removeSpecificContainer: MiddleWare;
 }
 
 export interface ImageController {

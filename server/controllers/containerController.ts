@@ -233,6 +233,35 @@ const containerController: ContainerController = {
       next(errorDetails);
     }
   },
+
+  removeSpecificContainer: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    const { name } = req.body;
+    try {
+      const { stdout, stderr } = await promisifyExec(`docker rm ${name}`);
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: "error in the containerController.removeSpecificContainer exec",
+          err: stderr,
+          message: `failed to finish delete route for ${name} in exec`,
+        };
+        next(errorDetails);
+      }
+      console.log(stdout.trim());
+      res.locals.removedContainer = [{ message: stdout.trim() }];
+      next();
+    } catch (error) {
+      const errorDetails: ErrorDetails = {
+        log: "error in containerController.removeSpecificContainer catch",
+        err: error,
+        message: `failed to finish delete route for ${name}`,
+      };
+      next(errorDetails);
+    }
+  },
 };
 
 export default containerController;

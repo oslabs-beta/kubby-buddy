@@ -63,6 +63,18 @@ containerRouter.get(
   }
 );
 
+//INPUT: body with key of name and property of stopped container's name
+//OUTPUT: array of an object with key name message and value of deleted container's name
+//other tests: when you run docker ps -a, the container should be gone
+
+//removes stopped container by name
+containerRouter.delete(
+  "/remove-specific-container",
+  containerController.removeSpecificContainer,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.removedContainer);
+  }
+);
 containerRouter.use("/", (_req: Request, res: Response) => {
   res.send("containerRouter test");
 });
