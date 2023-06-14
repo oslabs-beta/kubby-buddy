@@ -3,5 +3,9 @@ div.side-nav{
     border-radius: .25rem;
     grid-area: 2 / 1 / 5 / 2;
     margin: 2em 0 0 2em;
+    padding-top: 1em;
     background-color: hsl(0, 0%, 85%);
+    display: flex;
+    flex-direction: column;
+    color: #392e22
 }

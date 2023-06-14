@@ -21,7 +21,9 @@ const CommandButton : FC<CommandButtonProps> = ({name,cmdRoute, fetchMethod}) =>
         }
     }
 return (
-    <button className='commandButton' onClick={command}>{name}</button>
+    <button className='commandButton' onClick={command}>{name}
+    <div className="prunetooltip">docker container prune --force</div>
+    </button>
 )
 
 
@@ -31,8 +33,9 @@ return (
 export const GlobalCommands : FC = () => {
 
     return(
-        <div>
-            <CommandButton name='Prune' cmdRoute={new URL('/container/prune-stopped-containers')} fetchMethod='delete'/>
+        <div className='GlobalCommands-container'>
+            <CommandButton name='Prune' cmdRoute={new URL('/container/prune-stopped-containers', window.location.href)} fetchMethod='delete'/>
+
         </div>
     )
  }
