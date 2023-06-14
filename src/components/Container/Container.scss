@@ -31,10 +31,13 @@ grid-row-gap: 0px;
     
 }
 .cmdbutton { 
-    grid-area: 4 / 1 / 2 / 7;
+    grid-area: 4 / 1 / 2 / 8;
+    padding-right: 1em;
+    padding-left: 0em;
     display:flex;
-    justify-content: space-between;
-    gap: .5em;
+    justify-content: center;
+    gap: calc(1em + 5%);
+    
     
     button{
         
