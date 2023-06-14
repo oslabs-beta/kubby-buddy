@@ -85,34 +85,7 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      res.locals.ranContainerWithRemove = `Running Container ID: ${stdout}`;
-      next();
-    } catch (error) {
-      next({
-        log: "error in the imageController.runContainerFromImage middleware",
-        err: error,
-      });
-    }
-  },
-
-  // run container with remove when it stops
-  deleteImage: async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    const { image } = req.body;
-    try {
-      const { stdout, stderr } = await promisifyExec(`docker rmi ${image}`);
-      if (stderr) {
-        const errorDetails: ErrorDetails = {
-          log: "error in the imageController.runContainerFromImage exec",
-          err: stderr,
-          message: `Failed to delete image: ${image}`,
-        };
-        next(errorDetails);
-      }
-      res.locals.imagesDeleted = `Removed Image: ${stdout}`;
+      res.locals.ranContainerWithRemove = [{ message: stdout.trim() }];
       next();
     } catch (error) {
       next({
