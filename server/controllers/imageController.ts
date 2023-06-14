@@ -175,9 +175,9 @@ const imageController: ImageController = {
       const { stdout, stderr } = await promisifyExec(`docker image rm ${name}`);
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the imageController.removeSingleImage exec",
+          log: `error in the imageController.removeSingleImage exec for ${name}`,
           err: stderr,
-          message: "error in the imageController.removeSingleImage exec",
+          message: `error in the imageController.removeSingleImage exec for ${name}`,
         };
         next(errorDetails);
       }
@@ -187,9 +187,9 @@ const imageController: ImageController = {
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "",
+        log: `error in the imageController.removeSingleImage in the catch for ${name}`,
         err: error,
-        message: "error in the imageController.removeSingleImage catch",
+        message: `error in the imageController.removeSingleImage catch for ${name}`,
       };
       next(errorDetails);
     }
