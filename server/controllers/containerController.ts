@@ -166,7 +166,30 @@ const containerController: ContainerController = {
         next(errorDetails);
       }
       const dataArray = stdout.trim().split("\n");
-      res.locals.deletedContainers = [{ message: dataArray }];
+      const deletedContainersIndex = dataArray.findIndex(
+        (item) => item === "Deleted Containers:"
+      );
+      const reclaimedSpaceIndex = dataArray.findIndex((item) =>
+        item.startsWith("Total reclaimed space:")
+      );
+
+      const deletedContainers = dataArray
+        .slice(deletedContainersIndex + 1, reclaimedSpaceIndex)
+        .map((item) => item.trim())
+        .filter((item) => item !== ""); // Filter out empty strings
+
+      const reclaimedSpace = dataArray
+        .slice(reclaimedSpaceIndex)
+        .map((item) => item.trim());
+
+      const output = [
+        {
+          "Deleted Containers:": deletedContainers,
+          "Total reclaimed space:": reclaimedSpace,
+        },
+      ];
+
+      res.locals.deletedContainers = output;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
