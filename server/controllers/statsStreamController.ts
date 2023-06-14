@@ -11,19 +11,40 @@ const statsStreamController: StatsStreamController = {
     next: NextFunction
   ) => {
     try {
-      const { stdout, stderr } = await promisifyExec(
-        "docker stats --no-stream --format json"
-      );
-      if (stderr) {
-        const errorDetails: ErrorDetails = {
-          log: "error in the statsStreamController.getAllContainerStats exec call",
-          err: stderr,
-          message:
-            "error in the statsStreamController.getAllContainerStats exec call",
-        };
-        next(errorDetails);
-      }
-      return res.status(200).json(stdout);
+      res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
+      res.setHeader("Cache-Control", "no-cache");
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Connection", "keep-alive");
+
+      const interval = setInterval(async () => {
+        try {
+          const { stdout, stderr } = await promisifyExec(
+            "docker stats --no-stream --format json"
+          );
+          if (stderr) {
+            const errorDetails: ErrorDetails = {
+              log: "error in the statsStreamController.getAllContainerStats exec call",
+              err: stderr,
+              message:
+                "error in the statsStreamController.getAllContainerStats exec call",
+            };
+            next(errorDetails);
+          }
+          res.status(200);
+          const newData: string = JSON.stringify(stdout.trim().split("\n"));
+          console.log(newData);
+          res.write("data: " + newData + "\n\n");
+          // return res.status(200).json(stdout);
+        } catch (err) {
+          next(err);
+        }
+      }, 500);
+
+      res.on("close", () => {
+        console.log("Client dropped");
+        clearInterval(interval);
+        res.end();
+      });
     } catch (error) {
       const errorDetails: ErrorDetails = {
         log: "error in the statsStreamController.getAllContainerStats catch",
