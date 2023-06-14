@@ -5,8 +5,8 @@ import imageController from "../controllers/imageController";
 const imageRouter: Router = express.Router();
 
 //get route to retrieve all images
-//input: nothing
-//output: jsonified array of objects
+//INPUT: nothing
+//OUTPUT: array of objects
 imageRouter.get(
   "/all-images",
   imageController.getAllImages,
@@ -14,11 +14,11 @@ imageRouter.get(
     res.status(200).json(res.locals.images);
   }
 );
-//input: object with name and image value, {"name": "mongodb", "image": "mongo"}
-//output: json array of running container
-//other tests: container actually runs
 
 //post route to run a single container from an image
+//INPUT: array of object with name and image value, [{"name": "mongodb", "image": "mongo"}]
+//OUTPUT: json array of running container
+//other tests: container actually runs... maybe you can use another route to test?
 imageRouter.post(
   "/run-images",
   imageController.runContainerFromImage,
@@ -27,7 +27,10 @@ imageRouter.post(
   }
 );
 
-//post route to run a continer from an image with container removal
+//post route to run a container from an image with container removal
+//INPUT: array of object with name and image value, [{"name": "mongodb", "image": "mongo"}]
+//OUTPUT: json array of running container
+//other tests: container actually runs... maybe you can use another route to test?
 imageRouter.post(
   "/run-images-with-remove",
   imageController.runContainerFromImageWithRemove,
@@ -36,15 +39,8 @@ imageRouter.post(
   }
 );
 
-//delete an image
-imageRouter.delete(
-  "/delete",
-  imageController.deleteImage,
-  (_req: Request, res: Response) => {
-    res.status(200).json(res.locals.imagesDeleted);
-  }
-);
-
+//INPUT: nothing
+//OUTPUT: array... this needs to be refactored to put out an array of objects
 //prune all unused images (ones not acively connected witha container)
 
 imageRouter.delete(
@@ -55,6 +51,8 @@ imageRouter.delete(
   }
 );
 
+//INPUT: nothing
+//OUTPUT: array... this needs to be refactored to put out an array of objects
 //prune only dangling images (ones without a tag/name)
 
 imageRouter.delete(
@@ -65,6 +63,8 @@ imageRouter.delete(
   }
 );
 
+//INPUT: nothing
+//OUTPUT: array... this needs to be refactored to put out an array of objects
 // remove image by name
 
 imageRouter.delete(

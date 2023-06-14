@@ -54,7 +54,7 @@ containerRouter.delete(
 );
 
 //get logs for a specific container
-//OUTPUT: arrayu of objects
+//OUTPUT: array of objects
 containerRouter.get(
   "/log",
   containerController.getSpecificLog,
