@@ -14,7 +14,9 @@ const containerController: ContainerController = {
     next: NextFunction
   ) => {
     try {
-      const { stdout, stderr } = await promisifyExec("docker ps --format json");
+      const { stdout, stderr } = await promisifyExec(
+        "docker ps --format '{{json .}}'"
+      );
       if (stderr) {
         const errorDetails: ErrorDetails = {
           log: "error in the containerController.getAllRunningContainers exec",
@@ -24,7 +26,11 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.containers = stdout;
+      const dataArray = stdout
+        .trim()
+        .split("\n")
+        .map((item) => JSON.parse(item, undefined)); // Use undefined as the reviver
+      res.locals.containers = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -55,7 +61,14 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.containersNames = stdout;
+      const parsedOutput = stdout
+        .trim()
+        .split("\n")
+        .map((item) => {
+          const name = JSON.parse(item, undefined);
+          return { name };
+        }); // Use undefined as the reviver
+      res.locals.containersNames = parsedOutput;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -86,7 +99,9 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.stoppedContainer = `Stopped container: ${stdout}`;
+      const output = { message: stdout.replace(/[\r\n]+/gm, "") };
+      res.locals.stoppedContainer = output;
+      // res.locals.stoppedContainer = `Stopped container: ${stdout}`;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -117,7 +132,8 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.startedContainer = `Started container: ${stdout}`;
+      const output = { message: stdout.replace(/[\r\n]+/gm, "") };
+      res.locals.startedContainer = output;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -149,7 +165,8 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.deletedContainers = stdout;
+      const dataArray = stdout.trim().split("\n");
+      res.locals.deletedContainers = [{ message: dataArray }];
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
@@ -168,7 +185,7 @@ const containerController: ContainerController = {
     const { name } = req.query;
     try {
       const { stdout, stderr } = await promisifyExec(
-        `docker container logs ${name}`
+        `docker container logs ${name} `
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
@@ -178,7 +195,11 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      res.locals.log = stdout;
+      const dataArray = stdout
+        .trim()
+        .split("\n")
+        .map((item) => JSON.parse(item, undefined));
+      res.locals.log = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {

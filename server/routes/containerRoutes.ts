@@ -4,7 +4,7 @@ import containerController from "../controllers/containerController";
 const containerRouter = express.Router();
 
 //get info about all active ontainers
-
+//OUTPUT: array of objects
 containerRouter.get(
   "/all-active-containers",
   containerController.getAllRunningContainers,
@@ -14,6 +14,7 @@ containerRouter.get(
 );
 
 //get active container names
+//OUTPUT: array of objects
 containerRouter.get(
   "/all-active-containers-names",
   containerController.getAllRunningContainersNames,
@@ -23,7 +24,7 @@ containerRouter.get(
 );
 
 //stop a specific container
-
+//OUTPUT: array of object
 containerRouter.post(
   "/stop",
   containerController.stopASpecificContainer,
@@ -33,7 +34,7 @@ containerRouter.post(
 );
 
 //start a specific container
-
+//OUTPUT: array of object
 containerRouter.post(
   "/start",
   containerController.startASpecificContainer,
@@ -43,7 +44,7 @@ containerRouter.post(
 );
 
 //prune all stopped containers
-
+//OUTPUT: array of object.... it's not good
 containerRouter.delete(
   "/prune-stopped-containers",
   containerController.pruneStoppedContainers,
@@ -53,7 +54,7 @@ containerRouter.delete(
 );
 
 //get logs for a specific container
-
+//OUTPUT: arrayu of objects
 containerRouter.get(
   "/log",
   containerController.getSpecificLog,
