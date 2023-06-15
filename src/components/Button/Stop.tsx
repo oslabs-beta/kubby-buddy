@@ -1,5 +1,5 @@
-import React from "react";
-import stop from "../../assets/stop.png";
+import React from 'react';
+import stop from '../../assets/stop.png';
 
 // import { CommandButtonProps } from "../../types";
 
@@ -26,9 +26,9 @@ export const StopButton: React.FC = () => {
   //helper
   const handleStop = async () => {
     try {
-      const response = await fetch("/container/log", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/container/log', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: `container-name` }),
       });
       const data = await response.json();

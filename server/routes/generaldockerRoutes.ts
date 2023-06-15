@@ -6,7 +6,7 @@ const generalDockerRouter = express.Router();
 generalDockerRouter.get('/stats', statsStreamController.getAllContainerStats);
 
 generalDockerRouter.use('/', (_req: Request, res: Response) => {
-	res.send('generalDockerRouter test');
+  res.send('generalDockerRouter test');
 });
 
 export default generalDockerRouter;

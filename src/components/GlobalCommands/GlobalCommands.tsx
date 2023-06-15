@@ -1,6 +1,6 @@
-import React, { FC } from "react";
-import "./GlobalCommands.scss";
-import { CommandButtonProps } from "../../types";
+import React, { FC } from 'react';
+import './GlobalCommands.scss';
+import { CommandButtonProps } from '../../types';
 
 const CommandButton: FC<CommandButtonProps> = ({
   name,
@@ -33,7 +33,7 @@ export const GlobalCommands: FC = () => {
       <CommandButton
         name="Prune"
         cmdRoute={
-          new URL("/container/prune-stopped-containers", window.location.href)
+          new URL('/container/prune-stopped-containers', window.location.href)
         }
         fetchMethod="delete"
       />

@@ -1,8 +1,8 @@
 // display running containers as a list
 // onclick take user to scroll position in main view
-import React, { FC, useContext } from "react";
-import { UserContext } from "../../UserContext";
-import "./Quickview.scss";
+import React, { FC, useContext } from 'react';
+import { UserContext } from '../../UserContext';
+import './Quickview.scss';
 
 //will use ref and onclick in final version
 const GoTo: FC = () => {
