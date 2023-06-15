@@ -39,6 +39,17 @@ imageRouter.post(
   }
 );
 
+// post route to run a container from an image that creates named volume
+// INPUT: object with name, image, volumeName, fileDirectory, {"name": "mongodb", "image": "mongo", "volumeName": "vol1", "fileDirectory": "/App"}
+// OUTPUT: array of object that has message with value of running container, [{"message": "fbc113b8031af3560c77f023ea7fce22a8f7ff3c5c958b3b9c158956fb8e85ed"}]
+imageRouter.post(
+  "/run-images-with-named-volume",
+  imageController.runContainerFromImageWithNamedVolume,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.ranContainerFromImageWithNamedVolume);
+  }
+);
+
 // delete all unused images (ones not acively connected with a container)
 // INPUT: nothing
 // OUTPUT: Not finalized: WORK IN PROGRESS
@@ -71,6 +82,7 @@ imageRouter.delete(
     res.status(200).json(res.locals.output);
   }
 );
+
 //test route
 imageRouter.use("/", (_req: Request, res: Response) => {
   res.send("imageRouter Test");

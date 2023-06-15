@@ -30,6 +30,8 @@ export interface ImageController {
 
   runContainerFromImageWithRemove: MiddleWare;
 
+  runContainerFromImageWithNamedVolume: MiddleWare;
+
   pruneUnusedImages: MiddleWare;
 
   pruneDanglingImages: MiddleWare;
