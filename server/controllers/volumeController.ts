@@ -1,25 +1,36 @@
 import { Request, Response, NextFunction } from "express";
 import { exec } from "node:child_process";
-import { VolumeController } from "../../types";
+import { VolumeController, ErrorDetails } from "../../types";
+import { promisify } from "node:util";
+const promisifyExec = promisify(exec);
 
 const volumeController: VolumeController = {
   getAllVolumes: async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      await exec("docker volume ls --format json", (error, stdout, _stderr) => {
-        if (error) {
-          next({
-            log: "error in the volumeController.getAllVolumes exec call",
-            message: error,
-          });
-        }
-        res.locals.volumes = stdout;
-        next();
-      });
+      const { stdout, stderr } = await promisifyExec(
+        "docker volume ls --format json"
+      );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: "error in the volumeController.getAllVolumes exec call",
+          err: stderr,
+          message: "error in the volumeController.getAllVolumes exec call",
+        };
+        next(errorDetails);
+      }
+      const dataArray = stdout
+        .trim()
+        .split("\n")
+        .map((item) => JSON.parse(item, undefined));
+      res.locals.volumes = dataArray;
+      next();
     } catch (error) {
-      next({
-        log: "error in the volumeController.getAllVolumes middleware",
-        message: error,
-      });
+      const errorDetails: ErrorDetails = {
+        log: "error in the volumeController.getAllVolumes catch",
+        err: error,
+        message: "error in the volumeController.getAllVolumes catch",
+      };
+      next(errorDetails);
     }
   },
 
@@ -30,25 +41,33 @@ const volumeController: VolumeController = {
     next: NextFunction
   ) => {
     try {
-      await exec(
-        // `docker volume ls --format '{ "name": "{{ .Name }}"}'`,
-        `docker volume ls --format='{{json .Name}}'`,
-        (error, stdout, _stderr) => {
-          if (error) {
-            next({
-              log: "error in the volumeController.getAllVolumes exec call",
-              message: error,
-            });
-          }
-          res.locals.volumesNames = stdout;
-          next();
-        }
+      const { stdout, stderr } = await promisifyExec(
+        `docker volume ls --format='{{json .Name}}'`
       );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: "error in the volumeController.getAllVolumes exec call",
+          err: stderr,
+          message: "error in the volumeController.getAllVolumes exec call",
+        };
+        next(errorDetails);
+      }
+      const parsedOutput = stdout
+        .trim()
+        .split("\n")
+        .map((item) => {
+          const name = JSON.parse(item, undefined);
+          return { name };
+        });
+      res.locals.volumesNames = parsedOutput;
+      next();
     } catch (error) {
-      next({
-        log: "error in the volumeController.getAllVolumes middleware",
-        message: error,
-      });
+      const errorDetails: ErrorDetails = {
+        log: "error in the volumeController.getAllVolumesNames catch",
+        err: error,
+        message: "error in the volumeController.getAllVolumesNames catch",
+      };
+      next(errorDetails);
     }
   },
 
@@ -59,22 +78,49 @@ const volumeController: VolumeController = {
     next: NextFunction
   ) => {
     try {
-      await exec("docker volume prune -a --force", (error, stdout, _stderr) => {
-        if (error) {
-          next({
-            log: "error in the volumeController.deleteAll Volumes exec call",
-            message: error,
-          });
-        }
-        console.log(stdout.trim());
-        res.locals.deletedVolumes = stdout.trim();
-        next();
-      });
+      const { stdout, stderr } = await promisifyExec(
+        "docker volume prune -a --force"
+      );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: "error in the volumeController.deleteAll Volumes exec call",
+          err: stderr,
+          message: "error in the volumeController.deleteAll Volumes exec call",
+        };
+        next(errorDetails);
+      }
+      const dataArray = stdout.trim().split("\n");
+      const deletedVolumesIndex = dataArray.findIndex(
+        (item) => item === "Deleted Volumes:"
+      );
+      const reclaimedSpaceIndex = dataArray.findIndex((item) =>
+        item.startsWith("Total reclaimed space:")
+      );
+
+      const deletedVolumes = dataArray
+        .slice(deletedVolumesIndex + 1, reclaimedSpaceIndex)
+        .map((item) => item.trim())
+        .filter((item) => item !== ""); // Filter out empty strings
+
+      const reclaimedSpace = dataArray
+        .slice(reclaimedSpaceIndex)
+        .map((item) => item.trim());
+
+      const output = [
+        {
+          "Deleted Volumes:": deletedVolumes,
+          "Total reclaimed space:": reclaimedSpace,
+        },
+      ];
+      res.locals.deletedVolumes = output;
+      next();
     } catch (error) {
-      next({
-        log: "error in the volumeController.deleteAllVolumes middleware",
-        message: error,
-      });
+      const errorDetails: ErrorDetails = {
+        log: "error in the volumeController.deleteAllVolumes catch",
+        err: error,
+        message: "error in the volumeController.deleteAllVolumes catch",
+      };
+      next(errorDetails);
     }
   },
 
@@ -83,23 +129,52 @@ const volumeController: VolumeController = {
     res: Response,
     next: NextFunction
   ) => {
-    console.log("delete");
     try {
-      await exec("docker volume prune --force", (error, stdout, _stderr) => {
-        if (error) {
-          next({
-            log: "volumeController",
-            err: error,
-          });
-        }
-        res.locals.deletedAnonymous = stdout.trim();
-        next();
-      });
+      const { stdout, stderr } = await promisifyExec(
+        "docker volume prune --force"
+      );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: "error in the volumeController.deleteAllAnonymousVolumes",
+          err: stderr,
+          message: "error in the volumeController.deleteAllAnonymousVolumes",
+        };
+        next(errorDetails);
+      }
+
+      const dataArray = stdout.trim().split("\n");
+      const deletedVolumesIndex = dataArray.findIndex(
+        (item) => item === "Deleted Volumes:"
+      );
+      const reclaimedSpaceIndex = dataArray.findIndex((item) =>
+        item.startsWith("Total reclaimed space:")
+      );
+
+      const deletedVolumes = dataArray
+        .slice(deletedVolumesIndex + 1, reclaimedSpaceIndex)
+        .map((item) => item.trim())
+        .filter((item) => item !== ""); // Filter out empty strings
+
+      const reclaimedSpace = dataArray
+        .slice(reclaimedSpaceIndex)
+        .map((item) => item.trim());
+
+      const output = [
+        {
+          "Deleted Volumes:": deletedVolumes,
+          "Total reclaimed space:": reclaimedSpace,
+        },
+      ];
+      res.locals.deletedAnonymous = output;
+      next();
     } catch (error) {
-      next({
-        log: "error in the volumeController.deleteAllAnonymousVolumes",
-        message: error,
-      });
+      const errorDetails: ErrorDetails = {
+        log: "error in the volumeController.deleteAllAnonymousVolumes catch",
+        err: error,
+        message:
+          "error in the volumeController.deleteAllAnonymousVolumes catch",
+      };
+      next(errorDetails);
     }
   },
 };
