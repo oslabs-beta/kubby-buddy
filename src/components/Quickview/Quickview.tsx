@@ -17,9 +17,9 @@ export const Quickview: FC = () => {
     <div className="quickview-container">
       <h3 className="quickview-header">Running</h3>
       <ul className="quickview-list">
-        {runningContainers.map((container) => {
+        {runningContainers.map((container, index) => {
           return (
-            <li className="quickview-item">
+            <li key={index} className="quickview-item">
               {container.Names}
               <GoTo />
             </li>
