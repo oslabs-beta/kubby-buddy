@@ -26,6 +26,7 @@ const statsStreamController: StatsStreamController = {
           const newData: string = JSON.stringify(stdout.trim().split("\n"));
           console.log(newData);
           res.write("data: " + newData + "\n\n");
+          res.end();
           // return res.status(200).json(stdout);
         } catch (err) {
           next(err);

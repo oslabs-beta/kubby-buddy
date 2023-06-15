@@ -5,9 +5,11 @@ const Stream: FC = () => {
   console.log("hi");
   //Will start the stream and get averaged data, setting it to containersArray
   useEffect(() => {
+    console.log("in use effect");
     const sse = new EventSource("http://localhost:8080/general/stats");
+    console.log(sse);
     sse.onmessage = (event: MessageEvent) => {
-      console.log(event);
+      console.log("in onmessage");
       const data = JSON.parse(event?.data);
       setLogs(data);
     };
