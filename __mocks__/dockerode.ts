@@ -1,4 +1,4 @@
-import td from "testdouble";
+import td from 'testdouble';
 const mockContainer = {
   exec: td.function(),
   start: td.function(),
@@ -13,4 +13,4 @@ td.when(mockDocker.createContainer(td.matchers.anything())).thenReturn(
   mockContainer
 );
 
-module.exports = mockDocker;
+export default mockDocker;
