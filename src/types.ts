@@ -1,9 +1,16 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, SetStateAction } from "react";
 
 export interface Context {
     children?: ReactNode;
     runningContainers: Container[];
-    setRunningContainers: React.Dispatch<React.SetStateAction<Container[]>>
+    setRunningContainers: React.Dispatch<React.SetStateAction<Container[]>>;
+    availableImages: Image[];
+    setAvailableImages: React.Dispatch<React.SetStateAction<Image[]>>;
+    showDockerContainers: Boolean;
+    setShowDockerContainers: React.Dispatch<SetStateAction<boolean>>;
+    showImages: Boolean;
+    setShowImages: React.Dispatch<SetStateAction<boolean>>;
+
 }
 
 export interface Container {
@@ -22,8 +29,20 @@ export interface Container {
     Size:String;
     State:String;
     Status:String;
+}
 
-
+export interface Image {
+    Conatiners: String,
+    CreatedAt: String,
+    CreatedSince: String,
+    Digest: String,
+    ID: String,
+    Repository: String,
+    SharedSize: String,
+    Size: String,
+    Tag: String,
+    UniqueSize: String,
+    VirtualSize: String,
 }
 
 export interface CommandButtonProps {

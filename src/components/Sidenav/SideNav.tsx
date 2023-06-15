@@ -11,9 +11,11 @@ import { UserContext } from '../../UserContext';
 // import photo from '../../assests/logo.png'
 //container/all-active-containers
 
+
+//SwitchViewToggle will sit above Sidenav
 export const SideNav : FC = () => {
     // const testimage = require('../../assests/test.png')
-    const {setRunningContainers} = useContext(UserContext)
+    const {setRunningContainers, setAvailableImages} = useContext(UserContext)
 
 
     useEffect(() => { 
@@ -28,7 +30,19 @@ export const SideNav : FC = () => {
                 console.log(error)
             }
         }
+        async function getAvailableImages(){
+            try{
+                const getURL = 'image/all-images'
+                const fetchResponse = await fetch(getURL)
+                const data = await fetchResponse.json();
+    
+                setAvailableImages(data)
+            } catch (error){
+                console.log(error)
+            }
+        }
         getRunningContainers()
+        getAvailableImages()
      },[])
 
 

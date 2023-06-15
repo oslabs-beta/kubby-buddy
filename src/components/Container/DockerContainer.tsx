@@ -8,7 +8,7 @@ import { Graph } from '../Graph/Graph'
 
 
 
-export const DockerContainer: FC = () => {
+export const DockerContainers: FC = () => {
 
     interface TestContainer {
         name: string;
