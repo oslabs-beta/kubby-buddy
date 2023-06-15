@@ -100,8 +100,75 @@ const imageController: ImageController = {
     }
   },
 
-  // prune unused images (ones not actively connected with a container)
+  // run container with named volume
+  runContainerFromImageWithNamedVolume: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    const { name, image, volumeName, fileDirectory } = req.body;
+    try {
+      const { stdout, stderr } = await promisifyExec(
+        `docker run -d --name ${name} -v ${volumeName}:${fileDirectory} ${image}`
+      );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: 'error in the imageController.runContainerFromImageWithNamedVolume exec',
+          err: stderr,
+          message:
+            'error in the imageController.runContainerFromImageWithNamedVolume exec',
+        };
+        next(errorDetails);
+      }
+      res.locals.ranContainerFromImageWithNamedVolume = [
+        { message: stdout.trim() },
+      ];
+      next();
+    } catch (error) {
+      const errorDetails: ErrorDetails = {
+        log: 'error in imageController.unContainerFromImageWithNamedVolume catch',
+        err: error,
+        message: `error in exec of imageController.unContainerFromImageWithNamedVolume catch`,
+      };
+      next(errorDetails);
+    }
+  },
 
+  // run container with named volume and remove
+  runContainerFromImageWithNamedVolumeAndRemove: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    const { name, image, volumeName, fileDirectory } = req.body;
+    try {
+      const { stdout, stderr } = await promisifyExec(
+        `docker run -d --rm --name ${name} -v ${volumeName}:${fileDirectory} ${image}`
+      );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: 'error in the imageController.runContainerFromImageWithNamedVolumeAndRemove exec',
+          err: stderr,
+          message:
+            'error in the imageController.runContainerFromImageWithNamedVolumeAndRemove exec',
+        };
+        next(errorDetails);
+      }
+      res.locals.ranContainerFromImageWithNamedVolumeAndRemove = [
+        { message: stdout.trim() },
+      ];
+      next();
+    } catch (error) {
+      const errorDetails: ErrorDetails = {
+        log: 'error in imageController.runContainerFromImageWithNamedVolumeAndRemove catch',
+        err: error,
+        message: `error in exec of imageController.runContainerFromImageWithNamedVolumeAndRemove catch`,
+      };
+      next(errorDetails);
+    }
+  },
+
+  // prune unused images (ones not actively connected with a container)
   pruneUnusedImages: async (
     _req: Request,
     res: Response,
