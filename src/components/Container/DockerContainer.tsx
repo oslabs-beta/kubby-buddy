@@ -1,10 +1,10 @@
-import React, { FC } from "react";
-import "./Container.scss";
-import { StartButton } from "../Button/Start";
-import { StopButton } from "../Button/Stop";
-import { DeleteButton } from "../Button/Delete";
-import { LogButton } from "../Button/Logs";
-import { Graph } from "../Graph/Graph";
+import React, { FC } from 'react';
+import './Container.scss';
+import { StartButton } from '../Button/Start';
+import { StopButton } from '../Button/Stop';
+import { DeleteButton } from '../Button/Delete';
+import { LogButton } from '../Button/Logs';
+import { Graph } from '../Graph/Graph';
 
 export const DockerContainers: FC = () => {
   interface TestContainer {
@@ -16,16 +16,16 @@ export const DockerContainers: FC = () => {
   //testJSONobject
   const testArray: TestContainer[] = [
     {
-      name: "container1THISISAREALLYREALLYLONGNAME",
+      name: 'container1THISISAREALLYREALLYLONGNAME',
       id: 12345,
-      image: "Alpine1",
+      image: 'Alpine1',
     },
-    { name: "container2", id: 12345, image: "Alpine2" },
-    { name: "container3", id: 12345, image: "Alpine3" },
-    { name: "container4", id: 12345, image: "Alpine4" },
-    { name: "container4", id: 12345, image: "Alpine4" },
-    { name: "container4", id: 12345, image: "Alpine4" },
-    { name: "container4", id: 12345, image: "Alpine4" },
+    { name: 'container2', id: 12345, image: 'Alpine2' },
+    { name: 'container3', id: 12345, image: 'Alpine3' },
+    { name: 'container4', id: 12345, image: 'Alpine4' },
+    { name: 'container4', id: 12345, image: 'Alpine4' },
+    { name: 'container4', id: 12345, image: 'Alpine4' },
+    { name: 'container4', id: 12345, image: 'Alpine4' },
   ];
 
   //pass down necessary props to buttons for their relevant fetch requests

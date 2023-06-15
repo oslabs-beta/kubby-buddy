@@ -1,49 +1,49 @@
-const path = require("path");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: "./src/index.tsx",
+  entry: './src/index.tsx',
   devServer: {
     proxy: {
-      "/image/**": "http://localhost:3000",
-      "/general/**": "http://localhost:3000",
-      "/container/**": "http://localhost:3000",
-      "/volume/**": "http://localhost:3000",
+      '/image/**': 'http://localhost:3000',
+      '/general/**': 'http://localhost:3000',
+      '/container/**': 'http://localhost:3000',
+      '/volume/**': 'http://localhost:3000',
     },
     historyApiFallback: true,
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js", //filler
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js', //filler
   },
   plugins: [
     new HTMLWebpackPlugin({
-      template: "./src/index.html",
+      template: './src/index.html',
     }),
   ],
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.s[ac]ss$/i,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
               limit: 8192, // Convert images < 8kb to base64 strings
-              name: "images/[name].[hash].[ext]", // Output path and filename template
+              name: 'images/[name].[hash].[ext]', // Output path and filename template
             },
           },
         ],
@@ -61,6 +61,6 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: ['.tsx', '.ts', '.js'],
   },
 };

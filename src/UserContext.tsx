@@ -1,5 +1,5 @@
-import React, { createContext, useState, ReactNode } from "react";
-import { Context, Container, Image } from "./types";
+import React, { createContext, useState, ReactNode } from 'react';
+import { Context, Container, Image } from './types';
 
 export const UserContext = createContext<Context>({
   runningContainers: [],
