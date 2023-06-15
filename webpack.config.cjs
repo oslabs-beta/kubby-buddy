@@ -36,6 +36,18 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              limit: 8192, // Convert images < 8kb to base64 strings
+              name: 'images/[name].[hash].[ext]', // Output path and filename template
+            },
+          },
+        ],
+      },
       // {
       //   test: /\.tsx?/, //applys rules to js or jsx
       //   exclude: /node_modules/,
