@@ -99,7 +99,7 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      const output = { message: stdout.replace(/[\r\n]+/gm, "") };
+      const output = [{ message: stdout.replace(/[\r\n]+/gm, "") }];
       res.locals.stoppedContainer = output;
       // res.locals.stoppedContainer = `Stopped container: ${stdout}`;
       next();
@@ -132,7 +132,7 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      const output = { message: stdout.replace(/[\r\n]+/gm, "") };
+      const output = [{ message: stdout.replace(/[\r\n]+/gm, "") }];
       res.locals.startedContainer = output;
       next();
     } catch (error) {
