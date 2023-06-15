@@ -3,21 +3,21 @@
 
 //start or stop
 function dockerStartOrStop(command: string, id?: number): string {
-	if (id !== undefined) {
-		return `docker ${command} ${id}`;
-	} else {
-		return `docker ${command}`;
-	}
+  if (id !== undefined) {
+    return `docker ${command} ${id}`;
+  } else {
+    return `docker ${command}`;
+  }
 }
 
 //show all container or images, actieve & inactive
 
 function showAll(input: string): string {
-	if (input === 'images') {
-		return `docker images}`;
-	} else {
-		return `docker ps -a`;
-	}
+  if (input === 'images') {
+    return `docker images}`;
+  } else {
+    return `docker ps -a`;
+  }
 }
 
 //

@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from "express";
-import { exec } from "node:child_process";
-import { ContainerController } from "../../types";
-import { promisify } from "util";
-import { ErrorDetails } from "../../types";
+import { Request, Response, NextFunction } from 'express';
+import { exec } from 'node:child_process';
+import { ContainerController } from '../../types';
+import { promisify } from 'util';
+import { ErrorDetails } from '../../types';
 const promisifyExec = promisify(exec);
 
 const containerController: ContainerController = {
@@ -19,24 +19,24 @@ const containerController: ContainerController = {
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the containerController.getAllRunningContainers exec",
+          log: 'error in the containerController.getAllRunningContainers exec',
           err: stderr,
           message:
-            "error in the containerController.getAllRunningContainers exec",
+            'error in the containerController.getAllRunningContainers exec',
         };
         next(errorDetails);
       }
       const dataArray = stdout
         .trim()
-        .split("\n")
+        .split('\n')
         .map((item) => JSON.parse(item, undefined)); // Use undefined as the reviver
       res.locals.containers = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in containerController.getAllRunningContainers",
+        log: 'error in containerController.getAllRunningContainers',
         err: error,
-        message: "failed to get all running containers",
+        message: 'failed to get all running containers',
       };
       next(errorDetails);
     }
@@ -54,16 +54,16 @@ const containerController: ContainerController = {
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the containerController.getAllRunningContainersNames exec",
+          log: 'error in the containerController.getAllRunningContainersNames exec',
           err: stderr,
           message:
-            "error in the containerController.getAllRunningContainersNames exec",
+            'error in the containerController.getAllRunningContainersNames exec',
         };
         next(errorDetails);
       }
       const parsedOutput = stdout
         .trim()
-        .split("\n")
+        .split('\n')
         .map((item) => {
           const name = JSON.parse(item, undefined);
           return { name };
@@ -72,9 +72,9 @@ const containerController: ContainerController = {
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in containerController.getAllRunningContainersNames",
+        log: 'error in containerController.getAllRunningContainersNames',
         err: error,
-        message: "failed to get all running container names",
+        message: 'failed to get all running container names',
       };
       next(errorDetails);
     }
@@ -92,20 +92,20 @@ const containerController: ContainerController = {
       const { stdout, stderr } = await promisifyExec(`docker stop ${name}`);
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the containerController.stopASpecificContainer exec",
+          log: 'error in the containerController.stopASpecificContainer exec',
           err: stderr,
           message:
-            "error in the containerController.stopASpecificContainer exec",
+            'error in the containerController.stopASpecificContainer exec',
         };
         next(errorDetails);
       }
-      const output = [{ message: stdout.replace(/[\r\n]+/gm, "") }];
+      const output = [{ message: stdout.replace(/[\r\n]+/gm, '') }];
       res.locals.stoppedContainer = output;
       // res.locals.stoppedContainer = `Stopped container: ${stdout}`;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in containerController.stopASpecificContainer",
+        log: 'error in containerController.stopASpecificContainer',
         err: error,
         message: `failed to stop container: ${name}`,
       };
@@ -125,19 +125,19 @@ const containerController: ContainerController = {
       const { stdout, stderr } = await promisifyExec(`docker start ${name}`);
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the containerController.startASpecificContainer exec",
+          log: 'error in the containerController.startASpecificContainer exec',
           err: stderr,
           message:
-            "error in the containerController.startASpecificContainer exec",
+            'error in the containerController.startASpecificContainer exec',
         };
         next(errorDetails);
       }
-      const output = [{ message: stdout.replace(/[\r\n]+/gm, "") }];
+      const output = [{ message: stdout.replace(/[\r\n]+/gm, '') }];
       res.locals.startedContainer = output;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in containerController.startASpecificContainer",
+        log: 'error in containerController.startASpecificContainer',
         err: error,
         message: `failed to start container: ${name}`,
       };
@@ -158,25 +158,25 @@ const containerController: ContainerController = {
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the containerController.pruneStoppedContainers exec",
+          log: 'error in the containerController.pruneStoppedContainers exec',
           err: stderr,
           message:
-            "error in the containerController.pruneStoppedContainers exec",
+            'error in the containerController.pruneStoppedContainers exec',
         };
         next(errorDetails);
       }
-      const dataArray = stdout.trim().split("\n");
+      const dataArray = stdout.trim().split('\n');
       const deletedContainersIndex = dataArray.findIndex(
-        (item) => item === "Deleted Containers:"
+        (item) => item === 'Deleted Containers:'
       );
       const reclaimedSpaceIndex = dataArray.findIndex((item) =>
-        item.startsWith("Total reclaimed space:")
+        item.startsWith('Total reclaimed space:')
       );
 
       const deletedContainers = dataArray
         .slice(deletedContainersIndex + 1, reclaimedSpaceIndex)
         .map((item) => item.trim())
-        .filter((item) => item !== ""); // Filter out empty strings
+        .filter((item) => item !== ''); // Filter out empty strings
 
       const reclaimedSpace = dataArray
         .slice(reclaimedSpaceIndex)
@@ -184,8 +184,8 @@ const containerController: ContainerController = {
 
       const output = [
         {
-          "Deleted Containers:": deletedContainers,
-          "Total reclaimed space:": reclaimedSpace,
+          'Deleted Containers:': deletedContainers,
+          'Total reclaimed space:': reclaimedSpace,
         },
       ];
 
@@ -193,9 +193,9 @@ const containerController: ContainerController = {
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in containerController.pruneStoppedContainers",
+        log: 'error in containerController.pruneStoppedContainers',
         err: error,
-        message: "failed to prune stopped containers",
+        message: 'failed to prune stopped containers',
       };
       next(errorDetails);
     }
@@ -212,21 +212,21 @@ const containerController: ContainerController = {
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the containerController.getSpecificLog exec",
+          log: 'error in the containerController.getSpecificLog exec',
           err: stderr,
-          message: "error in the containerController.getSpecificLog exec",
+          message: 'error in the containerController.getSpecificLog exec',
         };
         next(errorDetails);
       }
       const dataArray = stdout
         .trim()
-        .split("\n")
+        .split('\n')
         .map((item) => JSON.parse(item, undefined));
       res.locals.log = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in containerController.getSpecificLog",
+        log: 'error in containerController.getSpecificLog',
         err: error,
         message: `failed to get logs for container: ${name}`,
       };
@@ -244,7 +244,7 @@ const containerController: ContainerController = {
       const { stdout, stderr } = await promisifyExec(`docker rm ${name}`);
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the containerController.removeSpecificContainer exec",
+          log: 'error in the containerController.removeSpecificContainer exec',
           err: stderr,
           message: `failed to finish delete route for ${name} in exec`,
         };
@@ -255,7 +255,7 @@ const containerController: ContainerController = {
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in containerController.removeSpecificContainer catch",
+        log: 'error in containerController.removeSpecificContainer catch',
         err: error,
         message: `failed to finish delete route for ${name}`,
       };

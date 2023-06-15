@@ -5,7 +5,7 @@ const App: FC = () => {
     <div>
       <h1>howdy kubby buddies! YOOO</h1>
     </div>
-  )
+  );
 };
 
 export default App;

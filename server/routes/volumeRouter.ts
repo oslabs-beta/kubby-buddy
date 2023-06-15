@@ -1,5 +1,5 @@
-import express, { Request, Response } from "express";
-import volumeController from "../controllers/volumeController";
+import express, { Request, Response } from 'express';
+import volumeController from '../controllers/volumeController';
 
 // create router for volume path
 const volumeRouter = express.Router();
@@ -8,7 +8,7 @@ const volumeRouter = express.Router();
 // INPUT: nothing
 // OUTPUT: array of objects [{},{}]
 volumeRouter.get(
-  "/all-volumes",
+  '/all-volumes',
   volumeController.getAllVolumes,
   (_req: Request, res: Response) => {
     res.status(200).json(res.locals.volumes);
@@ -19,7 +19,7 @@ volumeRouter.get(
 // INPUT: nothing
 // OUTPUT: array of objects [{},{}]
 volumeRouter.get(
-  "/all-volumes-names",
+  '/all-volumes-names',
   volumeController.getAllVolumesNames,
   (_req: Request, res: Response) => {
     res.status(200).json(res.locals.volumesNames);
@@ -33,7 +33,7 @@ volumeRouter.get(
 [{ "Deleted Volumes:": ["86006985e7dd01ad25be4812d1b1d2de1ac3159437ccc06f3b61f233dfec533c", "39e417afc8bea1a2a8dd7c11c17b54f71386187c9fe86a21b3b3bbd391906307"], "Total reclaimed space:": ["Total reclaimed space: 315MB"]}]
  */
 volumeRouter.delete(
-  "/all-volumes",
+  '/all-volumes',
   volumeController.deleteAllVolumes,
   (_req: Request, res: Response) => {
     res.status(200).json(res.locals.deletedVolumes);
@@ -47,7 +47,7 @@ volumeRouter.delete(
 [{ "Deleted Volumes:": ["86006985e7dd01ad25be4812d1b1d2de1ac3159437ccc06f3b61f233dfec533c", "39e417afc8bea1a2a8dd7c11c17b54f71386187c9fe86a21b3b3bbd391906307"], "Total reclaimed space:": ["Total reclaimed space: 315MB"]}]
  */
 volumeRouter.delete(
-  "/all-anonymous-volumes",
+  '/all-anonymous-volumes',
   volumeController.deleteAllAnonymousVolumes,
   (_req: Request, res: Response) => {
     res.status(200).json(res.locals.deletedAnonymous);

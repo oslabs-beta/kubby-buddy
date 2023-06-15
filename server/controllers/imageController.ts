@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from "express";
-import { exec } from "child_process";
-import { ImageController, ErrorDetails } from "../../types";
-import { promisify } from "node:util";
+import { Request, Response, NextFunction } from 'express';
+import { exec } from 'child_process';
+import { ImageController, ErrorDetails } from '../../types';
+import { promisify } from 'node:util';
 const promisifyExec = promisify(exec);
 
 const imageController: ImageController = {
@@ -12,25 +12,25 @@ const imageController: ImageController = {
   ): Promise<void> => {
     try {
       const { stdout, stderr } = await promisifyExec(
-        "docker images --format json"
+        'docker images --format json'
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in exec of imageController.getAllImages",
+          log: 'error in exec of imageController.getAllImages',
           err: stderr,
-          message: "error in exec of imageController.getAllImages",
+          message: 'error in exec of imageController.getAllImages',
         };
         next(errorDetails);
       }
       const dataArray = stdout
         .trim()
-        .split("\n")
+        .split('\n')
         .map((item) => JSON.parse(item, undefined)); // Use undefined as the reviver
       res.locals.images = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in imageController.getAllImages catch",
+        log: 'error in imageController.getAllImages catch',
         err: error,
         message: `error in exec of imageController.getAllImages catch`,
       };
@@ -50,9 +50,9 @@ const imageController: ImageController = {
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the imageController.runContainerFromImage exec",
+          log: 'error in the imageController.runContainerFromImage exec',
           err: stderr,
-          message: "error in the imageController.runContainerFromImage exec",
+          message: 'error in the imageController.runContainerFromImage exec',
         };
         next(errorDetails);
       }
@@ -61,7 +61,7 @@ const imageController: ImageController = {
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in imageController.runContainerFromImage catch",
+        log: 'error in imageController.runContainerFromImage catch',
         err: error,
         message: `error in exec of imageController.runContainerFromImage catch`,
       };
@@ -82,9 +82,9 @@ const imageController: ImageController = {
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the imageController.runContainerFromImage exec",
+          log: 'error in the imageController.runContainerFromImage exec',
           err: stderr,
-          message: "error in the imageController.runContainerFromImage exec",
+          message: 'error in the imageController.runContainerFromImage exec',
         };
         next(errorDetails);
       }
@@ -92,7 +92,7 @@ const imageController: ImageController = {
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in imageController.runContainerFromImageWithRemove catch",
+        log: 'error in imageController.runContainerFromImageWithRemove catch',
         err: error,
         message: `error in exec of imageController.runContainerFromImageWithRemove catch`,
       };
@@ -109,24 +109,24 @@ const imageController: ImageController = {
   ): Promise<void> => {
     try {
       const { stdout, stderr } = await promisifyExec(
-        "docker image prune -a --force"
+        'docker image prune -a --force'
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the exec of imageController.pruneUnusedImages",
+          log: 'error in the exec of imageController.pruneUnusedImages',
           err: stderr,
-          message: "error in the exec of imageController.pruneUnusedImages",
+          message: 'error in the exec of imageController.pruneUnusedImages',
         };
         next(errorDetails);
       }
-      const dataArray = stdout.trim().split("\n");
+      const dataArray = stdout.trim().split('\n');
       res.locals.output = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in the imageController.pruneUnusedImages catch",
+        log: 'error in the imageController.pruneUnusedImages catch',
         err: error,
-        message: "error in the imageController.pruneUnusedImages catch",
+        message: 'error in the imageController.pruneUnusedImages catch',
       };
       next(errorDetails);
     }
@@ -140,24 +140,24 @@ const imageController: ImageController = {
   ): Promise<void> => {
     try {
       const { stdout, stderr } = await promisifyExec(
-        "docker image prune --force"
+        'docker image prune --force'
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: "error in the exec of imageController.pruneDanglingImages",
+          log: 'error in the exec of imageController.pruneDanglingImages',
           err: stderr,
-          message: "error in the exec of imageController.pruneDanglingImages",
+          message: 'error in the exec of imageController.pruneDanglingImages',
         };
         next(errorDetails);
       }
-      const dataArray = stdout.trim().split("\n");
+      const dataArray = stdout.trim().split('\n');
       res.locals.output = dataArray;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in the imageController.pruneDanglingImages catch",
+        log: 'error in the imageController.pruneDanglingImages catch',
         err: error,
-        message: "error in the imageController.pruneDanglingImages catch",
+        message: 'error in the imageController.pruneDanglingImages catch',
       };
       next(errorDetails);
     }
@@ -181,7 +181,7 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      const dataArray = stdout.trim().split("\n");
+      const dataArray = stdout.trim().split('\n');
       // .map((item) => JSON.parse(item, undefined));
       res.locals.output = dataArray;
       next();
