@@ -1,45 +1,45 @@
-.commandButton{
-    align-self: center;
-    margin: auto;
-    color:hsl(29, 100%, 50%);
-    background-color: #392e22ac;
-    border:none;
-    padding: .5em;
-    font-size: 1.2em;
-    border-bottom: 2px black solid;
-    border-radius: .25em;
-    width: 50%;
+.commandButton {
+  align-self: center;
+  margin: auto;
+  color: hsl(29, 100%, 50%);
+  background-color: #392e22ac;
+  border: none;
+  padding: 0.5em;
+  font-size: 1.2em;
+  border-bottom: 2px black solid;
+  border-radius: 0.25em;
+  width: 50%;
 }
-.commandButton:hover{
-    background-color: white;
+.commandButton:hover {
+  background-color: white;
 }
-.commandButton:active{
-    transform: translateY(4px)
+.commandButton:active {
+  transform: translateY(4px);
 }
 
-.commandButton .prunetooltip{
-    min-width:200px;
-    max-width:400px;
-    top:200px;
-    transform:translate(-30%,-100%);
-    padding:10px 20px;
-    color:#ffffff;
-    background-color:#009cdc;
-    font-weight:normal;
-    font-size:14px;
-    border-radius:8px;
-    position:absolute;
-    z-index:99999999;
-    box-sizing:border-box;
-    box-shadow:0 1px 8px rgba(0,0,0,0.5);
-    display:none;
+.commandButton .prunetooltip {
+  min-width: 200px;
+  max-width: 400px;
+  top: 200px;
+  transform: translate(-30%, -100%);
+  padding: 10px 20px;
+  color: #ffffff;
+  background-color: #009cdc;
+  font-weight: normal;
+  font-size: 14px;
+  border-radius: 8px;
+  position: absolute;
+  z-index: 99999999;
+  box-sizing: border-box;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+  display: none;
 }
-.commandButton:hover .prunetooltip{
-    display:block;
+.commandButton:hover .prunetooltip {
+  display: block;
 }
-.GlobalCommands-container{
-    width: 100%;
-    display:flex;
-    padding-bottom: 1em;
-    margin-bottom: .5em;
+.GlobalCommands-container {
+  width: 100%;
+  display: flex;
+  padding-bottom: 1em;
+  margin-bottom: 0.5em;
 }

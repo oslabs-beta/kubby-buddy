@@ -1,5 +1,5 @@
 import React from "react";
-import stop from '../../assets/stop.png' 
+import stop from "../../assets/stop.png";
 
 // import { CommandButtonProps } from "../../types";
 
@@ -22,26 +22,26 @@ import stop from '../../assets/stop.png'
 
 // }
 
-export const StopButton: React.FC = () =>{
-    
-    //helper
-    const handleStop = async () => {
-        try{
-            const response = await fetch('/container/log', {
-                method: 'GET',
-                headers: {'Content-Type' : 'application/json'},
-                body: JSON.stringify({name:`container-name`})
-            })
-            const data = await response.json()
-            console.log(data)
-        } catch(err){
-            console.error(err)
-        }
+export const StopButton: React.FC = () => {
+  //helper
+  const handleStop = async () => {
+    try {
+      const response = await fetch("/container/log", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: `container-name` }),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      console.error(err);
     }
+  };
 
-
-    return (
-        <button style={{backgroundImage:`url(${stop})`}} onClick={handleStop}></button>
-    )
-
-}
+  return (
+    <button
+      style={{ backgroundImage: `url(${stop})` }}
+      onClick={handleStop}
+    ></button>
+  );
+};
