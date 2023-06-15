@@ -17,19 +17,19 @@ app.use(express.json());
 
 //--------------- ROUTES  ---------------//
 
-//routes for handling image commands
+// Routes for handling image commands
 
 app.use("/image", imageRouter);
 
-//routes for handling container commands
+// Routes for handling container commands
 
 app.use("/container", containerRouter);
 
-//routes for handling volumes
+// Routes for handling volumes
 
-app.use("/volumes", volumeRouter);
+app.use("/volume", volumeRouter);
 
-//routes for handling all other docker commands
+// Routes for handling all other docker commands
 
 app.use("/general", generalDockerRouter);
 
@@ -56,6 +56,7 @@ app.use(
   }
 );
 
+// Server listen
 app.listen(PORT, () => {
   console.log(`BEEP BOOP! Rockin' out on port ${PORT}`);
 });
