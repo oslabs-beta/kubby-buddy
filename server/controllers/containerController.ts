@@ -50,7 +50,7 @@ const containerController: ContainerController = {
   ) => {
     try {
       const { stdout, stderr } = await promisifyExec(
-        `docker container ls --format='{{json .Names}}'`
+        `docker ps --no-trunc --format '{"name":"{{.Names}}", "status":"{{.Status}}"}' -s | jq`
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
