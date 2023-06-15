@@ -28,11 +28,11 @@ export interface ImageController {
 
   runContainerFromImage: MiddleWare;
 
-  runContainerFromImageWithRemove: MiddleWare;
+  // runContainerFromImageWithRemove: MiddleWare;
 
-  runContainerFromImageWithNamedVolume: MiddleWare;
+  // runContainerFromImageWithNamedVolume: MiddleWare;
 
-  runContainerFromImageWithNamedVolumeAndRemove: MiddleWare;
+  // runContainerFromImageWithNamedVolumeAndRemove: MiddleWare;
 
   pruneUnusedImages: MiddleWare;
 
