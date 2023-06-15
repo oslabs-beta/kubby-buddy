@@ -15,7 +15,7 @@ const containerController: ContainerController = {
   ) => {
     try {
       const { stdout, stderr } = await promisifyExec(
-        "docker ps --format '{{json .}}'"
+        "docker ps -a --format '{{json .}}'"
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
