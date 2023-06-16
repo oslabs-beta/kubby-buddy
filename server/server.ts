@@ -1,12 +1,12 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 // import 'dotenv/config'
-import express, { Express, Request, Response, RequestHandler } from "express";
+import express, { Express, Request, Response, RequestHandler } from 'express';
 // const path = require('path');
-import imageRouter from "./routes/imageRoutes";
-import generalDockerRouter from "./routes/generaldockerRoutes";
-import containerRouter from "./routes/containerRoutes";
-import volumeRouter from "./routes/volumeRouter";
-import { ServerError, GlobalErr } from "../types";
+import imageRouter from './routes/imageRoutes';
+import generalDockerRouter from './routes/generaldockerRoutes';
+import containerRouter from './routes/containerRoutes';
+import volumeRouter from './routes/volumeRouter';
+import { ServerError, GlobalErr } from '../types';
 
 const PORT = process.env.PORT || 3000;
 
@@ -19,36 +19,36 @@ app.use(express.json());
 
 // Routes for handling image commands
 
-app.use("/image", imageRouter);
+app.use('/image', imageRouter);
 
 // Routes for handling container commands
 
-app.use("/container", containerRouter);
+app.use('/container', containerRouter);
 
 // Routes for handling volumes
 
-app.use("/volume", volumeRouter);
+app.use('/volume', volumeRouter);
 
 // Routes for handling all other docker commands
 
-app.use("/general", generalDockerRouter);
+app.use('/general', generalDockerRouter);
 
 // const route = require('./routes/<filename.js>')
 // app.use('path', route)
 
 // Catch all
-app.use("*", (_req: Request, res: Response) => {
-  res.status(404).send("Not Found");
+app.use('*', (_req: Request, res: Response) => {
+  res.status(404).send('Not Found');
 });
 
 // Global error handler
 app.use(
   (err: ServerError, _req: Request, res: Response, _next: RequestHandler) => {
     const defaultErr: GlobalErr = {
-      log: "Express error handler caught unknown middleware error",
+      log: 'Express error handler caught unknown middleware error',
       status: 500,
       message: {
-        err: "An error occured",
+        err: 'An error occured',
       },
     };
     const errorObj: ServerError = Object.assign(defaultErr, err);
@@ -60,3 +60,5 @@ app.use(
 app.listen(PORT, () => {
   console.log(`BEEP BOOP! Rockin' out on port ${PORT}`);
 });
+
+export default app;

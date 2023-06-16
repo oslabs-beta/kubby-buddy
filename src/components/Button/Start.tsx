@@ -1,7 +1,7 @@
-import React from "react";
-import start from "../../assets/play.png";
+import React from 'react';
+import start from '../../assets/play.png';
 
-import { CommandButtonProps } from "../../types";
+import { CommandButtonProps } from '../../types';
 
 interface StartCommandProp extends CommandButtonProps {
   onClick: () => void;
@@ -19,12 +19,12 @@ const StartButton: React.FC<StartCommandProp> = ({
       const response = await fetch(URL, {
         method: fetchMethod,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name: name }),
       });
       const data = await response.json();
-      console.log(data, "***data in handleStart ");
+      console.log(data, '***data in handleStart ');
     } catch (err) {
       console.error(err);
     }

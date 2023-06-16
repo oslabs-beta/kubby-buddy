@@ -1,9 +1,9 @@
 // display running containers as a list
 // onclick take user to scroll position in main view
-import React, { FC, useContext, useEffect, useState } from "react";
-import { UserContext } from "../../UserContext";
-import "./Quickview.scss";
-import { Container } from "../../types";
+import React, { FC, useContext, useEffect, useState } from 'react';
+import { UserContext } from '../../UserContext';
+import './Quickview.scss';
+import { Container } from '../../types';
 
 //will use ref and onclick in final version
 const GoTo: FC = () => {
@@ -19,7 +19,7 @@ export const Quickview: FC = () => {
 
   useEffect(() => {
     const filteredContainers = runningContainers.filter(
-      (container) => container.State === "running"
+      (container) => container.State === 'running'
     );
     setFilteredRunningContainers(filteredContainers);
   }, [runningContainers]);
@@ -44,7 +44,7 @@ export const Quickview: FC = () => {
       <h3 className="quickview-header">Sleepy</h3>
       <ul className="quickview-list">
         {runningContainers
-          .filter((container) => container.State === "exited")
+          .filter((container) => container.State === 'exited')
           .map((container, index) => (
             <li key={index} className="quickview-item">
               {container.Names}

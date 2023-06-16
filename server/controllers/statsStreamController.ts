@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from "express";
-import { exec } from "node:child_process";
-import { StatsStreamController, ErrorDetails } from "../../types";
-import { promisify } from "node:util";
+import { Request, Response, NextFunction } from 'express';
+import { exec } from 'node:child_process';
+import { StatsStreamController, ErrorDetails } from '../../types';
+import { promisify } from 'node:util';
 const promisifyExec = promisify(exec);
 
 const statsStreamController: StatsStreamController = {
@@ -11,21 +11,21 @@ const statsStreamController: StatsStreamController = {
     next: NextFunction
   ) => {
     try {
-      res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
-      res.setHeader("Cache-Control", "no-cache");
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader("Connection", "keep-alive");
+      res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Connection', 'keep-alive');
 
       const interval = setInterval(async () => {
         try {
           const { stdout } = await promisifyExec(
-            "docker stats --no-stream --format json"
+            'docker stats --no-stream --format json'
           );
 
           res.status(200);
-          const newData: string = JSON.stringify(stdout.trim().split("\n"));
+          const newData: string = JSON.stringify(stdout.trim().split('\n'));
           console.log(newData);
-          res.write("data: " + newData + "\n\n");
+          res.write('data: ' + newData + '\n\n');
           res.end();
           // return res.status(200).json(stdout);
         } catch (err) {
@@ -33,17 +33,17 @@ const statsStreamController: StatsStreamController = {
         }
       }, 500);
 
-      res.on("close", () => {
-        console.log("Client dropped");
+      res.on('close', () => {
+        console.log('Client dropped');
         clearInterval(interval);
         res.end();
       });
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: "error in the statsStreamController.getAllContainerStats catch",
+        log: 'error in the statsStreamController.getAllContainerStats catch',
         err: error,
         message:
-          "error in the statsStreamController.getAllContainerStats catch",
+          'error in the statsStreamController.getAllContainerStats catch',
       };
       next(errorDetails);
     }

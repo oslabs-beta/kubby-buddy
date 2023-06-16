@@ -1,9 +1,9 @@
 // /prune-stopped-containers
 
-import React from "react";
-import trash from "../../assets/trash.png";
+import React from 'react';
+import trash from '../../assets/trash.png';
 
-import { CommandButtonProps } from "../../types";
+import { CommandButtonProps } from '../../types';
 
 interface DeleteCommandProp extends CommandButtonProps {}
 
@@ -19,12 +19,12 @@ const DeleteButton: React.FC<DeleteCommandProp> = ({
       const response = await fetch(URL, {
         method: fetchMethod,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name: name }),
       });
       const data = await response.json();
-      console.log("test---->:" + data);
+      console.log('test---->:' + data);
     } catch (err) {
       console.error(err);
     }

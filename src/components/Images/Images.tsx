@@ -1,6 +1,6 @@
-import React, { FC, useContext } from "react";
-import "./Images.scss";
-import { UserContext } from "../../UserContext";
+import React, { FC, useContext } from 'react';
+import './Images.scss';
+import { UserContext } from '../../UserContext';
 
 export const Images: FC = () => {
   const { availableImages } = useContext(UserContext);

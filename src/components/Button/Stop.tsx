@@ -1,7 +1,7 @@
-import React from "react";
-import stop from "../../assets/stop.png";
+import React from 'react';
+import stop from '../../assets/stop.png';
 
-import { CommandButtonProps } from "../../types";
+import { CommandButtonProps } from '../../types';
 
 interface StopCommandProps extends CommandButtonProps {
   // onClick: ()=> void;
@@ -18,13 +18,13 @@ const StopButton: React.FC<StopCommandProps> = ({
       const response = await fetch(URL, {
         method: fetchMethod,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name: name }),
       });
       const data = await response.json();
-      console.log("----", data);
-      console.log(cmdRoute, "this is the route");
+      console.log('----', data);
+      console.log(cmdRoute, 'this is the route');
     } catch (err) {
       console.error(err);
     }

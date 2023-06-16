@@ -1,15 +1,15 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from 'react';
 
 const Stream: FC = () => {
   const [logs, setLogs] = useState<String[]>([]);
-  console.log("hi");
+  console.log('hi');
   //Will start the stream and get averaged data, setting it to containersArray
   useEffect(() => {
-    console.log("in use effect");
-    const sse = new EventSource("http://localhost:8080/general/stats");
+    console.log('in use effect');
+    const sse = new EventSource('http://localhost:8080/general/stats');
     console.log(sse);
     sse.onmessage = (event: MessageEvent) => {
-      console.log("in onmessage");
+      console.log('in onmessage');
       const data = JSON.parse(event?.data);
       setLogs(data);
     };

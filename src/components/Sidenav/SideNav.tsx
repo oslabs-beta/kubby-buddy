@@ -3,11 +3,11 @@
 /*
 
 */
-import React, { FC, useContext, useEffect } from "react";
-import "./SideNav.scss";
-import { Quickview } from "../Quickview/Quickview";
-import { GlobalCommands } from "../GlobalCommands/GlobalCommands";
-import { UserContext } from "../../UserContext";
+import React, { FC, useContext, useEffect } from 'react';
+import './SideNav.scss';
+import { Quickview } from '../Quickview/Quickview';
+import { GlobalCommands } from '../GlobalCommands/GlobalCommands';
+import { UserContext } from '../../UserContext';
 // import photo from '../../assests/logo.png'
 //container/all-active-containers
 
@@ -19,7 +19,7 @@ export const SideNav: FC = () => {
   useEffect(() => {
     async function getRunningContainers() {
       try {
-        const getURL = "container/all-active-containers";
+        const getURL = 'container/all-active-containers';
         const fetchResponse = await fetch(getURL);
         const data = await fetchResponse.json();
 
@@ -30,7 +30,7 @@ export const SideNav: FC = () => {
     }
     async function getAvailableImages() {
       try {
-        const getURL = "image/all-images";
+        const getURL = 'image/all-images';
         const fetchResponse = await fetch(getURL);
         const data = await fetchResponse.json();
 
