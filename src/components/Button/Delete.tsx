@@ -28,7 +28,6 @@ const DeleteButton: React.FC<DeleteCommandProp> = ({
     } catch (err) {
       console.error(err);
     }
-    32;
   };
 
   return (
