@@ -15,6 +15,7 @@ const CommandButton: FC<CommandButtonProps> = ({
       });
       const data = await fetchResponse.json();
       console.log(data);
+      console.log(cmdRoute);
     } catch (error) {
       console.log(error);
     }
@@ -29,14 +30,12 @@ const CommandButton: FC<CommandButtonProps> = ({
 
 export const GlobalCommands: FC = () => {
   return (
-    <div className="GlobalCommands-container">
-      <CommandButton
-        name="Prune"
-        cmdRoute={
-          new URL("/container/prune-stopped-containers", window.location.href)
-        }
-        fetchMethod="delete"
-      />
-    </div>
+    <CommandButton
+      name="Prune"
+      cmdRoute={
+        new URL("/container/prune-stopped-containers", window.location.href)
+      }
+      fetchMethod="delete"
+    />
   );
 };

@@ -65,7 +65,7 @@ containerRouter.delete(
 containerRouter.get(
   "/log",
   containerController.getSpecificLog,
-  (_req: Request, res: Response) => {
+  (req: Request, res: Response) => {
     res.status(200).json(res.locals.log);
   }
 );
