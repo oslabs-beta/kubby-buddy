@@ -1,10 +1,13 @@
+
 import React, { FC, useContext, useEffect } from "react";
 import "./Container.scss";
 import { UserContext } from "../../UserContext";
 import { DisplayRunning } from "./ContainerDisplay";
 
+
 export const DockerContainers: FC = () => {
   const { setRunningContainers } = useContext(UserContext);
+
 
   useEffect(() => {
     async function getRunningContainers() {
@@ -19,6 +22,8 @@ export const DockerContainers: FC = () => {
     }
     getRunningContainers();
   }, []);
+
+
 
   //pass down necessary props to buttons for their relevant fetch requests
   return <DisplayRunning />;

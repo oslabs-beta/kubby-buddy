@@ -1,5 +1,5 @@
-import React from "react";
-import start from "../../assets/play.png";
+import React from 'react';
+import start from '../../assets/play.png';
 
 import { CommandButtonProps } from "../../types";
 

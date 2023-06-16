@@ -18,5 +18,3 @@
   "exclude": ["node_modules"],
   "types": ["react/next", "react-dom/next"]
 }
-
-

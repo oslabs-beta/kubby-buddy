@@ -1,5 +1,5 @@
-import React from "react";
-import stop from "../../assets/stop.png";
+import React from 'react';
+import stop from '../../assets/stop.png';
 
 import { CommandButtonProps } from "../../types";
 
@@ -21,6 +21,7 @@ const StopButton: React.FC<StopCommandProps> = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ name: name }),
+
       });
       const data = await response.json();
       console.log("----", data);

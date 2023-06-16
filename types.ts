@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import { ExecException } from "child_process";
+import { Request, Response, NextFunction } from 'express';
+import { ExecException } from 'child_process';
 
 export type MiddleWare = (
   req: Request,
@@ -28,7 +28,11 @@ export interface ImageController {
 
   runContainerFromImage: MiddleWare;
 
-  runContainerFromImageWithRemove: MiddleWare;
+  // runContainerFromImageWithRemove: MiddleWare;
+
+  // runContainerFromImageWithNamedVolume: MiddleWare;
+
+  // runContainerFromImageWithNamedVolumeAndRemove: MiddleWare;
 
   pruneUnusedImages: MiddleWare;
 

@@ -5,6 +5,7 @@ import { UserContext } from "../../UserContext";
 import "./Quickview.scss";
 import { Container } from "../../types";
 
+
 //will use ref and onclick in final version
 const GoTo: FC = () => {
   return <button className="goto-button"> ➡ </button>;
