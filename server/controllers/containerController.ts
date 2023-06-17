@@ -5,6 +5,19 @@ import { promisify } from 'util';
 import { ErrorDetails } from '../../types';
 const promisifyExec = promisify(exec);
 
+function isJSON(data: string[]): boolean {
+  try {
+    for (const item of data) {
+      JSON.parse(item);
+    }
+    return true; // All elements are valid JSON strings
+  } catch (error) {
+    return false; // At least one element is not a valid JSON string
+  }
+}
+
+let transformedLogs;
+
 const containerController: ContainerController = {
   //middleware to run CLI command to get list of active containers
 
@@ -217,11 +230,26 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      const dataArray = stdout
-        .trim()
-        .split('\n')
-        .map((item) => JSON.parse(item, undefined));
-      res.locals.log = dataArray;
+      // const dataArray = stdout
+      //   .trim()
+      //   .split('\n')
+      // .map((item) => JSON.parse(item, undefined));
+      // .map((item) => item, undefined);
+      const dataArray = stdout.trim().split('\n');
+      if (isJSON(dataArray)) {
+        transformedLogs = dataArray.map((item) => JSON.parse(item, undefined));
+      } else {
+        transformedLogs = dataArray.map((log) => {
+          if (log.includes('=')) {
+            const keyValuePairs = log.split(' ').map((pair) => pair.split('='));
+            return Object.fromEntries(keyValuePairs);
+          } else {
+            return { [log]: null };
+          }
+        });
+      }
+
+      res.locals.log = transformedLogs;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
