@@ -21,7 +21,7 @@ export interface Container {
   Labels: String[];
   LocalVolumes: String;
   Mounts: String;
-  Names: String;
+  Names: string;
   Networks: String;
   Ports: String;
   RunningFor: String;

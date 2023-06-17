@@ -188,7 +188,6 @@ const containerController: ContainerController = {
           'Total reclaimed space:': reclaimedSpace,
         },
       ];
-
       res.locals.deletedContainers = output;
       next();
     } catch (error) {

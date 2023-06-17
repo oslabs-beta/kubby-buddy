@@ -28,6 +28,7 @@
   padding-right: 1em;
 }
 .cmdbutton {
+  // border: solid black 1px;
   grid-area: 4 / 1 / 2 / 8;
   padding-right: 1em;
   padding-left: 0em;
@@ -38,6 +39,7 @@
   button {
     min-width: 2.5em;
     width: 3em;
+    height: 3em;
     border: none;
 
     background-color: transparent;

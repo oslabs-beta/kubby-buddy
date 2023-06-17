@@ -1,17 +1,30 @@
 import React from 'react';
 import start from '../../assets/play.png';
 
-export const StartButton: React.FC = () => {
+import { CommandButtonProps } from '../../types';
+
+interface StartCommandProp extends CommandButtonProps {
+  onClick: () => void;
+}
+
+const StartButton: React.FC<StartCommandProp> = ({
+  name,
+  cmdRoute,
+  fetchMethod,
+}) => {
   //helper
-  const handleStart = async () => {
+  const command = async () => {
     try {
-      const response = await fetch('/container/start', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: `container-name` }),
+      const URL = cmdRoute;
+      const response = await fetch(URL, {
+        method: fetchMethod,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: name }),
       });
       const data = await response.json();
-      console.log(data);
+      console.log(data, '***data in handleStart ');
     } catch (err) {
       console.error(err);
     }
@@ -19,8 +32,27 @@ export const StartButton: React.FC = () => {
 
   return (
     <button
+      className="start"
       style={{ backgroundImage: `url(${start})` }}
-      onClick={handleStart}
+      onClick={command}
     ></button>
+  );
+};
+
+export const StartCommands: React.FC<StartCommandProp> = ({
+  name,
+  cmdRoute,
+  fetchMethod,
+  onClick,
+}) => {
+  return (
+    <div className="startCommand-container">
+      <StartButton
+        name={name}
+        cmdRoute={cmdRoute}
+        fetchMethod={fetchMethod}
+        onClick={onClick}
+      />
+    </div>
   );
 };
