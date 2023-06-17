@@ -88,7 +88,6 @@ const containerController: ContainerController = {
     next: NextFunction
   ) => {
     const { name } = req.body;
-    console.log(name, 'name &&&&');
     try {
       const { stdout, stderr } = await promisifyExec(`docker stop ${name}`);
       if (stderr) {
@@ -100,10 +99,7 @@ const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-
       const output = [{ message: stdout.replace(/[\r\n]+/gm, '') }];
-      console.log(output, 'output **');
-
       res.locals.stoppedContainer = output;
       // res.locals.stoppedContainer = `Stopped container: ${stdout}`;
       next();
@@ -152,12 +148,11 @@ const containerController: ContainerController = {
   //middleware to prune all stopped containers
 
   pruneStoppedContainers: async (
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
   ) => {
     try {
-      console.log(req.body);
       const { stdout, stderr } = await promisifyExec(
         `docker container prune --force`
       );
@@ -208,9 +203,8 @@ const containerController: ContainerController = {
   //get log for a specific container
 
   getSpecificLog: async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.query, '123123123');
+    console.log(req.query);
     const { name } = req.query;
-    console.log(req.query, 'this is query');
     try {
       const { stdout, stderr } = await promisifyExec(
         `docker container logs ${name} `
