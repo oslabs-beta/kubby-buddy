@@ -15,11 +15,19 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
     depends_on:
       - cadvisor
+    labels:
+      org_prometheus_starter: 'true'
+      org_prometheus_starter_port: '9090'
+      org_prometheus_starter_path: '/metrics'
+
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.47.1
     container_name: cadvisor
     ports:
       - '8081:8080'
+    labels:
+      org_prometheus_starter: 'true'
+      org_prometheus_starter_path: '/metrics'
 
     volumes:
       - /:/rootfs:ro
@@ -34,10 +42,22 @@ services:
     container_name: redis
     ports:
       - 6379:6379
+
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
+    user: '1000'
+    environment:
+      GF_SECURITY_ALLOW_EMBEDDING: true
+      GF_PATHS_CONFIG: /etc/grafana/grafana.ini
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
     ports:
       - 3001:3000
     depends_on:
       - prometheus
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana:/etc/grafana/grafana
+      - ./grafana/plugins:/var/lib/grafana/plugins

@@ -14,6 +14,10 @@ export const MainNav: FC = () => {
   return (
     <div className="main-nav">
       <ul>
+        <iframe
+          className="grafana"
+          src="http://localhost:3001/d-solo/c6d98103-49a2-4a71-a199-144325115d9f/new-dashboard?orgId=1&from=1687123489662&to=1687124389662&panelId=1"
+        ></iframe>
         {showDockerContainers && !showImages ? (
           <DockerContainers />
         ) : (
