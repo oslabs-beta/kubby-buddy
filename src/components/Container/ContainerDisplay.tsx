@@ -1,16 +1,16 @@
-import React, { FC, useContext, useState } from "react";
-import { UserContext } from "../../UserContext";
-import { StartCommands } from "../Button/Start";
-import { StopCommands } from "../Button/Stop";
-import { DeleteCommands } from "../Button/Delete";
-import { LogCommands } from "../Button/Logs";
-import { Graph } from "../Graph/Graph";
+import React, { FC, useContext, useState } from 'react';
+import { UserContext } from '../../UserContext';
+import { StartCommands } from '../Button/Start';
+import { StopCommands } from '../Button/Stop';
+import { DeleteCommands } from '../Button/Delete';
+import { LogCommands } from '../Button/Logs';
+import { Graph } from '../Graph/Graph';
 
 export const DisplayRunning: FC = () => {
-  const { runningContainers } = useContext(UserContext);
-
+  const { runningContainers, statStream } = useContext(UserContext);
+  console.log('containerdisplay', statStream);
   const [stopInvoked, setStop] = useState(false);
-  console.log("testtest====", runningContainers);
+  console.log('testtest====', runningContainers);
 
   const handleStopInvoke = () => {
     if (!stopInvoked) setStop(true);
@@ -45,14 +45,14 @@ export const DisplayRunning: FC = () => {
           <div className="cmdbutton">
             <StartCommands
               name={el.Names}
-              cmdRoute={new URL("/container/start", window.location.href)}
+              cmdRoute={new URL('/container/start', window.location.href)}
               fetchMethod="post"
               onClick={handleStopInvoke}
             />
             {/* <StopCommands name={el.Name} /> */}
             <StopCommands
               name={el.Names}
-              cmdRoute={new URL("/container/stop", window.location.href)}
+              cmdRoute={new URL('/container/stop', window.location.href)}
               fetchMethod="post"
               // onClick={handleStopInvoke}
             />
@@ -68,7 +68,7 @@ export const DisplayRunning: FC = () => {
               name={el.Names}
               cmdRoute={
                 new URL(
-                  "/container/remove-specific-container",
+                  '/container/remove-specific-container',
                   window.location.href
                 )
               }
@@ -76,7 +76,7 @@ export const DisplayRunning: FC = () => {
             />
             <LogCommands
               name={el.Names}
-              cmdRoute={new URL("/container/log", window.location.href)}
+              cmdRoute={new URL('/container/log', window.location.href)}
               fetchMethod="get"
             />
           </div>
