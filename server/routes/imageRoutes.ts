@@ -94,7 +94,7 @@ imageRouter.delete(
 
 // remove image by name
 // INPUT: nothing
-// OUTPUT: Not finalized: WORK IN PROGRESS
+// OUTPUT: array of object [{"Deleted": ["Untagged: image1:latest", "Deleted: sha256:df9e5deb1141fdaefa168a9a90e7936e09589b6ca6cd0fd6f7d564a9a45ec5ed"]}]
 imageRouter.delete(
   '/remove-image-by-name',
   imageController.removeSingleImage,
