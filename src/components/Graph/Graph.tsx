@@ -18,6 +18,7 @@ export function Graph(props: GraphProps) {
           parseFloat(props.data?.CPUPerc),
           parseFloat(props.data?.CPUPerc),
         ],
+        backgroundColor: ['#ff7c02'],
       },
       {
         label: 'Avail%',
@@ -57,6 +58,7 @@ export function Graph(props: GraphProps) {
             parseFloat(props.data?.MemPerc),
             (parsedNet[0] / parsedNet[1]) * 100,
           ],
+          backgroundColor: ['#ff7c02'],
         },
         {
           label: 'Avail%',
