@@ -6,6 +6,7 @@ div.main-nav {
   // border-radius: 0.25rem;
   overflow-x: hidden;
   width: 100%;
+  box-sizing: border-box;
 
   .dockercontainer {
     // padding-right: 2em;
@@ -14,9 +15,8 @@ div.main-nav {
       // padding: 20px;
       scrollbar-gutter: stable both;
       // margin: 1em 1em 1em 1em;
-      margin-bottom: 5px;
       // list-style-type: none;
-      box-shadow: 5px 5px 10px #666367;
+      box-shadow: 0px 0px 5px #666367;
     }
     * {
       // border: 1px solid red;

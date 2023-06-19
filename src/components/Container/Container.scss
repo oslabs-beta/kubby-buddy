@@ -1,6 +1,5 @@
 .dockercontainer {
   width: 100%;
-  border: 1px solid green;
   display: grid;
 }
 
@@ -12,7 +11,9 @@
   align-items: space-between;
   font-weight: 300;
   color: black;
-  p {
+  padding: 0 1em;
+  margin: 0.5em 1em;
+  box-sizing: border-box p {
     // border: 1px solid pink;
     font-weight: 300;
   }
@@ -36,7 +37,7 @@
   // font-size: 1.2em;
   word-wrap: break-word;
   word-break: break-all;
-  width: 100%;
+  width: 25%;
   // align-content: center;
   // text-align: center;
   // grid-area: 1 / 8 / 1 / 1;
@@ -52,27 +53,37 @@
 }
 .cmdbutton {
   // border: solid black 1px;
-  grid-area: 4 / 1 / 2 / 8;
+  // grid-area: 4 / 1 / 2 / 8;
   padding-right: 1em;
   padding-left: 0em;
   display: flex;
-  justify-content: center;
-  gap: calc(1em + 5%);
+  justify-content: space-around;
+  // gap: calc(1em + 5%);
+  align-self: center;
+  justify-self: center;
+  width: 35%;
 
   button {
-    min-width: 2.5em;
-    width: 3em;
-    height: 3em;
+    min-width: 2em;
+    width: 2em;
+    height: 2em;
     border: none;
 
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
+    cursor: pointer;
+    transition: 100ms;
+  }
+
+  button:hover {
+    filter: invert(77%) sepia(75%) saturate(5665%) hue-rotate(358deg)
+      brightness(99%) contrast(103%);
   }
   button:active {
     transform: translateY(2px);
-    filter: invert(77%) sepia(75%) saturate(5665%) hue-rotate(358deg)
+    filter: invert(80%) sepia(75%) saturate(5665%) hue-rotate(358deg)
       brightness(99%) contrast(103%);
   }
 
@@ -108,9 +119,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid red;
+  // border: 1px solid red;
+  width: 25%;
   .bargraph {
     width: 100%;
+    box-shadow: 0px 0px 5px black;
   }
 }
 
