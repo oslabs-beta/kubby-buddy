@@ -8,12 +8,13 @@
   padding: 0.5rem 2em;
   border-bottom: 2px black solid;
   // border-radius: 0.25em;
+  transition: 500ms;
 
   cursor: pointer;
 }
 .commandButton:hover {
   background-color: white;
-  border: #666367;
+  border: 1px solid black;
 }
 .commandButton:active {
   transform: translateY(4px);
@@ -36,19 +37,16 @@
   z-index: 99999999;
   box-sizing: border-box;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
-  display: none;
-  margin-top: 1em;
+  margin-top: 3em;
+  transition: 500ms;
+  opacity: 0;
 }
 // .commandButton:hover .prunetooltip {
 //   display: block;
 // }
 
-.prunetooltip {
-  display: none;
-}
-
 .commandButton:hover + .prunetooltip {
-  display: block;
+  opacity: 100;
 }
 
 // .prunetooltip:hover {
