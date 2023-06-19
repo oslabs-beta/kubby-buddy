@@ -1,4 +1,4 @@
-import React, { ReactNode, SetStateAction } from 'react';
+import React, { ReactNode } from 'react';
 
 export interface Context {
   children?: ReactNode;
@@ -6,10 +6,8 @@ export interface Context {
   setRunningContainers: React.Dispatch<React.SetStateAction<Container[]>>;
   availableImages: Image[];
   setAvailableImages: React.Dispatch<React.SetStateAction<Image[]>>;
-  showDockerContainers: Boolean;
-  setShowDockerContainers: React.Dispatch<SetStateAction<boolean>>;
-  showImages: Boolean;
-  setShowImages: React.Dispatch<SetStateAction<boolean>>;
+  showing: string;
+  setShowing: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface Container {

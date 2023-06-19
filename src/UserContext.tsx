@@ -6,18 +6,15 @@ export const UserContext = createContext<Context>({
   setRunningContainers: () => {},
   availableImages: [],
   setAvailableImages: () => {},
-  showDockerContainers: false,
-  setShowDockerContainers: () => {},
-  showImages: false,
-  setShowImages: () => {},
+  showing: '',
+  setShowing: () => {},
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [runningContainers, setRunningContainers] = useState<Container[]>([]);
   const [availableImages, setAvailableImages] = useState<Image[]>([]);
-  const [showDockerContainers, setShowDockerContainers] =
-    useState<boolean>(true);
-  const [showImages, setShowImages] = useState<boolean>(false);
+  const [showing, setShowing] = useState<string>('Containers');
+
   // const [showVolumes, setShowVolumes] = useState<Boolean>(true)
 
   const contextProps: Context = {
@@ -25,10 +22,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setRunningContainers,
     availableImages,
     setAvailableImages,
-    showDockerContainers,
-    setShowDockerContainers,
-    showImages,
-    setShowImages,
+    showing,
+    setShowing,
   };
   return (
     <UserContext.Provider value={contextProps}>{children}</UserContext.Provider>

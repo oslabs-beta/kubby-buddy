@@ -42,7 +42,7 @@ export const Quickview: FC = () => {
         })}
       </ul>
       <h3 className="quickview-header">Sleepy</h3>
-      <ul className="quickview-list">
+      <ul className="quickview-list-sleepy">
         {runningContainers
           .filter((container) => container.State === 'exited')
           .map((container, index) => (

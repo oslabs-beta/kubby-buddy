@@ -1,0 +1,57 @@
+/* reset */
+
+.ToggleGroup {
+  font-family: sans-serif;
+  display: inline-flex;
+  background-color: hsl(0, 0%, 85%);
+  border-radius: 4px;
+  border: solid hsl(29, 100%, 50%);
+  color: #392e22;
+  margin: auto;
+  margin-top: 1em;
+  width: 50%;
+  font-size: 1.2em;
+  button {
+    all: unset;
+    width: 50%;
+    text-align: center;
+    height: 2em;
+  }
+}
+
+.ToggleGroupItem {
+  align-self: center;
+  background-color: white;
+  color: pink;
+
+  display: flex;
+  font-size: 15px;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1px;
+}
+
+.ToggleGroupItem:first-child {
+  margin-left: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.ToggleGroupItem:not(:last-child) {
+  border-right: solid hsl(29, 100%, 50%);
+}
+.ToggleGroupItem:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.ToggleGroupItem:hover {
+  background-color: hsl(29, 100%, 50%);
+}
+.ToggleGroupItem[data-state='on'] {
+  background-color: white;
+  color: hsl(29, 100%, 50%);
+}
+.ToggleGroupItem:focus {
+  position: relative;
+  box-shadow: 0 0 0 0.1px black;
+}
