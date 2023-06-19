@@ -10,6 +10,8 @@ export interface Context {
   setShowDockerContainers: React.Dispatch<SetStateAction<boolean>>;
   showImages: Boolean;
   setShowImages: React.Dispatch<SetStateAction<boolean>>;
+  statStream: Container[];
+  setStatStream: React.Dispatch<React.SetStateAction<Container[]>>;
 }
 
 export interface Container {

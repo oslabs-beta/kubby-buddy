@@ -10,6 +10,8 @@ export const UserContext = createContext<Context>({
   setShowDockerContainers: () => {},
   showImages: false,
   setShowImages: () => {},
+  statStream: [],
+  setStatStream: () => {},
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -18,6 +20,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [showDockerContainers, setShowDockerContainers] =
     useState<boolean>(true);
   const [showImages, setShowImages] = useState<boolean>(false);
+  const [statStream, setStatStream] = useState<Container[]>([]);
   // const [showVolumes, setShowVolumes] = useState<Boolean>(true)
 
   const contextProps: Context = {
@@ -29,6 +32,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setShowDockerContainers,
     showImages,
     setShowImages,
+    statStream,
+    setStatStream,
   };
   return (
     <UserContext.Provider value={contextProps}>{children}</UserContext.Provider>
