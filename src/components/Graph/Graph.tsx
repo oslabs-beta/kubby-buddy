@@ -6,6 +6,7 @@ import { GraphProps } from '../../types';
 
 export function Graph(props: GraphProps) {
   // const num = parseFloat(props.CPUPerc)
+  const [limit, setLimit] = useState(1);
   const [userData, setUserData] = useState({
     labels: ['CPU'],
     datasets: [
@@ -16,14 +17,14 @@ export function Graph(props: GraphProps) {
     ],
   });
 
-  console.log('props', props.data, parseFloat(props.data.CPUPerc));
+  console.log('props', props.data, parseFloat(props.data?.CPUPerc), limit);
   if (10 > 11) {
     setUserData({
       labels: ['CPU'],
       datasets: [
         {
           label: '%',
-          data: [parseFloat(props.CPUPerc)],
+          data: [parseFloat(props.data?.CPUPerc)],
         },
       ],
     });
@@ -37,10 +38,12 @@ export function Graph(props: GraphProps) {
       datasets: [
         {
           label: '%',
-          data: [parseFloat(props.data.CPUPerc)],
+          data: [parseFloat(props.data?.CPUPerc)],
         },
       ],
     });
+
+    setLimit(parseFloat(props.data?.CPUPerc) * 2);
   }, [props.data]);
   return (
     <div className="graph">
@@ -51,7 +54,7 @@ export function Graph(props: GraphProps) {
             y: {
               stacked: true,
               min: 0,
-              max: 2,
+              max: 5,
             },
           },
         }}
