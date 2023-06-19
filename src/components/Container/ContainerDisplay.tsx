@@ -20,7 +20,7 @@ export const DisplayRunning: FC = () => {
   return (
     <div className="dockercontainer">
       {runningContainers.map((el, index) => (
-        <div className="" key={index}>
+        <div className="container" key={index}>
           <div className="container-info">
             <p>
               <strong>Container: {el.Names}</strong>

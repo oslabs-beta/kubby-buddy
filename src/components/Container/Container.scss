@@ -1,6 +1,12 @@
 .dockercontainer {
+  width: 100%;
+  border: 1px solid green;
 }
 
+.container {
+  width: 100%;
+  border: 1px solid pink;
+}
 .list {
   background-color: hsl(0, 0%, 85%);
   width: 100%;
