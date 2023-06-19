@@ -65,3 +65,5 @@ export interface GraphProps {
   // PIDs?: string;
   [key: string]: any;
 }
+
+export type Parser = (net: string) => string[];

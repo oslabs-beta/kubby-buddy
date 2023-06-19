@@ -16,11 +16,11 @@ export const DisplayRunning: FC = () => {
     else setStop(false);
   };
 
-  console.log('hi', typeof statStream[0]);
+  console.log('hi', statStream[0]);
   return (
     <div className="dockercontainer">
       {runningContainers.map((el, index) => (
-        <li className="list" key={index}>
+        <li className="" key={index}>
           <div className="container-info">
             <p>
               <strong>Container: {el.Names}</strong>
@@ -88,7 +88,11 @@ export const DisplayRunning: FC = () => {
             <button>stats</button>
           </div> */}
 
-          {statStream.length > 0 ? <Graph data={statStream[index]} /> : ''}
+          {statStream.length > 0 ? (
+            <Graph className="bargraph" data={statStream[index]} />
+          ) : (
+            ''
+          )}
         </li>
       ))}
     </div>

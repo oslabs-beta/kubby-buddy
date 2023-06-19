@@ -6,44 +6,72 @@ import { GraphProps } from '../../types';
 
 export function Graph(props: GraphProps) {
   // const num = parseFloat(props.CPUPerc)
-  const [limit, setLimit] = useState(1);
+  // const [limit, setLimit] = useState(1);
   const [userData, setUserData] = useState({
-    labels: ['CPU'],
+    labels: ['CPU', 'Memory', 'Net I/O', 'Block I/O'],
     datasets: [
       {
-        label: '%',
-        data: [20],
+        label: 'CPU%',
+        data: [
+          parseFloat(props.data?.CPUPerc),
+          parseFloat(props.data?.MemPerc),
+          parseFloat(props.data?.CPUPerc),
+          parseFloat(props.data?.CPUPerc),
+        ],
+      },
+      {
+        label: 'Avail%',
+        data: [
+          100 - parseFloat(props.data?.CPUPerc),
+          100 - parseFloat(props.data?.MemPerc),
+          100 - parseFloat(props.data?.CPUPerc),
+          100 - parseFloat(props.data?.CPUPerc),
+        ],
       },
     ],
+    categoryPercentage: 0.1,
+    barPercentage: 1.0,
   });
 
-  console.log('props', props.data, parseFloat(props.data?.CPUPerc), limit);
-  if (10 > 11) {
-    setUserData({
-      labels: ['CPU'],
-      datasets: [
-        {
-          label: '%',
-          data: [parseFloat(props.data?.CPUPerc)],
-        },
-      ],
-    });
+  function netParser(net: string): number[] {
+    const result: number[] = [];
+    const indexey: number = net?.indexOf('B');
+    result.push(parseFloat(net?.slice(0, indexey - 2)));
+    result.push(parseFloat(net?.slice(indexey + 3)) + 1 * 1000);
+    return result;
   }
-
+  console.log(
+    parseFloat(props.data?.NetIO.slice(props.data?.NetIO.indexOf('B') + 3))
+  );
   useEffect(() => {
     // const updateedNum = parseFloat(props.CPUPerc)
-
+    const parsedNet = netParser(props.data?.NetIO);
+    console.log(parsedNet, 'useEffeect');
     setUserData({
-      labels: ['CPU'],
+      labels: ['CPU', 'Memory', 'Net I/O'],
       datasets: [
         {
-          label: '%',
-          data: [parseFloat(props.data?.CPUPerc)],
+          label: 'CPU%',
+          data: [
+            parseFloat(props.data?.CPUPerc),
+            parseFloat(props.data?.MemPerc),
+            (parsedNet[0] / parsedNet[1]) * 100,
+          ],
+        },
+        {
+          label: 'Avail%',
+          data: [
+            100 - parseFloat(props.data?.CPUPerc),
+            100 - parseFloat(props.data?.MemPerc),
+            (1 - parsedNet[0] / parsedNet[1]) * 100,
+          ],
         },
       ],
+      categoryPercentage: 0.1,
+      barPercentage: 0.1,
     });
 
-    setLimit(parseFloat(props.data?.CPUPerc) * 2);
+    // setLimit(parseFloat(props.data?.CPUPerc) * 2);
   }, [props.data]);
   return (
     <div className="graph">
@@ -52,11 +80,13 @@ export function Graph(props: GraphProps) {
         options={{
           scales: {
             y: {
-              stacked: true,
+              stacked: false,
               min: 0,
-              max: 5,
+              max: 100,
             },
           },
+          responsive: true,
+          indexAxis: 'y',
         }}
       />
     </div>

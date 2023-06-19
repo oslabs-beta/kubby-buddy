@@ -26,6 +26,9 @@
   display: grid;
   gap: 10px;
   padding-right: 1em;
+  .bargraph {
+    width: 20%;
+  }
 }
 .cmdbutton {
   // border: solid black 1px;
@@ -74,4 +77,9 @@
     flex-basis: calc(50% - 1em);
     height: 2em;
   }
+}
+
+.bargraph {
+  display: block;
+  width: 100px;
 }
