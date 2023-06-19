@@ -26,9 +26,6 @@
   display: grid;
   gap: 10px;
   padding-right: 1em;
-  .bargraph {
-    width: 20%;
-  }
 }
 .cmdbutton {
   // border: solid black 1px;
@@ -82,4 +79,14 @@
 .bargraph {
   display: block;
   width: 100px;
+}
+
+.chartContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid red;
+  .bargraph {
+    width: 100%;
+  }
 }
