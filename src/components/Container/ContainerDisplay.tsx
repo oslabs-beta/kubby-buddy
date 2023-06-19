@@ -22,9 +22,7 @@ export const DisplayRunning: FC = () => {
       {runningContainers.map((el, index) => (
         <div className="container" key={index}>
           <div className="container-info">
-            <p>
-              <strong>Container: {el.Names}</strong>
-            </p>
+            <div className="container-name">{el.Names}</div>
             <div className="subinfo">
               <p className="Imagename">Image: {el.Image}</p>
               <p className="Port">Port: {el.Ports}</p>
