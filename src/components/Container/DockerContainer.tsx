@@ -23,12 +23,11 @@ export const DockerContainers: FC = () => {
   //Create EvenSource to stream docker stats
 
   useEffect(() => {
-    console.log('in use effect');
     const sse = new EventSource('http://localhost:8080/general/stats');
     console.log(sse);
-    sse.onmessage = (event: MessageEvent) => {
-      console.log('in onmessage');
+    sse.onmessage = async (event: MessageEvent) => {
       const data = JSON.parse(event?.data);
+      // const data = await event?.data.json()
       setStatStream(data);
     };
     //If there is an error for the stream (Docker not running / No active containers) - setup for Error Component

@@ -8,7 +8,6 @@ import { Graph } from '../Graph/Graph';
 
 export const DisplayRunning: FC = () => {
   const { runningContainers, statStream } = useContext(UserContext);
-  console.log('containerdisplay', statStream);
   const [stopInvoked, setStop] = useState(false);
   console.log('testtest====', runningContainers);
 
@@ -17,6 +16,7 @@ export const DisplayRunning: FC = () => {
     else setStop(false);
   };
 
+  console.log('hi', typeof statStream[0]);
   return (
     <div className="dockercontainer">
       {runningContainers.map((el, index) => (
@@ -88,7 +88,7 @@ export const DisplayRunning: FC = () => {
             <button>stats</button>
           </div> */}
 
-          <Graph />
+          {statStream.length > 0 ? <Graph data={statStream[index]} /> : ''}
         </li>
       ))}
     </div>

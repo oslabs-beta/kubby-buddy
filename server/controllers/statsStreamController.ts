@@ -4,6 +4,18 @@ import { StatsStreamController, ErrorDetails } from '../../types';
 import { promisify } from 'node:util';
 const promisifyExec = promisify(exec);
 
+const parseData = (stdout: string) => {
+  const containers = [];
+  const dockerStats: string = stdout.trim();
+  const conts: string[] = dockerStats.split('\n');
+
+  for (let i = 0; i < conts.length; i++) {
+    containers.push(JSON.parse(conts[i]));
+  }
+  //returns array of proper objects to then be stringified
+  return containers;
+};
+
 const statsStreamController: StatsStreamController = {
   getAllContainerStats: async (
     _req: Request,
@@ -23,8 +35,8 @@ const statsStreamController: StatsStreamController = {
           );
 
           res.status(200);
-          const newData: string = JSON.stringify(stdout.trim().split('\n'));
-          console.log(newData);
+          const newData: string = JSON.stringify(parseData(stdout));
+          // console.log(newData);
           res.write('data: ' + newData + '\n\n');
           res.end();
           // return res.status(200).json(stdout);
