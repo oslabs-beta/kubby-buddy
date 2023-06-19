@@ -5,9 +5,10 @@
 */
 import React, { FC, useContext, useEffect } from 'react';
 import './SideNav.scss';
-import { Quickview } from '../Quickview/Quickview';
+// import { Quickview } from '../Quickview/Quickview';
 import { GlobalCommands } from '../GlobalCommands/GlobalCommands';
 import { UserContext } from '../../UserContext';
+import favicon from '../../assets/favicon.png';
 // import photo from '../../assests/logo.png'
 //container/all-active-containers
 
@@ -45,8 +46,16 @@ export const SideNav: FC = () => {
 
   return (
     <div className="side-nav">
+      <div className="favicon-holder">
+        <img className="favicon" src={favicon} />
+      </div>
+      <ul>
+        <li>Dashboard</li>
+        <li>Images</li>
+        <li>Containers</li>
+      </ul>
       <GlobalCommands />
-      <Quickview />
+      {/* <Quickview /> */}
     </div>
   );
 };

@@ -1,11 +1,43 @@
 div.side-nav {
-  border: solid hsl(29, 100%, 50%);
-  border-radius: 0.25rem;
-  grid-area: 2 / 1 / 5 / 2;
-  margin: 2em 0 0 2em;
-  padding-top: 1em;
-  background-color: hsl(0, 0%, 85%);
+  // border: solid hsl(29, 100%, 50%);
+  // border-radius: 0.25rem;
+  // grid-area: 1 / 1 / 6 / 2;
+  // margin: 2em 0 0 2em;
+  // padding-top: 1em;
+  background-color: #fcfbfc;
   display: flex;
   flex-direction: column;
-  color: #392e22;
+  align-items: center;
+  justify-content: flex-start;
+  color: #666367;
+  width: 15%;
+  * {
+  }
+  ul {
+    list-style: none;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    li {
+      margin: 1rem auto;
+      cursor: pointer;
+      transition: 500ms;
+    }
+    li:hover,
+    li:focus {
+      color: #ff7c02;
+    }
+    li:active {
+      color: darkorange;
+    }
+  }
+}
+.favicon-holder {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5rem;
 }
