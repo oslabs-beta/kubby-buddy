@@ -304,7 +304,30 @@ const imageController: ImageController = {
         next(errorDetails);
       }
       const dataArray = stdout.trim().split('\n');
-      res.locals.output = dataArray;
+      const deletedImagesIndex = dataArray.findIndex(
+        (item) => item === 'Deleted Images:'
+      );
+      const reclaimedSpaceIndex = dataArray.findIndex((item) =>
+        item.startsWith('Total reclaimed space:')
+      );
+
+      const deletedImages = dataArray
+        .slice(deletedImagesIndex + 1, reclaimedSpaceIndex)
+        .map((item) => item.trim())
+        .filter((item) => item !== ''); // Filter out empty strings
+
+      const reclaimedSpace = dataArray
+        .slice(reclaimedSpaceIndex)
+        .map((item) => item.trim());
+
+      const output = [
+        {
+          'Deleted Images:': deletedImages,
+          'Total reclaimed space:': reclaimedSpace,
+        },
+      ];
+
+      res.locals.output = output;
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
