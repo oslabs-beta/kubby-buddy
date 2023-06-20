@@ -1,30 +1,28 @@
-import React, { FC, useContext, useState } from "react";
-import { UserContext } from "../../UserContext";
-import { StartCommands } from "../Button/Start";
-import { StopCommands } from "../Button/Stop";
-import { DeleteCommands } from "../Button/Delete";
-import { LogCommands } from "../Button/Logs";
-import { Graph } from "../Graph/Graph";
+import React, { FC, useContext, useState } from 'react';
+import { UserContext } from '../../UserContext';
+import { StartCommands } from '../Button/Start';
+import { StopCommands } from '../Button/Stop';
+import { DeleteCommands } from '../Button/Delete';
+import { LogCommands } from '../Button/Logs';
+import { Graph } from '../Graph/Graph';
 
 export const DisplayRunning: FC = () => {
-  const { runningContainers } = useContext(UserContext);
-
+  const { runningContainers, statStream } = useContext(UserContext);
   const [stopInvoked, setStop] = useState(false);
-  console.log("testtest====", runningContainers);
+  console.log('testtest====', runningContainers);
 
   const handleStopInvoke = () => {
     if (!stopInvoked) setStop(true);
     else setStop(false);
   };
 
+  console.log('hi', statStream[0]);
   return (
     <div className="dockercontainer">
       {runningContainers.map((el, index) => (
-        <li className="list" key={index}>
+        <div className="container" key={index}>
           <div className="container-info">
-            <p>
-              <strong>Container: {el.Names}</strong>
-            </p>
+            <div className="container-name">{el.Names}</div>
             <div className="subinfo">
               <p className="Imagename">Image: {el.Image}</p>
               <p className="Port">Port: {el.Ports}</p>
@@ -45,14 +43,14 @@ export const DisplayRunning: FC = () => {
           <div className="cmdbutton">
             <StartCommands
               name={el.Names}
-              cmdRoute={new URL("/container/start", window.location.href)}
+              cmdRoute={new URL('/container/start', window.location.href)}
               fetchMethod="post"
               onClick={handleStopInvoke}
             />
             {/* <StopCommands name={el.Name} /> */}
             <StopCommands
               name={el.Names}
-              cmdRoute={new URL("/container/stop", window.location.href)}
+              cmdRoute={new URL('/container/stop', window.location.href)}
               fetchMethod="post"
               // onClick={handleStopInvoke}
             />
@@ -68,7 +66,7 @@ export const DisplayRunning: FC = () => {
               name={el.Names}
               cmdRoute={
                 new URL(
-                  "/container/remove-specific-container",
+                  '/container/remove-specific-container',
                   window.location.href
                 )
               }
@@ -76,7 +74,7 @@ export const DisplayRunning: FC = () => {
             />
             <LogCommands
               name={el.Names}
-              cmdRoute={new URL("/container/log", window.location.href)}
+              cmdRoute={new URL('/container/log', window.location.href)}
               fetchMethod="get"
             />
           </div>
@@ -87,9 +85,14 @@ export const DisplayRunning: FC = () => {
             <button>image</button>
             <button>stats</button>
           </div> */}
-
-          <Graph />
-        </li>
+          <div className="chartContainer">
+            {statStream.length > 0 ? (
+              <Graph className="bargraph" data={statStream[index]} />
+            ) : (
+              ''
+            )}
+          </div>
+        </div>
       ))}
     </div>
   );
