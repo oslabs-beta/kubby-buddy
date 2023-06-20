@@ -9,13 +9,15 @@ import './SideNav.scss';
 import { GlobalCommands } from '../GlobalCommands/GlobalCommands';
 import { UserContext } from '../../UserContext';
 import favicon from '../../assets/favicon.png';
-// import photo from '../../assests/logo.png'
-//container/all-active-containers
 
-//SwitchViewToggle will sit above Sidenav
 export const SideNav: FC = () => {
   // const testimage = require('../../assests/test.png')
-  const { setRunningContainers, setAvailableImages } = useContext(UserContext);
+  const {
+    setRunningContainers,
+    setAvailableImages,
+    setShowing,
+    setAvailableVolumes,
+  } = useContext(UserContext);
 
   useEffect(() => {
     async function getRunningContainers() {
@@ -40,6 +42,18 @@ export const SideNav: FC = () => {
         console.log(error);
       }
     }
+    async function getAvailableVolumes() {
+      try {
+        const getURL = 'volume/all-volumes';
+        const fetchResponse = await fetch(getURL);
+        const data = await fetchResponse.json();
+
+        setAvailableVolumes(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getAvailableVolumes();
     getRunningContainers();
     getAvailableImages();
   }, []);
@@ -51,8 +65,8 @@ export const SideNav: FC = () => {
       </div>
       <ul>
         <li>Dashboard</li>
-        <li>Images</li>
-        <li>Containers</li>
+        <li onClick={() => setShowing('Images')}>Images</li>
+        <li onClick={() => setShowing('Containers')}>Containers</li>
       </ul>
       <GlobalCommands />
       {/* <Quickview /> */}

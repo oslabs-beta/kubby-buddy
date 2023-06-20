@@ -1,4 +1,4 @@
-import React, { ReactNode, SetStateAction } from 'react';
+import React, { ReactNode } from 'react';
 
 export interface Context {
   children?: ReactNode;
@@ -6,12 +6,12 @@ export interface Context {
   setRunningContainers: React.Dispatch<React.SetStateAction<Container[]>>;
   availableImages: Image[];
   setAvailableImages: React.Dispatch<React.SetStateAction<Image[]>>;
-  showDockerContainers: Boolean;
-  setShowDockerContainers: React.Dispatch<SetStateAction<boolean>>;
-  showImages: Boolean;
-  setShowImages: React.Dispatch<SetStateAction<boolean>>;
+  showing: string;
+  setShowing: React.Dispatch<React.SetStateAction<string>>;
   statStream: Container[];
   setStatStream: React.Dispatch<React.SetStateAction<Container[]>>;
+  availableVolumes: Volume[];
+  setAvailableVolumes: React.Dispatch<React.SetStateAction<Volume[]>>;
 }
 
 export interface Container {
@@ -33,19 +33,30 @@ export interface Container {
 }
 
 export interface Image {
-  Conatiners: String;
-  CreatedAt: String;
-  CreatedSince: String;
-  Digest: String;
-  ID: String;
-  Repository: String;
-  SharedSize: String;
-  Size: String;
-  Tag: String;
-  UniqueSize: String;
-  VirtualSize: String;
+  Containers: string;
+  CreatedAt: string;
+  CreatedSince: string;
+  Digest: string;
+  ID: string;
+  Repository: string;
+  SharedSize: string;
+  Size: string;
+  Tag: string;
+  UniqueSize: string;
+  VirtualSize: string;
 }
-
+export interface Volume {
+  Availability: string;
+  Driver: string;
+  Group: string;
+  Labels: string;
+  Links: string;
+  Mountpoint: string;
+  Name: string;
+  Scope: string;
+  Size: string;
+  Status: string;
+}
 export interface CommandButtonProps {
   name: string;
   cmdRoute: URL;
