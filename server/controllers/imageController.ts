@@ -382,7 +382,7 @@ const imageController: ImageController = {
       }
       const dataArray = stdout.trim().split('\n');
       // .map((item) => JSON.parse(item, undefined));
-      res.locals.output = dataArray;
+      res.locals.output = [{ Deleted: dataArray }];
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
