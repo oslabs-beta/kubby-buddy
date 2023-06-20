@@ -1,6 +1,6 @@
 // /prune-stopped-containers
 
-import React, { useContext, forwardRef, Ref, useRef } from 'react';
+import React, { useContext, forwardRef, Ref, useRef, FC } from 'react';
 import create from '../../assets/add-document.png';
 import * as Popover from '@radix-ui/react-popover';
 import * as Select from '@radix-ui/react-select';
@@ -10,16 +10,27 @@ import { CommandButtonProps } from '../../types';
 import { UserContext } from '../../UserContext';
 import classnames from 'classnames';
 
+let selectedVolume: string;
+
 interface SelectItemProps {
   className?: string;
   children: React.ReactNode;
   value: string;
 }
-
-const VolumeSelect = () => {
+// interface VolumeSelectProps {
+//     onVolumeSelect: (selectedValue: string) => void;
+//   }
+const VolumeSelect: FC = () => {
   const { availableVolumes } = useContext(UserContext);
+
   return (
-    <Select.Root>
+    <Select.Root
+      value={selectedVolume}
+      onValueChange={(newValue) => {
+        selectedVolume = newValue;
+        console.log(selectedVolume);
+      }}
+    >
       <Select.Trigger className="VolumeSelectTrigger">
         <Select.Value placeholder="optional: include a volume"></Select.Value>
         <Select.Icon>
@@ -45,12 +56,14 @@ const VolumeSelect = () => {
 
 const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
   ({ value, children, className, ...props }, ref: Ref<HTMLDivElement>) => {
+    const valueRef = useRef<string>(value);
     return (
       <Select.Item
         value={value}
         className={classnames('SelectItem', className)}
         {...props}
         ref={ref}
+        onClick={() => console.log(valueRef)}
       >
         <Select.ItemText>{children}</Select.ItemText>
         <Select.ItemIndicator className="SelectItemIndicator">
@@ -69,36 +82,36 @@ interface CreateCommandProp extends CommandButtonProps {
   port?: string;
 }
 
-const CreateButton: React.FC<CreateCommandProp> = (
-  {
-    //   name,
-    //   cmdRoute,
-    //   fetchMethod,
-  }
-) => {
-  //helper
-  //   const command = async () => {
-  //     try {
-  //       const URL = cmdRoute;
-  //       const response = await fetch(URL, {
-  //         method: fetchMethod,
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({ name: name }),
-  //       });
-  //       const data = await response.json();
-  //       console.log('test---->:' + data);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
+const CreateButton: React.FC<CreateCommandProp> = ({
+  name,
+  cmdRoute,
+  fetchMethod,
+}) => {
   const containerName = useRef<HTMLInputElement>(null);
   const port = useRef<HTMLInputElement>(null);
-  // let selectedVolume: string;
-  // const handleVolumeSelect = (selectedValue: string) => {
-  //     selectedVolume = selectedValue;
-  // }
+  const volumeDirectory = useRef<HTMLInputElement>(null);
+
+  const command = async () => {
+    try {
+      const URL = cmdRoute;
+      const response = await fetch(URL, {
+        method: fetchMethod,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: containerName.current?.value,
+          port: port.current?.value,
+          image: name,
+          fileDirectory: volumeDirectory.current?.value,
+        }),
+      });
+      const data = await response.json();
+      console.log('test---->:' + data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <Popover.Root>
@@ -134,6 +147,7 @@ const CreateButton: React.FC<CreateCommandProp> = (
               </label>
               <input
                 className="Input"
+                ref={volumeDirectory}
                 id="height"
                 defaultValue="/var/lib/docker/volumes"
                 placeholder="optional"
@@ -150,7 +164,7 @@ const CreateButton: React.FC<CreateCommandProp> = (
                 defaultValue="1234"
               />
             </fieldset>
-            <CheckIcon />
+            <CheckIcon onClick={command} />
           </div>
           <Popover.Close className="PopoverClose" aria-label="Close">
             <Cross2Icon />
