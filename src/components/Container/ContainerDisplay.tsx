@@ -26,7 +26,6 @@ export const DisplayRunning: FC = () => {
     // Call the updateChange function whenever statStream is updated
     updateChange();
   }, [statStream]);
-
   return (
     <div className="dockercontainer">
       {runningContainers.map((el, index) => (
