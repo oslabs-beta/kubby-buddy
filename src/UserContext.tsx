@@ -1,39 +1,37 @@
 import React, { createContext, useState, ReactNode } from 'react';
-import { Context, Container, Image } from './types';
+import { Context, Container, Image, Volume } from './types';
 
 export const UserContext = createContext<Context>({
   runningContainers: [],
   setRunningContainers: () => {},
   availableImages: [],
   setAvailableImages: () => {},
-  showDockerContainers: false,
-  setShowDockerContainers: () => {},
-  showImages: false,
-  setShowImages: () => {},
+  availableVolumes: [],
+  setAvailableVolumes: () => {},
   statStream: [],
   setStatStream: () => {},
+  showing: '',
+  setShowing: () => {},
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [runningContainers, setRunningContainers] = useState<Container[]>([]);
   const [availableImages, setAvailableImages] = useState<Image[]>([]);
-  const [showDockerContainers, setShowDockerContainers] =
-    useState<boolean>(true);
-  const [showImages, setShowImages] = useState<boolean>(false);
+  const [availableVolumes, setAvailableVolumes] = useState<Volume[]>([]);
   const [statStream, setStatStream] = useState<Container[]>([]);
-  // const [showVolumes, setShowVolumes] = useState<Boolean>(true)
+  const [showing, setShowing] = useState<string>('Images');
 
   const contextProps: Context = {
     runningContainers,
     setRunningContainers,
     availableImages,
     setAvailableImages,
-    showDockerContainers,
-    setShowDockerContainers,
-    showImages,
-    setShowImages,
     statStream,
     setStatStream,
+    showing,
+    setShowing,
+    availableVolumes,
+    setAvailableVolumes,
   };
 
   return (
