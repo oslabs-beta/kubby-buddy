@@ -9,17 +9,11 @@ import { UserContext } from '../../UserContext';
 //using a ternary based on booleans from useContext to switch the views
 
 export const MainNav: FC = () => {
-  const { showDockerContainers, showImages } = useContext(UserContext);
+  const { showing } = useContext(UserContext);
 
   return (
     <div className="main-nav">
-      <ul>
-        {showDockerContainers && !showImages ? (
-          <DockerContainers />
-        ) : (
-          <Images />
-        )}
-      </ul>
+      <ul>{showing === 'Containers' ? <DockerContainers /> : <Images />}</ul>
     </div>
   );
 };

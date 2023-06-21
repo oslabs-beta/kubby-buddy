@@ -4,8 +4,8 @@ import { StartCommands } from '../Button/Start';
 import { StopCommands } from '../Button/Stop';
 import { DeleteCommands } from '../Button/Delete';
 import { LogCommands } from '../Button/Logs';
-// import { Graph } from '../Graph/Graph';
-import LineGraph from '../LineGraph/Line';
+import { Graph } from '../Graph/Graph';
+// import LineGraph from '../LineGraph/Line';
 
 export const DisplayRunning: FC = () => {
   const { runningContainers, statStream } = useContext(UserContext);
@@ -30,11 +30,9 @@ export const DisplayRunning: FC = () => {
   return (
     <div className="dockercontainer">
       {runningContainers.map((el, index) => (
-        <li className="list" key={index}>
+        <div className="container" key={index}>
           <div className="container-info">
-            <p>
-              <strong>Container: {el.Names}</strong>
-            </p>
+            <div className="container-name">{el.Names}</div>
             <div className="subinfo">
               <p className="Imagename">Image: {el.Image}</p>
               <p className="Port">Port: {el.Ports}</p>
@@ -97,14 +95,14 @@ export const DisplayRunning: FC = () => {
             <button>image</button>
             <button>stats</button>
           </div> */}
-
-          {/* {console.log(statStream[index])} */}
-          {statStream.length > 0 ? (
-            <LineGraph data={statStream[index]} change={change} />
-          ) : (
-            ''
-          )}
-        </li>
+          <div className="chartContainer">
+            {statStream.length > 0 ? (
+              <Graph className="bargraph" data={statStream[index]} />
+            ) : (
+              ''
+            )}
+          </div>
+        </div>
       ))}
     </div>
   );

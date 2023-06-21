@@ -70,9 +70,12 @@ imageRouter.post(
 //   }
 // );
 
+/**
 // delete all unused images (ones not acively connected with a container)
 // INPUT: nothing
-// OUTPUT: Not finalized: WORK IN PROGRESS
+// OUTPUT: array of objects containing property and array of values 
+// [{ "Deleted images:": ["deleted: sha256:dd6675b5cfea17abb655ea8229cbcfa5db9d0b041f839db0c24228c2e18a4bdf"], "Total reclaimed space:": ["Total reclaimed space: 305MB"]}]
+ */
 imageRouter.delete(
   '/prune-all-unused',
   imageController.pruneUnusedImages,
@@ -81,9 +84,12 @@ imageRouter.delete(
   }
 );
 
+/**
 // delete only dangling images (ones without a tag/name)
 // INPUT: nothing
-// OUTPUT: Not finalized: WORK IN PROGRESS
+// OUTPUT: array of objects containing property and array of values 
+// [{ "Deleted images:": ["deleted: sha256:dd6675b5cfea17abb655ea8229cbcfa5db9d0b041f839db0c24228c2e18a4bdf"], "Total reclaimed space:": ["Total reclaimed space: 305MB"]}]
+*/
 imageRouter.delete(
   '/prune-dangling',
   imageController.pruneDanglingImages,
@@ -94,7 +100,7 @@ imageRouter.delete(
 
 // remove image by name
 // INPUT: nothing
-// OUTPUT: Not finalized: WORK IN PROGRESS
+// OUTPUT: array of object [{"Deleted": ["Untagged: image1:latest", "Deleted: sha256:df9e5deb1141fdaefa168a9a90e7936e09589b6ca6cd0fd6f7d564a9a45ec5ed"]}]
 imageRouter.delete(
   '/remove-image-by-name',
   imageController.removeSingleImage,
