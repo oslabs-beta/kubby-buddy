@@ -35,6 +35,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     statStream,
     setStatStream,
   };
+
   return (
     <UserContext.Provider value={contextProps}>{children}</UserContext.Provider>
   );

@@ -6,6 +6,7 @@ import { GraphProps } from '../../types';
 
 export function Graph(props: GraphProps) {
   // const num = parseFloat(props.CPUPerc)
+  console.log('NEW PROPS', props.data);
   const [limit, setLimit] = useState(1);
   const [userData, setUserData] = useState({
     labels: ['CPU'],

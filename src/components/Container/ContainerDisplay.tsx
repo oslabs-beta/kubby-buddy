@@ -1,22 +1,32 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../UserContext';
 import { StartCommands } from '../Button/Start';
 import { StopCommands } from '../Button/Stop';
 import { DeleteCommands } from '../Button/Delete';
 import { LogCommands } from '../Button/Logs';
-import { Graph } from '../Graph/Graph';
+// import { Graph } from '../Graph/Graph';
+import LineGraph from '../LineGraph/Line';
 
 export const DisplayRunning: FC = () => {
   const { runningContainers, statStream } = useContext(UserContext);
   const [stopInvoked, setStop] = useState(false);
-  console.log('testtest====', runningContainers);
+  const [change, setChange] = useState(false);
+  // console.log('testtest====', runningContainers);
 
   const handleStopInvoke = () => {
     if (!stopInvoked) setStop(true);
     else setStop(false);
   };
 
-  console.log('hi', typeof statStream[0]);
+  const updateChange = () => {
+    setChange((prevChange) => !prevChange);
+  };
+
+  useEffect(() => {
+    // Call the updateChange function whenever statStream is updated
+    updateChange();
+  }, [statStream]);
+
   return (
     <div className="dockercontainer">
       {runningContainers.map((el, index) => (
@@ -88,7 +98,12 @@ export const DisplayRunning: FC = () => {
             <button>stats</button>
           </div> */}
 
-          {statStream.length > 0 ? <Graph data={statStream[index]} /> : ''}
+          {/* {console.log(statStream[index])} */}
+          {statStream.length > 0 ? (
+            <LineGraph data={statStream[index]} change={change} />
+          ) : (
+            ''
+          )}
         </li>
       ))}
     </div>
