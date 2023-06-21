@@ -74,7 +74,9 @@ export const DisplayRunning: FC = () => {
             />
             <LogCommands
               name={el.Names}
-              cmdRoute={new URL('/container/log', window.location.href)}
+              cmdRoute={
+                new URL(`/container/log?name=${el.Names}`, window.location.href)
+              }
               fetchMethod="get"
             />
           </div>
