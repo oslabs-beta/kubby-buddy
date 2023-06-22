@@ -18,12 +18,16 @@ export const Images: FC = () => {
     images = availableImages.map((el, index) => (
       <li className="listImage" key={index}>
         <div className="image-info">
-          <p>{el.Repository}</p>
+          <p className="image-title">{el.Repository}</p>
           <div className="image-subinfo">
             <p>Containers: {el.Containers}</p>
             <p>Time since created: {el.CreatedSince}</p>
+          </div>
+          <div className="image-subinfo">
             <p>Created At: {el.CreatedAt}</p>
             <p>Size: {el.Size}</p>
+          </div>
+          <div className="image-subinfo">
             <p>Tag: {el.Tag}</p>
             <p>ID: {el.ID}</p>
           </div>

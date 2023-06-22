@@ -9,10 +9,13 @@ import Loader from '../Loader/Loader';
 //using a ternary based on booleans from useContext to switch the views
 
 export const MainNav: FC = () => {
-  const { showing } = useContext(UserContext);
-  if (showing) {
+  const { showing, runningContainers } = useContext(UserContext);
+  if (!runningContainers) {
     return <Loader />;
   }
+  // if (showing) {
+  //   return <Loader />;
+  // }
   return (
     <div className="main-nav">
       <ul>{showing === 'Containers' ? <DockerContainers /> : <Images />}</ul>
