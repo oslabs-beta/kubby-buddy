@@ -89,24 +89,24 @@ export const DisplayRunning: FC = () => {
             />
 
         )} */}
-          <DeleteCommands
-            name={el.Names}
-            cmdRoute={
-              new URL(
-                '/container/remove-specific-container',
-                window.location.href
-              )
-            }
-            fetchMethod="delete"
-          />
-          <LogCommands
-            name={el.Names}
-            cmdRoute={
-              new URL(`/container/log?name=${el.Names}`, window.location.href)
-            }
-            fetchMethod="get"
-          />
-        </div>
+            <DeleteCommands
+              name={el.Names}
+              cmdRoute={
+                new URL(
+                  '/container/remove-specific-container',
+                  window.location.href
+                )
+              }
+              fetchMethod="delete"
+            />
+            <LogCommands
+              name={el.Names}
+              cmdRoute={
+                new URL(`/container/log?name=${el.Names}`, window.location.href)
+              }
+              fetchMethod="get"
+            />
+          </div>
 
           {/* <div className="dropdown">
         <button>container</button>
@@ -114,23 +114,24 @@ export const DisplayRunning: FC = () => {
         <button>image</button>
         <button>stats</button>
       </div> */}
-        <div className="chartContainer">
-          {statStream.length > 0 ? (
-            <LineGraph
-              className="bargraph"
-              data={statStream[index]}
-              change={change}
-            />
-          ) : (
-            ''
-          )}
-        </div>
-        <div className="chartContainer">
-          {statStream.length > 0 ? (
-            <Graph className="bargraph" data={statStream[index]} />
-          ) : (
-            ''
-          )}
+          <div className="chartContainer">
+            {statStream.length > 0 ? (
+              <LineGraph
+                className="bargraph"
+                data={statStream[index]}
+                change={change}
+              />
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="chartContainer">
+            {statStream.length > 0 ? (
+              <Graph className="bargraph" data={statStream[index]} />
+            ) : (
+              ''
+            )}
+          </div>
         </div>
       ));
   }
