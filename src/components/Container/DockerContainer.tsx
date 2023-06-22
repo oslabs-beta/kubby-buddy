@@ -23,6 +23,7 @@ export const DockerContainers: FC = () => {
   //Create EvenSource to stream docker stats
 
   useEffect(() => {
+    // ** Change localhost to env later on **
     const sse = new EventSource('http://localhost:8080/general/stats');
     // console.log(sse);
     sse.onmessage = async (event: MessageEvent) => {
