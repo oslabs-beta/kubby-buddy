@@ -39,6 +39,7 @@ export const SideNav: FC = () => {
 
         setAvailableImages(data);
       } catch (error) {
+        setAvailableImages([]);
         console.log(error);
       }
     }
