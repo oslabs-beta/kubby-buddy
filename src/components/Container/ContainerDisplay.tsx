@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import { UserContext } from '../../UserContext';
 import { StartCommands } from '../Button/Start';
 import { StopCommands } from '../Button/Stop';
@@ -10,7 +10,7 @@ import { Graph } from '../Graph/Graph';
 export const DisplayRunning: FC = () => {
   const { runningContainers, statStream } = useContext(UserContext);
   const [stopInvoked, setStop] = useState(false);
-  const [change, setChange] = useState(false);
+  // const [change, setChange] = useState(false);
   // console.log('testtest====', runningContainers);
 
   const handleStopInvoke = () => {
@@ -18,14 +18,14 @@ export const DisplayRunning: FC = () => {
     else setStop(false);
   };
 
-  const updateChange = () => {
-    setChange((prevChange) => !prevChange);
-  };
+  // const updateChange = () => {
+  //   setChange((prevChange) => !prevChange);
+  // };
 
-  useEffect(() => {
-    // Call the updateChange function whenever statStream is updated
-    updateChange();
-  }, [statStream]);
+  // useEffect(() => {
+  //   // Call the updateChange function whenever statStream is updated
+  //   updateChange();
+  // }, [statStream]);
   return (
     <div className="dockercontainer">
       {runningContainers.map((el, index) => (
