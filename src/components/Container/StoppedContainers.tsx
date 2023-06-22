@@ -1,19 +1,16 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import { UserContext } from '../../UserContext';
 import { StartCommands } from '../Button/Start';
-import { StopCommands } from '../Button/Stop';
+// import { StopCommands } from '../Button/Stop';
 import { DeleteCommands } from '../Button/Delete';
 import { LogCommands } from '../Button/Logs';
 // import { Graph } from '../Graph/Graph';
-import LineGraph from '../LineGraph/Line';
-import Donut1 from '../Donut/DonutCPU';
-import Loader from '../Loader/Loader';
-import Donut2 from '../Donut/DonutMemory';
+// import LineGraph from '../LineGraph/Line';
 
-export const DisplayRunning: FC = () => {
-  const { runningContainers, statStream } = useContext(UserContext);
+export const StoppedContainers: FC = () => {
+  const { stoppedContainers } = useContext(UserContext);
   const [stopInvoked, setStop] = useState(false);
-  const [change, setChange] = useState(false);
+  // const [change, setChange] = useState(false);
   // console.log('testtest====', runningContainers);
 
   const handleStopInvoke = () => {
@@ -21,22 +18,25 @@ export const DisplayRunning: FC = () => {
     else setStop(false);
   };
 
-  const updateChange = () => {
-    setChange((prevChange) => !prevChange);
-  };
+  // const updateChange = () => {
+  //   setChange((prevChange) => !prevChange);
+  // };
 
-  useEffect(() => {
-    // Call the updateChange function whenever statStream is updated
-    updateChange();
-    console.log(runningContainers);
-  }, [runningContainers, statStream]);
+  // useEffect(() => {
+  //   // Call the updateChange function whenever statStream is updated
+  //   updateChange();
+  // }, [statStream]);
 
-  let running;
+  let stopped;
 
-  if (typeof runningContainers === 'string') {
-    running = <Loader />;
+  if (typeof stoppedContainers === 'string') {
+    stopped = (
+      <div>
+        <p>You have no running containers</p>
+      </div>
+    );
   } else {
-    running = runningContainers.map((el, index) => (
+    stopped = stoppedContainers.map((el, index) => (
       <div className="container" key={index}>
         <div className="container-info">
           <div className="container-name">{el.Names}</div>
@@ -65,12 +65,12 @@ export const DisplayRunning: FC = () => {
             onClick={handleStopInvoke}
           />
           {/* <StopCommands name={el.Name} /> */}
-          <StopCommands
-            name={el.Names}
-            cmdRoute={new URL('/container/stop', window.location.href)}
-            fetchMethod="post"
-            // onClick={handleStopInvoke}
-          />
+          {/* <StopCommands
+              name={el.Names}
+              cmdRoute={new URL('/container/stop', window.location.href)}
+              fetchMethod="post"
+              // onClick={handleStopInvoke}
+            /> */}
           {/* {stopInvoked && (
             <DeleteCommands
              name={el.Names}
@@ -104,32 +104,18 @@ export const DisplayRunning: FC = () => {
         <button>image</button>
         <button>stats</button>
       </div> */}
-        <div className="chartContainer">
-          {statStream.length > 0 ? (
-            <Donut1 className="bargraph" data={statStream[index]} />
-          ) : (
-            ''
-          )}
-        </div>
-        <div className="chartContainer">
-          {statStream.length > 0 ? (
-            <Donut2 className="bargraph" data={statStream[index]} />
-          ) : (
-            ''
-          )}
-        </div>
-        <div className="chartContainer">
-          {statStream.length > 0 ? (
-            <LineGraph
-              className="bargraph"
-              data={statStream[index]}
-              change={change}
-            />
-          ) : (
-            ''
-          )}
-        </div>
         {/* <div className="chartContainer">
+            {statStream.length > 0 ? (
+              <LineGraph
+                className="bargraph"
+                data={statStream[index]}
+                change={change}
+              />
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="chartContainer">
             {statStream.length > 0 ? (
               <Graph className="bargraph" data={statStream[index]} />
             ) : (
@@ -140,5 +126,5 @@ export const DisplayRunning: FC = () => {
     ));
   }
 
-  return <div className="dockercontainer">{running}</div>;
+  return <div className="dockercontainer">{stopped}</div>;
 };

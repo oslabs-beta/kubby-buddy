@@ -2,17 +2,25 @@ import React, { FC, useContext, useEffect } from 'react';
 import './Container.scss';
 import { UserContext } from '../../UserContext';
 import { DisplayRunning } from './ContainerDisplay';
+import { StoppedContainers } from './StoppedContainers';
+import { Container } from '../../types';
 
 export const DockerContainers: FC = () => {
-  const { setRunningContainers, setStatStream } = useContext(UserContext);
+  const { setStoppedContainers, setRunningContainers, setStatStream } =
+    useContext(UserContext);
 
   useEffect(() => {
     async function getRunningContainers() {
       try {
         const url = 'container/all-active-containers';
         const response = await fetch(url);
-        const data = await response.json();
-        setRunningContainers(data);
+        const data: Container[] = await response.json();
+        setRunningContainers(
+          data.filter((container) => container.State !== 'exited')
+        );
+        setStoppedContainers(
+          data.filter((container) => container.State === 'exited')
+        );
       } catch (err) {
         console.error(err);
       }
@@ -46,5 +54,10 @@ export const DockerContainers: FC = () => {
   }, []);
 
   //pass down necessary props to buttons for their relevant fetch requests
-  return <DisplayRunning />;
+  return (
+    <>
+      <DisplayRunning />
+      <StoppedContainers />
+    </>
+  );
 };

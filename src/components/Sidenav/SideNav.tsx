@@ -9,10 +9,12 @@ import './SideNav.scss';
 import { GlobalCommands } from '../GlobalCommands/GlobalCommands';
 import { UserContext } from '../../UserContext';
 import favicon from '../../assets/favicon.png';
+import { Container } from '../../types';
 
 export const SideNav: FC = () => {
   // const testimage = require('../../assests/test.png')
   const {
+    setStoppedContainers,
     setRunningContainers,
     setAvailableImages,
     setShowing,
@@ -24,9 +26,14 @@ export const SideNav: FC = () => {
       try {
         const getURL = 'container/all-active-containers';
         const fetchResponse = await fetch(getURL);
-        const data = await fetchResponse.json();
+        const data: Container[] = await fetchResponse.json();
 
-        setRunningContainers(data);
+        setRunningContainers(
+          data.filter((container) => container.State !== 'exited')
+        );
+        setStoppedContainers(
+          data.filter((container) => container.State === 'exited')
+        );
       } catch (error) {
         console.log(error);
       }
