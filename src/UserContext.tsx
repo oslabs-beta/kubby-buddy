@@ -33,6 +33,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     availableVolumes,
     setAvailableVolumes,
   };
+
   return (
     <UserContext.Provider value={contextProps}>{children}</UserContext.Provider>
   );

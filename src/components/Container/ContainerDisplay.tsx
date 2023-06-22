@@ -5,10 +5,13 @@ import { StopCommands } from '../Button/Stop';
 import { DeleteCommands } from '../Button/Delete';
 import { LogCommands } from '../Button/Logs';
 import { Graph } from '../Graph/Graph';
+// import LineGraph from '../LineGraph/Line';
 
 export const DisplayRunning: FC = () => {
   const { runningContainers, statStream } = useContext(UserContext);
   const [stopInvoked, setStop] = useState(false);
+  // const [change, setChange] = useState(false);
+  // console.log('testtest====', runningContainers);
 
   const handleStopInvoke = () => {
     if (!stopInvoked) setStop(true);

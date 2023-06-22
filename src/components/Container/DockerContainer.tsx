@@ -24,7 +24,7 @@ export const DockerContainers: FC = () => {
 
   useEffect(() => {
     const sse = new EventSource('http://localhost:8080/general/stats');
-    console.log(sse);
+    // console.log(sse);
     sse.onmessage = async (event: MessageEvent) => {
       const data = JSON.parse(event?.data);
       // const data = await event?.data.json()
@@ -34,9 +34,10 @@ export const DockerContainers: FC = () => {
 
     //if this is uncommented, the stream stops
 
-    // sse.onerror = () => {
-    //   return sse.close();
-    // }
+    sse.onerror = (event) => {
+      // return sse.close();
+      console.log('ERROR TRIPPED', event);
+    };
     //Cleanup
     return () => {
       sse.close();
