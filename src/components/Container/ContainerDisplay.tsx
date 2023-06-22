@@ -5,18 +5,27 @@ import { StopCommands } from '../Button/Stop';
 import { DeleteCommands } from '../Button/Delete';
 import { LogCommands } from '../Button/Logs';
 import { Graph } from '../Graph/Graph';
+// import LineGraph from '../LineGraph/Line';
 
 export const DisplayRunning: FC = () => {
   const { runningContainers, statStream } = useContext(UserContext);
   const [stopInvoked, setStop] = useState(false);
-  console.log('testtest====', runningContainers);
+  // const [change, setChange] = useState(false);
+  // console.log('testtest====', runningContainers);
 
   const handleStopInvoke = () => {
     if (!stopInvoked) setStop(true);
     else setStop(false);
   };
 
-  console.log('hi', statStream[0]);
+  // const updateChange = () => {
+  //   setChange((prevChange) => !prevChange);
+  // };
+
+  // useEffect(() => {
+  //   // Call the updateChange function whenever statStream is updated
+  //   updateChange();
+  // }, [statStream]);
   return (
     <div className="dockercontainer">
       {runningContainers.map((el, index) => (

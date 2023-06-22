@@ -23,13 +23,14 @@
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@types/express": "^4.17.17",
     "@types/node": "^20.2.5",
-    "chart.js": "^4.3.0",
-    "classnames": "^2.3.2",
+    "chart.js": "^3.9.1",
+    "chartjs-adapter-luxon": "^1.2.0",
+    "chartjs-plugin-streaming": "^2.0.0",
     "dockerode": "^3.3.5",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "react": "^18.2.0",
-    "react-chartjs-2": "^5.2.0",
+    "react-chartjs-2": "^4.3.1",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
