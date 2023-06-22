@@ -6,6 +6,7 @@ import { DeleteCommands } from '../Button/Delete';
 import { LogCommands } from '../Button/Logs';
 import { Graph } from '../Graph/Graph';
 import LineGraph from '../LineGraph/Line';
+import Loader from '../Loader/Loader';
 
 export const DisplayRunning: FC = () => {
   const { runningContainers, statStream } = useContext(UserContext);
@@ -30,11 +31,7 @@ export const DisplayRunning: FC = () => {
   let containers;
 
   if (typeof runningContainers === 'string') {
-    containers = (
-      <div>
-        <p>You have no running containers</p>
-      </div>
-    );
+    containers = <Loader />;
   } else {
     containers = runningContainers
       .sort((a, b) => {
