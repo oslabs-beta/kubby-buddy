@@ -18,7 +18,6 @@ export const DisplayRunning: FC = () => {
     else setStop(false);
   };
 
-
   const updateChange = () => {
     setChange((prevChange) => !prevChange);
   };
@@ -27,7 +26,7 @@ export const DisplayRunning: FC = () => {
     // Call the updateChange function whenever statStream is updated
     updateChange();
   }, [statStream]);
-    
+
   let containers;
 
   if (typeof runningContainers === 'string') {
@@ -74,47 +73,29 @@ export const DisplayRunning: FC = () => {
           />
           {/* {stopInvoked && (
             <DeleteCommands
-              name={el.Names}
-              cmdRoute={
-                new URL(
-                  '/container/remove-specific-container',
-                  window.location.href
-                )
-              }
-              fetchMethod="delete"
-            />
-            <LogCommands
-              name={el.Names}
-              cmdRoute={
-                new URL(`/container/log?name=${el.Names}`, window.location.href)
-              }
-              fetchMethod="get"
+             name={el.Names}
+             cmdRoute={new URL("/container/remove-specific-container", window.location.href)}
+             fetchMethod='delete'
             />
 
-          {/* <div className="dropdown">
-            <button>container</button>
-            <button>volumes</button>
-            <button>image</button>
-            <button>stats</button>
-          </div> */}
-          <div className="chartContainer">
-            {statStream.length > 0 ? (
-              <LineGraph
-                className="bargraph"
-                data={statStream[index]}
-                change={change}
-              />
-            ) : (
-              ''
-            )}
-          </div>
-          <div className="chartContainer">
-            {statStream.length > 0 ? (
-              <Graph className="bargraph" data={statStream[index]} />
-            ) : (
-              ''
-            )}
-          </div>
+        )} */}
+          <DeleteCommands
+            name={el.Names}
+            cmdRoute={
+              new URL(
+                '/container/remove-specific-container',
+                window.location.href
+              )
+            }
+            fetchMethod="delete"
+          />
+          <LogCommands
+            name={el.Names}
+            cmdRoute={
+              new URL(`/container/log?name=${el.Names}`, window.location.href)
+            }
+            fetchMethod="get"
+          />
         </div>
 
         {/* <div className="dropdown">
@@ -123,6 +104,17 @@ export const DisplayRunning: FC = () => {
         <button>image</button>
         <button>stats</button>
       </div> */}
+        <div className="chartContainer">
+          {statStream.length > 0 ? (
+            <LineGraph
+              className="bargraph"
+              data={statStream[index]}
+              change={change}
+            />
+          ) : (
+            ''
+          )}
+        </div>
         <div className="chartContainer">
           {statStream.length > 0 ? (
             <Graph className="bargraph" data={statStream[index]} />
