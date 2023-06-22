@@ -105,40 +105,45 @@ export default function LineChart(props: any) {
   }
 
   return (
-    <div className="lineGraph">
-      <Line
-        ref={chart}
-        data={chartData}
-        options={{
-          plugins: {
-            legend: {
-              display: true,
-              position: 'bottom',
-            },
-            streaming: {
-              duration: 20000,
-              refresh: 100,
-              delay: 1000,
-              frameRate: 100,
-            },
-          },
-          scales: {
-            x: {
-              type: 'realtime',
-              realtime: {
+    <>
+      <h1 className="header-linegraph">
+        Network I/O: {JSON.stringify(props.data.NetIO).replace(/"/g, '')}
+      </h1>
+      <div className="lineGraph">
+        <Line
+          ref={chart}
+          data={chartData}
+          options={{
+            plugins: {
+              legend: {
+                display: true,
+                position: 'bottom',
+              },
+              streaming: {
                 duration: 20000,
                 refresh: 100,
                 delay: 1000,
+                frameRate: 100,
               },
             },
-          },
-          elements: {
-            line: {
-              spanGaps: true,
+            scales: {
+              x: {
+                type: 'realtime',
+                realtime: {
+                  duration: 20000,
+                  refresh: 100,
+                  delay: 1000,
+                },
+              },
             },
-          },
-        }}
-      />
-    </div>
+            elements: {
+              line: {
+                spanGaps: true,
+              },
+            },
+          }}
+        />
+      </div>
+    </>
   );
 }
