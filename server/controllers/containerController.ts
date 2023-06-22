@@ -8,15 +8,17 @@ const promisifyExec = promisify(exec);
 function isJSON(data: string[]): boolean {
   try {
     for (const item of data) {
+      console.log(`Parsing item: ${item}`);
       JSON.parse(item);
     }
     return true; // All elements are valid JSON strings
   } catch (error) {
+    console.error(`Error parsing item: ${error}`);
     return false; // At least one element is not a valid JSON string
   }
 }
 
-let transformedLogs;
+let transformedLogs: any = 'placeholder';
 
 const containerController: ContainerController = {
   //middleware to run CLI command to get list of active containers
@@ -219,17 +221,16 @@ const containerController: ContainerController = {
     console.log(req.query);
     const { name } = req.query;
     try {
-      const { stdout, stderr } = await promisifyExec(
-        `docker container logs ${name} `
-      );
-      if (stderr) {
-        const errorDetails: ErrorDetails = {
-          log: 'error in the containerController.getSpecificLog exec',
-          err: stderr,
-          message: 'error in the containerController.getSpecificLog exec',
-        };
-        next(errorDetails);
-      }
+      const { stdout } = await promisifyExec(`docker container logs ${name} `);
+      // console.log('std', stderr);
+      // if (stderr) {
+      //   const errorDetails: ErrorDetails = {
+      //     log: 'error in the containerController.getSpecificLog exec',
+      //     err: stderr,
+      //     message: 'error in the containerController.getSpecificLog exec',
+      //   };
+      //   next(errorDetails);
+      // }
       // const dataArray = stdout
       //   .trim()
       //   .split('\n')

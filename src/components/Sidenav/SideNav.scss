@@ -33,11 +33,14 @@ div.side-nav {
   }
 }
 .favicon-holder {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: 5rem;
+}
+.favicon {
+  align-self: center;
 }

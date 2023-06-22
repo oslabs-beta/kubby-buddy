@@ -1,38 +1,47 @@
 // /prune-stopped-containers
 
-import React, { useContext, forwardRef, Ref, useRef, FC } from 'react';
+import React, {
+  useContext,
+  forwardRef,
+  Ref,
+  useRef,
+  FC,
+  useState,
+} from 'react';
 import create from '../../assets/add-document.png';
 import * as Popover from '@radix-ui/react-popover';
 import * as Select from '@radix-ui/react-select';
+import * as Checkbox from '@radix-ui/react-checkbox';
 import './CreatePopover.scss';
 import { Cross2Icon, CheckIcon, ChevronDownIcon } from '@radix-ui/react-icons';
 import { CommandButtonProps } from '../../types';
 import { UserContext } from '../../UserContext';
 import classnames from 'classnames';
 
-let selectedVolume: string;
-
 interface SelectItemProps {
   className?: string;
   children: React.ReactNode;
   value: string;
 }
-// interface VolumeSelectProps {
-//     onVolumeSelect: (selectedValue: string) => void;
-//   }
-const VolumeSelect: FC = () => {
+interface VolumeSelectProps {
+  selectedVolume: string;
+  setSelectedVolume: (selectedValue: string) => void;
+}
+const VolumeSelect: FC<VolumeSelectProps> = ({
+  selectedVolume,
+  setSelectedVolume,
+}) => {
   const { availableVolumes } = useContext(UserContext);
 
   return (
     <Select.Root
       value={selectedVolume}
       onValueChange={(newValue) => {
-        selectedVolume = newValue;
-        console.log(selectedVolume);
+        setSelectedVolume(newValue);
       }}
     >
       <Select.Trigger className="VolumeSelectTrigger">
-        <Select.Value placeholder="optional: include a volume"></Select.Value>
+        <Select.Value placeholder=""></Select.Value>
         <Select.Icon>
           <ChevronDownIcon />
         </Select.Icon>
@@ -90,6 +99,9 @@ const CreateButton: React.FC<CreateCommandProp> = ({
   const containerName = useRef<HTMLInputElement>(null);
   const port = useRef<HTMLInputElement>(null);
   const volumeDirectory = useRef<HTMLInputElement>(null);
+  const [selectedVolume, setSelectedVolume] = useState('');
+  const [error, setError] = useState<undefined | string>(undefined);
+  let removeChecked = false;
 
   const command = async () => {
     try {
@@ -104,12 +116,14 @@ const CreateButton: React.FC<CreateCommandProp> = ({
           port: port.current?.value,
           image: name,
           fileDirectory: volumeDirectory.current?.value,
+          remove: removeChecked ? 'yes' : 'no',
         }),
       });
       const data = await response.json();
       console.log('test---->:' + data);
+      if (response.status === 500) throw new Error(data);
     } catch (err) {
-      console.error(err);
+      setError(err instanceof Error ? err.message : String(err));
     }
   };
 
@@ -122,7 +136,7 @@ const CreateButton: React.FC<CreateCommandProp> = ({
         <Popover.Content className="PopoverContent" sideOffset={5}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <p className="Text" style={{ marginBottom: 10 }}>
-              Specifications
+              New Container From This Image
             </p>
             <fieldset className="Fieldset">
               <label className="Label" htmlFor="name">
@@ -136,35 +150,56 @@ const CreateButton: React.FC<CreateCommandProp> = ({
               />
             </fieldset>
             <fieldset className="Fieldset">
-              <label className="Label" htmlFor="volumename">
-                Volume Name
+              <label className="Label" htmlFor="Volume Name">
+                Volume (optional)
               </label>
-              <VolumeSelect />
-            </fieldset>
-            <fieldset className="Fieldset">
-              <label className="Label" htmlFor="height">
-                Volume Directory
-              </label>
-              <input
-                className="Input"
-                ref={volumeDirectory}
-                id="height"
-                defaultValue="/var/lib/docker/volumes"
-                placeholder="optional"
+              <VolumeSelect
+                setSelectedVolume={setSelectedVolume}
+                selectedVolume={selectedVolume}
               />
             </fieldset>
+            {selectedVolume && (
+              <fieldset className="Fieldset">
+                <label className="Label" htmlFor="Volume Directory">
+                  Volume Directory
+                </label>
+                <input
+                  className="Input"
+                  ref={volumeDirectory}
+                  id="height"
+                  placeholder="volume location on container"
+                />
+              </fieldset>
+            )}
+
             <fieldset className="Fieldset">
-              <label className="Label" htmlFor="maxHeight">
+              <label className="Label" htmlFor="port">
                 Port
               </label>
               <input
                 className="Input"
                 ref={port}
                 id="maxHeight"
-                defaultValue="1234"
+                placeholder="unused port number"
               />
             </fieldset>
-            <CheckIcon onClick={command} />
+            <fieldset className="Fieldset">
+              <label className="CheckLabel" htmlFor="run with remove flag?">
+                run with remove flag?
+              </label>
+              <Checkbox.Root
+                className="CheckboxRoot"
+                onCheckedChange={() => (removeChecked = !removeChecked)}
+              >
+                <Checkbox.Indicator className="CheckboxIndicator">
+                  <CheckIcon />
+                </Checkbox.Indicator>
+              </Checkbox.Root>
+            </fieldset>
+
+            {error && <label className="errorImage">{error}</label>}
+
+            <CheckIcon className="submitCheck" onClick={command} />
           </div>
           <Popover.Close className="PopoverClose" aria-label="Close">
             <Cross2Icon />
