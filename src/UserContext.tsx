@@ -4,6 +4,8 @@ import { Context, Container, Image, Volume } from './types';
 export const UserContext = createContext<Context>({
   runningContainers: [],
   setRunningContainers: () => {},
+  stoppedContainers: [],
+  setStoppedContainers: () => {},
   availableImages: [],
   setAvailableImages: () => {},
   availableVolumes: [],
@@ -16,6 +18,7 @@ export const UserContext = createContext<Context>({
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [runningContainers, setRunningContainers] = useState<Container[]>([]);
+  const [stoppedContainers, setStoppedContainers] = useState<Container[]>([]);
   const [availableImages, setAvailableImages] = useState<Image[]>([]);
   const [availableVolumes, setAvailableVolumes] = useState<Volume[]>([]);
   const [statStream, setStatStream] = useState<Container[]>([]);
@@ -24,6 +27,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const contextProps: Context = {
     runningContainers,
     setRunningContainers,
+    stoppedContainers,
+    setStoppedContainers,
     availableImages,
     setAvailableImages,
     statStream,

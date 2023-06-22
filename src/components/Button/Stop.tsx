@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import stop from '../../assets/stop.png';
 
 import { CommandButtonProps } from '../../types';
+import { UserContext } from '../../UserContext';
+// import { StoppedContainers } from '../Container/StoppedContainers';
 
 interface StopCommandProps extends CommandButtonProps {
   // onClick: ()=> void;
@@ -12,6 +14,12 @@ const StopButton: React.FC<StopCommandProps> = ({
   cmdRoute,
   fetchMethod,
 }) => {
+  const {
+    setStoppedContainers,
+    setRunningContainers,
+    stoppedContainers,
+    runningContainers,
+  } = useContext(UserContext);
   const command = async () => {
     try {
       const URL = cmdRoute;
@@ -25,6 +33,15 @@ const StopButton: React.FC<StopCommandProps> = ({
       const data = await response.json();
       console.log('----', data);
       console.log(cmdRoute, 'this is the route');
+      console.log(runningContainers[0]);
+
+      setStoppedContainers([
+        ...stoppedContainers,
+        ...runningContainers.filter((container) => container.Names === name),
+      ]);
+      setRunningContainers(
+        runningContainers.filter((container) => container.Names !== name)
+      );
     } catch (err) {
       console.error(err);
     }

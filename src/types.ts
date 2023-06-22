@@ -4,6 +4,8 @@ export interface Context {
   children?: ReactNode;
   runningContainers: Container[];
   setRunningContainers: React.Dispatch<React.SetStateAction<Container[]>>;
+  stoppedContainers: Container[];
+  setStoppedContainers: React.Dispatch<React.SetStateAction<Container[]>>;
   availableImages: Image[];
   setAvailableImages: React.Dispatch<React.SetStateAction<Image[]>>;
   showing: string;

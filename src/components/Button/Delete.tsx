@@ -14,7 +14,7 @@ const DeleteButton: React.FC<DeleteCommandProp> = ({
   fetchMethod,
 }) => {
   //helper
-  const { setRunningContainers, runningContainers } = useContext(UserContext);
+  const { setStoppedContainers, stoppedContainers } = useContext(UserContext);
 
   const command = async () => {
     try {
@@ -29,8 +29,8 @@ const DeleteButton: React.FC<DeleteCommandProp> = ({
       const data = await response.json();
       console.log('test---->:' + data);
       if (response.status !== 500) {
-        setRunningContainers(
-          runningContainers.filter((container) => container.Names !== name)
+        setStoppedContainers(
+          stoppedContainers.filter((container) => container.Names !== name)
         );
       }
     } catch (err) {

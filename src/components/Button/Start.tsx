@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import start from '../../assets/play.png';
 
 import { CommandButtonProps } from '../../types';
+import { UserContext } from '../../UserContext';
 
 interface StartCommandProp extends CommandButtonProps {
   onClick: () => void;
@@ -12,6 +13,12 @@ const StartButton: React.FC<StartCommandProp> = ({
   cmdRoute,
   fetchMethod,
 }) => {
+  const {
+    setStoppedContainers,
+    setRunningContainers,
+    stoppedContainers,
+    runningContainers,
+  } = useContext(UserContext);
   //helper
   const command = async () => {
     try {
@@ -25,6 +32,17 @@ const StartButton: React.FC<StartCommandProp> = ({
       });
       const data = await response.json();
       console.log(data, '***data in handleStart ');
+
+      const containerToStart = stoppedContainers.find(
+        (container) => container.Names === name
+      );
+
+      if (containerToStart) {
+        setStoppedContainers(
+          stoppedContainers.filter((container) => container.Names !== name)
+        );
+        setRunningContainers([...runningContainers, containerToStart]);
+      }
     } catch (err) {
       console.error(err);
     }
