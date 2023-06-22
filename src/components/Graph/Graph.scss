@@ -2,3 +2,12 @@
   grid-area: 1 / 8 / 7 / 14;
   border: solid 1px black;
 }
+
+.header-graph {
+  display: flex;
+  margin-bottom: 0.5rem;
+  justify-content: center;
+  font-size: 17px;
+  font-family: sans-serif;
+  font-weight: 300;
+}

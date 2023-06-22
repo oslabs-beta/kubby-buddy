@@ -5,6 +5,14 @@ import 'chart.js/auto';
 import { GraphProps } from '../../types';
 
 export function Graph(props: GraphProps) {
+  if (
+    !props.data ||
+    !props.data.NetIO ||
+    !props.data.CPUPerc ||
+    !props.data.MemPerc
+  ) {
+    return null;
+  }
   // const num = parseFloat(props.CPUPerc)
   console.log('NEW PROPS', props.data);
   const [userData, setUserData] = useState({
@@ -76,21 +84,29 @@ export function Graph(props: GraphProps) {
     // setLimit(parseFloat(props.data?.CPUPerc) * 2);
   }, [props.data]);
   return (
-    <div className="graph">
-      <Bar
-        data={userData}
-        options={{
-          scales: {
-            y: {
-              stacked: false,
-              min: 0,
-              max: 100,
+    <>
+      <h1 className="header-graph">
+        CPU/Memory Usage{' '}
+        {JSON.stringify(props.data?.CPUPerc).replace(/"/g, '') +
+          ' / ' +
+          JSON.stringify(props.data?.MemPerc).replace(/"/g, '')}
+      </h1>
+      <div className="graph">
+        <Bar
+          data={userData}
+          options={{
+            scales: {
+              y: {
+                stacked: false,
+                min: 0,
+                max: 100,
+              },
             },
-          },
-          responsive: true,
-          indexAxis: 'y',
-        }}
-      />
-    </div>
+            responsive: true,
+            indexAxis: 'y',
+          }}
+        />
+      </div>
+    </>
   );
 }
