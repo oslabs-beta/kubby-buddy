@@ -27,10 +27,7 @@ export default function Donut1(props: any) {
         {
           label: 'Container Use Ratio',
           data: [newData, 100 - newData],
-          backgroundColor: [
-            'rgba(245, 40, 145, 0.75)',
-            'rgba(75, 48, 232, 0.75)',
-          ],
+          backgroundColor: ['rgb(1, 131, 254)', 'rgb(254,124,1)'],
         },
       ],
     });
