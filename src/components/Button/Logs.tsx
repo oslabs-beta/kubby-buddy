@@ -26,7 +26,13 @@ const LogButton: React.FC<LogCommandProp> = ({ cmdRoute, fetchMethod }) => {
   };
 
   function cleanLogData(log: any) {
-    const cleanedLog = JSON.stringify(log).replace(/[{}]/g, '');
+    const cleanedLog = JSON.stringify(log)
+      .replace(/[{}]/g, '')
+      .replace(/"/g, '')
+      .replace(/\$/g, '')
+      .replace(/[{}"]/g, '')
+      .replace(/:/g, ': ')
+      .replace(/,/g, ', ');
     return cleanedLog;
   }
 

@@ -24,7 +24,7 @@ export const Quickview: FC = () => {
     setFilteredRunningContainers(filteredContainers);
   }, [runningContainers]);
 
-  console.log(runningContainers);
+  // console.log(runningContainers);
   //display instances of running containers, just the name
   return (
     <div className="quickview-container">
