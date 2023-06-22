@@ -10,9 +10,7 @@ import { UserContext } from '../../UserContext';
 
 export const MainNav: FC = () => {
   const { showing } = useContext(UserContext);
-  // if (showing) {
-  //   return <Loader />;
-  // }
+
   return (
     <div className="main-nav">
       <ul>{showing === 'Containers' ? <DockerContainers /> : <Images />}</ul>

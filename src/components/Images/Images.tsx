@@ -2,6 +2,7 @@ import React, { FC, useContext } from 'react';
 import './Images.scss';
 import { UserContext } from '../../UserContext';
 import { CreateCommands } from '../../components/Button/Create';
+import Loader from '../Loader/Loader';
 
 export const Images: FC = () => {
   const { availableImages } = useContext(UserContext);
@@ -9,21 +10,21 @@ export const Images: FC = () => {
   let images;
 
   if (typeof availableImages === 'string') {
-    images = (
-      <div>
-        <p>You have no running images</p>
-      </div>
-    );
+    images = <Loader />;
   } else {
     images = availableImages.map((el, index) => (
       <li className="listImage" key={index}>
         <div className="image-info">
-          <p>{el.Repository}</p>
+          <p className="image-title">{el.Repository}</p>
           <div className="image-subinfo">
             <p>Containers: {el.Containers}</p>
             <p>Time since created: {el.CreatedSince}</p>
+          </div>
+          <div className="image-subinfo">
             <p>Created At: {el.CreatedAt}</p>
             <p>Size: {el.Size}</p>
+          </div>
+          <div className="image-subinfo">
             <p>Tag: {el.Tag}</p>
             <p>ID: {el.ID}</p>
           </div>

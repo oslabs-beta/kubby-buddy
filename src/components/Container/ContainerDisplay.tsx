@@ -4,8 +4,11 @@ import { StartCommands } from '../Button/Start';
 import { StopCommands } from '../Button/Stop';
 import { DeleteCommands } from '../Button/Delete';
 import { LogCommands } from '../Button/Logs';
-import { Graph } from '../Graph/Graph';
+// import { Graph } from '../Graph/Graph';
 import LineGraph from '../LineGraph/Line';
+import Donut1 from '../Donut/DonutCPU';
+import Loader from '../Loader/Loader';
+import Donut2 from '../Donut/DonutMemory';
 
 export const DisplayRunning: FC = () => {
   const { runningContainers, statStream } = useContext(UserContext);
@@ -31,11 +34,8 @@ export const DisplayRunning: FC = () => {
   let running;
 
   if (typeof runningContainers === 'string') {
-    running = (
-      <div>
-        <p>You have no running containers</p>
-      </div>
-    );
+
+    containers = <Loader />;
   } else {
     running = runningContainers.map((el, index) => (
       <div className="container" key={index}>
@@ -105,23 +105,39 @@ export const DisplayRunning: FC = () => {
         <button>image</button>
         <button>stats</button>
       </div> */}
-        <div className="chartContainer">
-          {statStream.length > 0 ? (
-            <LineGraph
-              className="bargraph"
-              data={statStream[index]}
-              change={change}
-            />
-          ) : (
-            ''
-          )}
-        </div>
-        <div className="chartContainer">
-          {statStream.length > 0 ? (
-            <Graph className="bargraph" data={statStream[index]} />
-          ) : (
-            ''
-          )}
+
+          <div className="chartContainer">
+            {statStream.length > 0 ? (
+              <Donut1 className="bargraph" data={statStream[index]} />
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="chartContainer">
+            {statStream.length > 0 ? (
+              <Donut2 className="bargraph" data={statStream[index]} />
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="chartContainer">
+            {statStream.length > 0 ? (
+              <LineGraph
+                className="bargraph"
+                data={statStream[index]}
+                change={change}
+              />
+            ) : (
+              ''
+            )}
+          </div>
+          {/* <div className="chartContainer">
+            {statStream.length > 0 ? (
+              <Graph className="bargraph" data={statStream[index]} />
+            ) : (
+              ''
+            )}
+          </div> */}
         </div>
       </div>
     ));
