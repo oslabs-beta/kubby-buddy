@@ -58,10 +58,10 @@ export default function LineChart(props: any) {
         },
       ];
       const updatedBackgroundColors1 = Array(updatedData1.length).fill(
-        'rgba(38, 189, 106, 0.75)'
+        'rgb(254, 125, 1)'
       );
       const updatedBackgroundColors2 = Array(updatedData2.length).fill(
-        'rgba(221, 80, 105, 0.75)'
+        'rgb(155, 76, 0)'
       );
       return {
         ...prevState,
