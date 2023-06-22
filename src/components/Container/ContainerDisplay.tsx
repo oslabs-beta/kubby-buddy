@@ -27,14 +27,24 @@ export const DisplayRunning: FC = () => {
       </div>
     );
   } else {
-    containers = runningContainers.map((el, index) => (
-      <div className="container" key={index}>
-        <div className="container-info">
-          <div className="container-name">{el.Names}</div>
-          <div className="subinfo">
-            <p className="Imagename">Image: {el.Image}</p>
-            <p className="Port">Port: {el.Ports}</p>
-            {/* <p className="State">State: {el.State}</p>
+    containers = runningContainers
+      .sort((a, b) => {
+        if (a.State === 'running') {
+          return -1; // a comes before b
+        } else if (b.State === 'running') {
+          return 1; // b comes before a
+        }
+        return 0; // no change in order
+      })
+      .map((el, index) => (
+        <div className="container" key={index}>
+          <div className="container-info">
+            <div className="container-name">{el.Names}</div>
+            <div className="subinfo">
+              <p className="Imagename">Image: {el.Image}</p>
+              <p className="Port">Port: {el.Ports}</p>
+              <p className="Status">State: {el.State}</p>
+              {/* <p className="State">State: {el.State}</p>
           <p className="Networks">Networks: {el.Networks}</p>
           <p className="CreatedAt">CreatedAt: {el.CreatedAt}</p>
           <p className="Status">Status: {el.Status}</p>
@@ -45,24 +55,24 @@ export const DisplayRunning: FC = () => {
           <p className="Mounts">Mounts: {el.Mounts}</p>
           <p className="Labels">Labels: {el.Labels}</p>
           <p className="volume">volume: {(el.volume as string) || "N/A"}</p> */}
+            </div>
           </div>
-        </div>
 
-        <div className="cmdbutton">
-          <StartCommands
-            name={el.Names}
-            cmdRoute={new URL('/container/start', window.location.href)}
-            fetchMethod="post"
-            onClick={handleStopInvoke}
-          />
-          {/* <StopCommands name={el.Name} /> */}
-          <StopCommands
-            name={el.Names}
-            cmdRoute={new URL('/container/stop', window.location.href)}
-            fetchMethod="post"
-            // onClick={handleStopInvoke}
-          />
-          {/* {stopInvoked && (
+          <div className="cmdbutton">
+            <StartCommands
+              name={el.Names}
+              cmdRoute={new URL('/container/start', window.location.href)}
+              fetchMethod="post"
+              onClick={handleStopInvoke}
+            />
+            {/* <StopCommands name={el.Name} /> */}
+            <StopCommands
+              name={el.Names}
+              cmdRoute={new URL('/container/stop', window.location.href)}
+              fetchMethod="post"
+              // onClick={handleStopInvoke}
+            />
+            {/* {stopInvoked && (
             <DeleteCommands
              name={el.Names}
              cmdRoute={new URL("/container/remove-specific-container", window.location.href)}
@@ -70,38 +80,38 @@ export const DisplayRunning: FC = () => {
             />
 
         )} */}
-          <DeleteCommands
-            name={el.Names}
-            cmdRoute={
-              new URL(
-                '/container/remove-specific-container',
-                window.location.href
-              )
-            }
-            fetchMethod="delete"
-          />
-          <LogCommands
-            name={el.Names}
-            cmdRoute={new URL('/container/log', window.location.href)}
-            fetchMethod="get"
-          />
-        </div>
+            <DeleteCommands
+              name={el.Names}
+              cmdRoute={
+                new URL(
+                  '/container/remove-specific-container',
+                  window.location.href
+                )
+              }
+              fetchMethod="delete"
+            />
+            <LogCommands
+              name={el.Names}
+              cmdRoute={new URL('/container/log', window.location.href)}
+              fetchMethod="get"
+            />
+          </div>
 
-        {/* <div className="dropdown">
+          {/* <div className="dropdown">
         <button>container</button>
         <button>volumes</button>
         <button>image</button>
         <button>stats</button>
       </div> */}
-        <div className="chartContainer">
-          {statStream.length > 0 ? (
-            <Graph className="bargraph" data={statStream[index]} />
-          ) : (
-            ''
-          )}
+          <div className="chartContainer">
+            {statStream.length > 0 ? (
+              <Graph className="bargraph" data={statStream[index]} />
+            ) : (
+              ''
+            )}
+          </div>
         </div>
-      </div>
-    ));
+      ));
   }
 
   return <div className="dockercontainer">{containers}</div>;

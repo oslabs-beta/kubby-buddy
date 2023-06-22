@@ -1,7 +1,8 @@
 // /prune-stopped-containers
 
-import React from 'react';
+import React, { useContext } from 'react';
 import trash from '../../assets/trash.png';
+import { UserContext } from '../../UserContext';
 
 import { CommandButtonProps } from '../../types';
 
@@ -13,6 +14,8 @@ const DeleteButton: React.FC<DeleteCommandProp> = ({
   fetchMethod,
 }) => {
   //helper
+  const { setRunningContainers, runningContainers } = useContext(UserContext);
+
   const command = async () => {
     try {
       const URL = cmdRoute;
@@ -25,6 +28,11 @@ const DeleteButton: React.FC<DeleteCommandProp> = ({
       });
       const data = await response.json();
       console.log('test---->:' + data);
+      if (response.status !== 500) {
+        setRunningContainers(
+          runningContainers.filter((container) => container.Names !== name)
+        );
+      }
     } catch (err) {
       console.error(err);
     }
