@@ -60,7 +60,8 @@ export interface Volume {
   Status: string;
 }
 export interface CommandButtonProps {
-  name: string;
+  name?: string;
+  id?: string;
   cmdRoute: URL;
   fetchMethod: string;
 }
