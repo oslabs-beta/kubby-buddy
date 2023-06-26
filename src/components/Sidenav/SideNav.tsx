@@ -43,7 +43,7 @@ export const SideNav: FC = () => {
         const getURL = 'image/all-images';
         const fetchResponse = await fetch(getURL);
         const data = await fetchResponse.json();
-
+        console.log(data);
         setAvailableImages(data);
       } catch (error) {
         setAvailableImages([]);
