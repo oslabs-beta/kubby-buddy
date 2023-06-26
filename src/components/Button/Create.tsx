@@ -121,7 +121,7 @@ const CreateButton: React.FC<CreateCommandProp> = ({
       });
       const data = await response.json();
       console.log('test---->:' + data);
-      setStatus('Creation Successful');
+      setStatus('Creation Successful!');
       if (response.status === 500) throw new Error(data);
     } catch (err) {
       setStatus(err instanceof Error ? err.message : String(err));

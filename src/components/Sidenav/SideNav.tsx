@@ -22,6 +22,7 @@ export const SideNav: FC = () => {
   } = useContext(UserContext);
 
   useEffect(() => {
+    // INITIAL LOAD
     async function getRunningContainers() {
       try {
         const getURL = 'container/all-active-containers';
