@@ -2,6 +2,7 @@ import React, { FC, useContext } from 'react';
 import './Images.scss';
 import { UserContext } from '../../UserContext';
 import { CreateCommands } from '../../components/Button/Create';
+import { DeleteImageCommands } from '../Button/DeleteImage';
 import Loader from '../Loader/Loader';
 
 export const Images: FC = () => {
@@ -30,6 +31,13 @@ export const Images: FC = () => {
           </div>
         </div>
         <div className="cmdbutton">
+          <DeleteImageCommands
+            id={el.ID}
+            cmdRoute={
+              new URL('/image/remove-image-by-name', window.location.href)
+            }
+            fetchMethod="delete"
+          />
           <CreateCommands
             name={el.Repository}
             cmdRoute={new URL('/image/run-images', window.location.href)}
