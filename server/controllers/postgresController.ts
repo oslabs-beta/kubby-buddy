@@ -39,14 +39,31 @@ const postgresController = {
             `docker inspect --format='{{.Config.Image}}' ${ele}`
           );
           console.log(stderr);
-          return { ...data[index], imageName: stdout.trim() };
+          const container = { ...data[index], imageName: stdout.trim() };
+
+          const { CPUPerc, MemPerc, imageName } = container;
+
+          const queryString = `INSERT INTO image_stats (${CPUPerc}, ${MemPerc}, ${imageName}, 1)`;
+
+          return container;
         }
         return data[index];
       })
     );
 
     return updatedData;
-
+    // {
+    //     BlockIO: '0B / 0B',
+    //     CPUPerc: '0.42%',
+    //     Container: '41ee273a7096',
+    //     ID: '41ee273a7096',
+    //     MemPerc: '0.03%',
+    //     MemUsage: '2.691MiB / 7.667GiB',
+    //     Name: 'redis',
+    //     PIDs: '5',
+    //     NetIO: '1.15kB / 0B',
+    //     imageName: 'redis:latest'
+    // }
     //INSERT INTO image_stats (image_id, name, entries, mem_per, cpu_per VALUES (1, 'test', 1, 1, 1);
     //query database
     //for each value in the database
