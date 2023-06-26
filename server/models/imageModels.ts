@@ -1,5 +1,6 @@
 import { Pool } from 'pg';
 
+//process.env.PGHOST;
 const PG_URI =
   'postgres://miprnoed:LAZstS_z_xZhHFeZsDib4Kv5FgdEiUJ9@rajje.db.elephantsql.com/miprnoed';
 
