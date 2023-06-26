@@ -100,7 +100,7 @@ const CreateButton: React.FC<CreateCommandProp> = ({
   const port = useRef<HTMLInputElement>(null);
   const volumeDirectory = useRef<HTMLInputElement>(null);
   const [selectedVolume, setSelectedVolume] = useState('');
-  const [error, setError] = useState<undefined | string>(undefined);
+  const [status, setStatus] = useState<undefined | string>(undefined);
   let removeChecked = false;
 
   const command = async () => {
@@ -121,9 +121,10 @@ const CreateButton: React.FC<CreateCommandProp> = ({
       });
       const data = await response.json();
       console.log('test---->:' + data);
+      setStatus('Creation Successful!');
       if (response.status === 500) throw new Error(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      setStatus(err instanceof Error ? err.message : String(err));
     }
   };
 
@@ -133,7 +134,11 @@ const CreateButton: React.FC<CreateCommandProp> = ({
         <button style={{ backgroundImage: `url(${create})` }} />
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content className="PopoverContent" sideOffset={5}>
+        <Popover.Content
+          className="PopoverContent"
+          sideOffset={5}
+          onPointerDownOutside={() => setStatus(undefined)}
+        >
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <p className="Text" style={{ marginBottom: 10 }}>
               New Container From This Image
@@ -197,11 +202,15 @@ const CreateButton: React.FC<CreateCommandProp> = ({
               </Checkbox.Root>
             </fieldset>
 
-            {error && <label className="errorImage">{error}</label>}
+            {status && <label className="creationStatus">{status}</label>}
 
             <CheckIcon className="submitCheck" onClick={command} />
           </div>
-          <Popover.Close className="PopoverClose" aria-label="Close">
+          <Popover.Close
+            className="PopoverClose"
+            aria-label="Close"
+            onClick={() => setStatus(undefined)}
+          >
             <Cross2Icon />
           </Popover.Close>
           <Popover.Arrow className="PopoverArrow" />

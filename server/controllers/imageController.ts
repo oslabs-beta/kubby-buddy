@@ -12,7 +12,7 @@ const imageController: ImageController = {
   ): Promise<void> => {
     try {
       const { stdout, stderr } = await promisifyExec(
-        'docker images --format json'
+        'docker images --format "{{json . }}"'
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {

@@ -7,6 +7,7 @@
   width: 90%;
   // border: 1px solid #ff7c02;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: space-between;
   font-weight: 300;
@@ -67,6 +68,7 @@
     min-width: 2em;
     width: 2em;
     height: 2em;
+    margin: 0.1em 0.5em 0.1em 0.5em;
     border: none;
 
     background-color: transparent;
