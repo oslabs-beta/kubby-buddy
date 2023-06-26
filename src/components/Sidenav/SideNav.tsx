@@ -22,6 +22,7 @@ export const SideNav: FC = () => {
   } = useContext(UserContext);
 
   useEffect(() => {
+    // INITIAL LOAD
     async function getRunningContainers() {
       try {
         const getURL = 'container/all-active-containers';
@@ -43,7 +44,7 @@ export const SideNav: FC = () => {
         const getURL = 'image/all-images';
         const fetchResponse = await fetch(getURL);
         const data = await fetchResponse.json();
-
+        console.log(data);
         setAvailableImages(data);
       } catch (error) {
         setAvailableImages([]);
