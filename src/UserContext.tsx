@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { createContext, useState, ReactNode } from 'react';
 import { Context, Container, Image, Volume } from './types';
 

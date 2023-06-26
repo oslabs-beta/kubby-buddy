@@ -1,5 +1,5 @@
 // contain our containers
-
+//@ts-ignore
 import React, { FC, useContext } from 'react';
 import './MainNav.scss';
 import { DockerContainers } from '../Container/DockerContainer';

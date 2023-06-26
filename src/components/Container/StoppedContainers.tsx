@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { FC, useContext, useState } from 'react';
 import { UserContext } from '../../UserContext';
 import { StartCommands } from '../Button/Start';

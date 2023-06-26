@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { useState, useEffect } from 'react';
 import './Graph.scss';
 import { Bar } from 'react-chartjs-2';

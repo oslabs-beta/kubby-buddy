@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { FC, useContext } from 'react';
 import './Images.scss';
 import { UserContext } from '../../UserContext';

@@ -9,7 +9,7 @@
     "strict": true,
     "module": "CommonJS",
     "target": "es5",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",

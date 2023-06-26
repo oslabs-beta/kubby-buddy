@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { FC } from 'react';
 // import './App';
 import { UserProvider } from './UserContext';
@@ -11,9 +12,7 @@ import { MainNav } from './components/Mainnav/MainNav';
 const App: FC = () => {
   return (
     <UserProvider>
-      <div className="mainpage">
-        {/* <img src={logo} /> */}
-        {/* <h1>howdy kubby buddies! YOOO</h1> */}
+      <div className="mainpage" data-testid="mainpage">
         <SideNav />
         <MainNav />
       </div>
