@@ -1,0 +1,41 @@
+version: '1'
+services:
+  frontend:
+    image: coachsteve/kubbybuddy-frontend
+    container_name: front-end
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+    depends_on:
+      - backend
+  backend:
+    image: coachsteve/kubbybuddy-backend
+    container_name: backend
+    ports:
+      - 3000:3000
+# version: '3'
+# services:
+#   test:
+#     image: cortlandsteve/mm-dev
+#     container_name: mm-test
+#     ports:
+#       - 3000:3000
+#     volumes:
+#       - .:/usr/src/app
+#       - node_modules:/usr/src/app/node_modules
+#     command: npm run test
+#     depends_on:
+#       - postgres-db-test
+#   postgres-db-test:
+#     image: cortlandsteve/mm-postgres
+#     container_name: mm-test-database
+#     environment:
+#       - POSTGRES_PASSWORD=admin
+#       - POSTGRES_USER=mmadmin
+#       - POSTGRES_DB=mmdb
+#     volumes:
+#       - test-db-volume:/var/lib/postgresql/data
+# volumes:
+#   node_modules:
+#   test-db-volume:
