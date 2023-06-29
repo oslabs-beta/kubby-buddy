@@ -8,14 +8,31 @@ const pool = new Pool({
   password: process.env.PGPASSWORD,
 });
 
-const startDB = async () => {
+const query = async (text: string, values?: []) => {
   try {
-    await pool.connect();
+    const client = await pool.connect();
+    await client.query(text, values);
+    client.release();
   } catch (err) {
     console.log(`Failed to connect to DB: ${err}`);
   } finally {
-    console.log('Connected to Database.');
+    console.log('Query sent.');
   }
 };
 
-export default startDB;
+//process.env.PGHOST;
+// const PG_URI =
+//   'postgres://miprnoed:LAZstS_z_xZhHFeZsDib4Kv5FgdEiUJ9@rajje.db.elephantsql.com/miprnoed';
+
+// const pool = new Pool({
+//   connectionString: PG_URI,
+// });
+
+// export default {
+//   query: (text: string, params: any, callback: any) => {
+//     console.log('executed query', text);
+//     return pool.query(text, params, callback);
+//   },
+// };
+
+export default query;

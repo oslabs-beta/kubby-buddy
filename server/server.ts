@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import startDB from './db';
 import express, { Express, Request, Response, RequestHandler } from 'express';
 import imageRouter from './routes/imageRoutes';
 import generalDockerRouter from './routes/generaldockerRoutes';
@@ -10,7 +9,6 @@ import { ServerError, GlobalErr } from '../types';
 const PORT = process.env.PORT || 3000;
 
 dotenv.config();
-startDB();
 const app: Express = express();
 
 app.use(express.json());
