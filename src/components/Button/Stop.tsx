@@ -46,11 +46,13 @@ const StopButton: React.FC<StopCommandProps> = ({
       console.error(err);
     }
   };
+
   return (
     <button
       className="stop"
       style={{ backgroundImage: `url(${stop})` }}
       onClick={command}
+      data-testid="stop-button"
     ></button>
   );
 };
