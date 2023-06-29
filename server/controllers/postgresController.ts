@@ -1,20 +1,13 @@
 // import query from "../models/imageModels"
+import { Request, Response, NextFunction } from 'express';
 import query from '../db';
 import { exec } from 'child_process';
 import { promisify } from 'node:util';
+
 // import { parse } from 'path';
 // const exec = require('child_process')
 // const promisify = require('node:util')
 const promisifyExec = promisify(exec);
-
-// const parseData = (stdout: string) => {
-//   // const containers = [];
-//   const dockerStats: string = stdout.trim();
-//   const conts: string[] = dockerStats.split('\n');
-
-//   return JSON.parse(conts[0]);
-//   //returns array of proper objects to then be stringified
-// };
 
 type dataObject = {
   BlockIO: string;
@@ -28,6 +21,14 @@ type dataObject = {
   PIDs: string;
   imageId: string;
 };
+
+type postgresData = {
+  cpu_per: number;
+  mem_per: number;
+  image_id: string;
+  num_entries: number;
+};
+
 const postgresController = {
   imageStats: async (data: dataObject[]) => {
     let newData = data.slice();
@@ -64,26 +65,30 @@ const postgresController = {
     );
 
     return updatedData;
-    // {
-    //     BlockIO: '0B / 0B',
-    //     CPUPerc: '0.42%',
-    //     Container: '41ee273a7096',
-    //     ID: '41ee273a7096',
-    //     MemPerc: '0.03%',
-    //     MemUsage: '2.691MiB / 7.667GiB',
-    //     Name: 'redis',
-    //     PIDs: '5',
-    //     NetIO: '1.15kB / 0B',
-    //     imageName: 'redis:latest'
-    // }
-    //INSERT INTO image_stats (image_id, name, entries, mem_per, cpu_per VALUES (1, 'test', 1, 1, 1);
-    //query database
-    //for each value in the database
-    //multiply by times entered, add new value, divide
   },
-};
 
-//run docke rps, swap id for name
-//query database
+  // grabImageStats: async (
+  //   _req: Request,
+  //   res: Response,
+  //   next: NextFunction
+  // ) => {
+
+  //   //res.locals.images.map(ele=> {
+  //   //return query(`
+  //   // SELECT cpu_per, mem_per
+  //   // FROM image_stats
+  //   // WHERE image_id = ${ele.ID}`)
+  //   //})
+  //   const queryString: string = `
+  //   SELECT cpu_per, mem_per
+  //   FROM image_stats
+  //   WHERE image_id = ${imageId}`
+
+  //   const queryStats = query(queryString);
+
+  //   res.locals.averages = queryStats
+  //   return next()
+  // },
+};
 
 export default postgresController;
