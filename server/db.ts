@@ -12,11 +12,10 @@ const query = async (text: string, values?: []) => {
   try {
     const client = await pool.connect();
     await client.query(text, values);
+    console.log('Query sent.');
     client.release();
   } catch (err) {
     console.log(`Failed to connect to DB: ${err}`);
-  } finally {
-    console.log('Query sent.');
   }
 };
 

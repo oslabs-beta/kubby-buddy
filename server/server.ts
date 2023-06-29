@@ -6,6 +6,9 @@ import containerRouter from './routes/containerRoutes';
 import volumeRouter from './routes/volumeRouter';
 import { ServerError, GlobalErr } from '../types';
 
+// testing db
+import router from './routes/filler';
+
 const PORT = process.env.PORT || 3000;
 
 dotenv.config();
@@ -14,6 +17,9 @@ const app: Express = express();
 app.use(express.json());
 
 //--------------- ROUTES  ---------------//
+
+// testing db
+app.use('/db', router);
 
 // Routes for handling image commands
 
