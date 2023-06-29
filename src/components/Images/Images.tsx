@@ -11,7 +11,7 @@ export const Images: FC = () => {
 
   let images;
 
-  const StoppedContainer: React.FC<{ el: Image; index: number }> = React.memo(
+  const ImageContainer: React.FC<{ el: Image; index: number }> = React.memo(
     ({ el, index }) => {
       return (
         <li className="listImage" key={index}>
@@ -55,7 +55,7 @@ export const Images: FC = () => {
     images = useMemo(
       () =>
         availableImages.map((el, index) => (
-          <StoppedContainer el={el} index={index} key={`image${index}`} />
+          <ImageContainer el={el} index={index} key={`image${index}`} />
         )),
       [availableImages]
     );
