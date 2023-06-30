@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  dind:
+    image: docker:dind
+    container_name: DIND
+    privileged: true
+
+  mock-container-1:
+    image: alpine
+    command: sleep 3600
+    container_name: TEST1
+    depends_on:
+      - dind
+
+  mock-container-2:
+    image: alpine
+    command: tail -f /dev/null
+    container_name: TEST2
+    depends_on:
+      - dind
