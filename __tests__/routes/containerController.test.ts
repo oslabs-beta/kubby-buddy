@@ -11,13 +11,13 @@ import {
   cmdStopASpecificContainer,
   cmdStartASpecificContainer,
   cmdPruneStoppedContainers,
-  // cmdGetSpecificLog,
+  cmdGetSpecificLog,
   // cmdRemoveSpecificContainer,
   parseOutputContainers,
   parseOutputContainersNames,
   parseOutputStartStop,
   parseOutputPruneStoppedContainers,
-  // transformLogs,
+  transformLogs,
   // parseOutputRemoveSpecificContainer,
 } from '../../server/controllers/containerController';
 
@@ -211,6 +211,20 @@ describe('Docker Tests', () => {
       )
     ).toBeTruthy();
     expect(dindContainers).toHaveLength(1);
+    expect(Array.isArray(dindContainers)).toBeTruthy();
+    expect(dindContainers.length).toBeGreaterThan(0);
+    expect(typeof dindContainers[0]).toBe('object');
+  });
+
+  test('GET /logs get logs for a specific container', async () => {
+    const dindContainersResponse = execSync(
+      `docker exec -i DIND sh -c "${cmdGetSpecificLog} my-container2"`,
+      { stdio: 'pipe' } // Added option to capture the command output
+    );
+
+    const dindContainers = transformLogs(dindContainersResponse);
+    // console.log('DIND CONTAINERS', dindContainers);
+
     expect(Array.isArray(dindContainers)).toBeTruthy();
     expect(dindContainers.length).toBeGreaterThan(0);
     expect(typeof dindContainers[0]).toBe('object');

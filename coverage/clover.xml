@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1688152208063" clover="3.2.0">
-  <project timestamp="1688152208063" name="All files">
-    <metrics statements="139" coveredstatements="52" conditionals="11" coveredconditionals="1" methods="37" coveredmethods="11" elements="187" coveredelements="64" complexity="0" loc="139" ncloc="139" packages="2" files="2" classes="2"/>
+<coverage generated="1688152466090" clover="3.2.0">
+  <project timestamp="1688152466090" name="All files">
+    <metrics statements="139" coveredstatements="59" conditionals="11" coveredconditionals="2" methods="37" coveredmethods="13" elements="187" coveredelements="74" complexity="0" loc="139" ncloc="139" packages="2" files="2" classes="2"/>
     <package name="controllers">
-      <metrics statements="119" coveredstatements="40" conditionals="11" coveredconditionals="1" methods="29" coveredmethods="11"/>
+      <metrics statements="119" coveredstatements="47" conditionals="11" coveredconditionals="2" methods="29" coveredmethods="13"/>
       <file name="containerController.ts" path="/Users/jg/CTRI 16/Github/Week 10/kubby-buddy/server/controllers/containerController.ts">
-        <metrics statements="119" coveredstatements="40" conditionals="11" coveredconditionals="1" methods="29" coveredmethods="11"/>
+        <metrics statements="119" coveredstatements="47" conditionals="11" coveredconditionals="2" methods="29" coveredmethods="13"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -43,15 +43,15 @@
         <line num="69" count="1" type="stmt"/>
         <line num="76" count="1" type="stmt"/>
         <line num="79" count="1" type="stmt"/>
-        <line num="80" count="0" type="stmt"/>
-        <line num="83" count="0" type="stmt"/>
-        <line num="84" count="0" type="stmt"/>
-        <line num="85" count="0" type="stmt"/>
-        <line num="87" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="85" count="1" type="stmt"/>
+        <line num="87" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="88" count="0" type="stmt"/>
         <line num="89" count="0" type="stmt"/>
-        <line num="91" count="0" type="stmt"/>
-        <line num="96" count="0" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="96" count="1" type="stmt"/>
         <line num="99" count="1" type="stmt"/>
         <line num="100" count="0" type="stmt"/>
         <line num="101" count="0" type="stmt"/>
