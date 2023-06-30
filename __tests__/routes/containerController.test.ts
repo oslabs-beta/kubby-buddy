@@ -12,13 +12,13 @@ import {
   cmdStartASpecificContainer,
   cmdPruneStoppedContainers,
   cmdGetSpecificLog,
-  // cmdRemoveSpecificContainer,
+  cmdRemoveSpecificContainer,
   parseOutputContainers,
   parseOutputContainersNames,
   parseOutputStartStop,
   parseOutputPruneStoppedContainers,
   transformLogs,
-  // parseOutputRemoveSpecificContainer,
+  parseOutputRemoveSpecificContainer,
 } from '../../server/controllers/containerController';
 
 const app = express();
@@ -225,6 +225,40 @@ describe('Docker Tests', () => {
     const dindContainers = transformLogs(dindContainersResponse);
     // console.log('DIND CONTAINERS', dindContainers);
 
+    expect(Array.isArray(dindContainers)).toBeTruthy();
+    expect(dindContainers.length).toBeGreaterThan(0);
+    expect(typeof dindContainers[0]).toBe('object');
+  });
+
+  test('DELETE /remove-specific-container removes stopped container by name', async () => {
+    execSync(`docker exec -i DIND sh -c "docker stop my-container2"`, {
+      stdio: 'pipe',
+    });
+    // console.log(
+    //   'TEST1',
+    //   execSync(`docker exec -i DIND sh -c "docker ps -a"`).toString()
+    // );
+    const dindContainersResponse = execSync(
+      `docker exec -i DIND sh -c "${cmdRemoveSpecificContainer} my-container2"`,
+      { stdio: 'pipe' } // Added option to capture the command output
+    );
+    // console.log(
+    //   'TEST2',
+    //   execSync(`docker exec -i DIND sh -c "docker ps -a"`).toString()
+    // );
+
+    const dindContainers = parseOutputRemoveSpecificContainer(
+      dindContainersResponse
+    );
+    // console.log('TEST3', dindContainers);
+
+    expect(dindContainers.some((container) => container.message)).toBeTruthy();
+    expect(
+      dindContainers.some((container) => container.message === 'my-container2')
+    ).toBeTruthy();
+    expect(
+      dindContainers.some((container) => container.message === 'my-container')
+    ).toBeFalsy();
     expect(Array.isArray(dindContainers)).toBeTruthy();
     expect(dindContainers.length).toBeGreaterThan(0);
     expect(typeof dindContainers[0]).toBe('object');

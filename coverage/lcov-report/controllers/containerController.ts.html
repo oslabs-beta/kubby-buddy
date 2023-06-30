@@ -23,9 +23,9 @@
         </h1>
         <div class="clearfix">
           <div class="fl pad1y space-right2">
-            <span class="strong">37% </span>
+            <span class="strong">38.58% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">47/127</span>
+            <span class="fraction">49/127</span>
           </div>
 
           <div class="fl pad1y space-right2">
@@ -35,15 +35,15 @@
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">44.82% </span>
+            <span class="strong">48.27% </span>
             <span class="quiet">Functions</span>
-            <span class="fraction">13/29</span>
+            <span class="fraction">14/29</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">39.49% </span>
+            <span class="strong">41.17% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">47/119</span>
+            <span class="fraction">49/119</span>
           </div>
         </div>
         <p class="quiet">
@@ -481,8 +481,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -803,9 +803,9 @@ export function transformLogs(stdout: string | Buffer) {
   return transformedLogs;
 }
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >parseOutputRemoveSpecificContainer(</span>stdout: string | Buffer) {
-  const output = <span class="cstat-no" title="statement not covered" >stdout.toString().trim();</span>
-<span class="cstat-no" title="statement not covered" >  return [{ message: output }];</span>
+export function parseOutputRemoveSpecificContainer(stdout: string | Buffer) {
+  const output = stdout.toString().trim();
+  return [{ message: output }];
 }
 &nbsp;
 export const containerController: ContainerController = {
@@ -1042,7 +1042,7 @@ export default containerController;
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2023-06-30T19:14:26.075Z
+      at 2023-06-30T19:18:08.669Z
     </div>
     <script src="../prettify.js"></script>
     <script>

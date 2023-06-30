@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1688152466090" clover="3.2.0">
-  <project timestamp="1688152466090" name="All files">
-    <metrics statements="139" coveredstatements="59" conditionals="11" coveredconditionals="2" methods="37" coveredmethods="13" elements="187" coveredelements="74" complexity="0" loc="139" ncloc="139" packages="2" files="2" classes="2"/>
+<coverage generated="1688152689185" clover="3.2.0">
+  <project timestamp="1688152689185" name="All files">
+    <metrics statements="139" coveredstatements="61" conditionals="11" coveredconditionals="2" methods="37" coveredmethods="14" elements="187" coveredelements="77" complexity="0" loc="139" ncloc="139" packages="2" files="2" classes="2"/>
     <package name="controllers">
-      <metrics statements="119" coveredstatements="47" conditionals="11" coveredconditionals="2" methods="29" coveredmethods="13"/>
+      <metrics statements="119" coveredstatements="49" conditionals="11" coveredconditionals="2" methods="29" coveredmethods="14"/>
       <file name="containerController.ts" path="/Users/jg/CTRI 16/Github/Week 10/kubby-buddy/server/controllers/containerController.ts">
-        <metrics statements="119" coveredstatements="47" conditionals="11" coveredconditionals="2" methods="29" coveredmethods="13"/>
+        <metrics statements="119" coveredstatements="49" conditionals="11" coveredconditionals="2" methods="29" coveredmethods="14"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -53,8 +53,8 @@
         <line num="91" count="1" type="stmt"/>
         <line num="96" count="1" type="stmt"/>
         <line num="99" count="1" type="stmt"/>
-        <line num="100" count="0" type="stmt"/>
-        <line num="101" count="0" type="stmt"/>
+        <line num="100" count="1" type="stmt"/>
+        <line num="101" count="1" type="stmt"/>
         <line num="104" count="1" type="stmt"/>
         <line num="110" count="0" type="stmt"/>
         <line num="113" count="0" type="stmt"/>
