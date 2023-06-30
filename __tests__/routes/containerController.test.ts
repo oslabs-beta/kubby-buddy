@@ -9,7 +9,7 @@ import {
   cmdGetAllRunningContainers,
   cmdGetAllRunningContainersNames,
   cmdStopASpecificContainer,
-  // cmdStartASpecificContainer,
+  cmdStartASpecificContainer,
   // cmdPruneStoppedContainers,
   // cmdGetSpecificLog,
   // cmdRemoveSpecificContainer,
@@ -135,6 +135,41 @@ describe('Docker Tests', () => {
     expect(
       dindContainers.some((container) => container.message === 'my-container2')
     ).toBeTruthy();
+    expect(dindContainers).toHaveLength(1);
+    expect(Array.isArray(dindContainers)).toBeTruthy();
+    expect(dindContainers.length).toBeGreaterThan(0);
+    expect(typeof dindContainers[0]).toBe('object');
+  });
+
+  test('POST /start should start a specific container', async () => {
+    execSync(
+      `docker exec -i DIND sh -c "docker stop my-container my-container2"`,
+      {
+        stdio: 'pipe',
+      }
+    );
+    // console.log(
+    //   'TEST1',
+    //   execSync(`docker exec -i DIND sh -c "docker ps"`).toString()
+    // );
+    const dindContainersResponse = execSync(
+      `docker exec -i DIND sh -c "${cmdStartASpecificContainer} my-container"`,
+      { stdio: 'pipe' } // Added option to capture the command output
+    );
+    // console.log(
+    //   'TEST2',
+    //   execSync(`docker exec -i DIND sh -c "docker ps"`).toString()
+    // );
+
+    const dindContainers = parseOutputStartStop(dindContainersResponse);
+
+    // // Make sure the my-container is running within the DIND container
+    expect(
+      dindContainers.some((container) => container.message === 'my-container')
+    ).toBeTruthy();
+    expect(
+      dindContainers.some((container) => container.message === 'my-container2')
+    ).toBeFalsy();
     expect(dindContainers).toHaveLength(1);
     expect(Array.isArray(dindContainers)).toBeTruthy();
     expect(dindContainers.length).toBeGreaterThan(0);
