@@ -10,13 +10,13 @@ import {
   cmdGetAllRunningContainersNames,
   cmdStopASpecificContainer,
   cmdStartASpecificContainer,
-  // cmdPruneStoppedContainers,
+  cmdPruneStoppedContainers,
   // cmdGetSpecificLog,
   // cmdRemoveSpecificContainer,
   parseOutputContainers,
   parseOutputContainersNames,
   parseOutputStartStop,
-  // parseOutputPruneStoppedContainers,
+  parseOutputPruneStoppedContainers,
   // transformLogs,
   // parseOutputRemoveSpecificContainer,
 } from '../../server/controllers/containerController';
@@ -170,6 +170,46 @@ describe('Docker Tests', () => {
     expect(
       dindContainers.some((container) => container.message === 'my-container2')
     ).toBeFalsy();
+    expect(dindContainers).toHaveLength(1);
+    expect(Array.isArray(dindContainers)).toBeTruthy();
+    expect(dindContainers.length).toBeGreaterThan(0);
+    expect(typeof dindContainers[0]).toBe('object');
+  });
+
+  test('DELETE /prune-stopped-containers should delete all stopped containers', async () => {
+    execSync(`docker exec -i DIND sh -c "docker stop my-container"`, {
+      stdio: 'pipe',
+    });
+    // console.log(
+    //   'TEST1',
+    //   execSync(`docker exec -i DIND sh -c "docker ps -a"`).toString()
+    // );
+    const dindContainersResponse = execSync(
+      `docker exec -i DIND sh -c "${cmdPruneStoppedContainers}"`,
+      { stdio: 'pipe' } // Added option to capture the command output
+    );
+    // console.log(
+    //   'TEST2',
+    //   execSync(`docker exec -i DIND sh -c "docker ps -a"`).toString()
+    // );
+
+    const dindContainers = parseOutputPruneStoppedContainers(
+      dindContainersResponse
+    );
+    // console.log('DIND CONTAINERS', dindContainers);
+    // Make sure the my-container is running within the DIND container
+    expect(
+      dindContainers.some((container) => container['Deleted Containers:'])
+    ).toBeTruthy();
+    expect(
+      dindContainers.some(
+        (container) =>
+          container['Deleted Containers:'].length > 0 &&
+          container['Total reclaimed space:'][0].includes(
+            'Total reclaimed space'
+          )
+      )
+    ).toBeTruthy();
     expect(dindContainers).toHaveLength(1);
     expect(Array.isArray(dindContainers)).toBeTruthy();
     expect(dindContainers.length).toBeGreaterThan(0);

@@ -23,9 +23,9 @@
         </h1>
         <div class="clearfix">
           <div class="fl pad1y space-right2">
-            <span class="strong">21.25% </span>
+            <span class="strong">31.49% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">27/127</span>
+            <span class="fraction">40/127</span>
           </div>
 
           <div class="fl pad1y space-right2">
@@ -35,15 +35,15 @@
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">17.24% </span>
+            <span class="strong">37.93% </span>
             <span class="quiet">Functions</span>
-            <span class="fraction">5/29</span>
+            <span class="fraction">11/29</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">22.68% </span>
+            <span class="strong">33.61% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">27/119</span>
+            <span class="fraction">40/119</span>
           </div>
         </div>
         <p class="quiet">
@@ -432,32 +432,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -754,33 +754,33 @@ export function parseOutputStartStop(data: string | Buffer) {
   return parsedOutput;
 }
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >parseOutputPruneStoppedContainers(</span>stdout: string | Buffer) {
-  const data = <span class="cstat-no" title="statement not covered" >stdout.toString().trim();</span>
-  const dataArray = <span class="cstat-no" title="statement not covered" >data.split('\n');</span>
-  const deletedContainersIndex = <span class="cstat-no" title="statement not covered" >dataArray.findIndex(</span>
-<span class="fstat-no" title="function not covered" >    (i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item === 'Deleted Containers:'</span>
+export function parseOutputPruneStoppedContainers(stdout: string | Buffer) {
+  const data = stdout.toString().trim();
+  const dataArray = data.split('\n');
+  const deletedContainersIndex = dataArray.findIndex(
+    (item) =&gt; item === 'Deleted Containers:'
   );
-  const reclaimedSpaceIndex = <span class="cstat-no" title="statement not covered" >dataArray.findIndex(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >    item.startsWith('Total reclaimed space:')</span>
+  const reclaimedSpaceIndex = dataArray.findIndex((item) =&gt;
+    item.startsWith('Total reclaimed space:')
   );
 &nbsp;
-  const deletedContainers = <span class="cstat-no" title="statement not covered" >dataArray</span>
+  const deletedContainers = dataArray
     .slice(deletedContainersIndex + 1, reclaimedSpaceIndex)
-    .map(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item.trim())</span>
-    .filter(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item !== '');</span> // Filter out empty strings
+    .map((item) =&gt; item.trim())
+    .filter((item) =&gt; item !== ''); // Filter out empty strings
 &nbsp;
-  const reclaimedSpace = <span class="cstat-no" title="statement not covered" >dataArray</span>
+  const reclaimedSpace = dataArray
     .slice(reclaimedSpaceIndex)
-    .map(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item.trim());</span>
+    .map((item) =&gt; item.trim());
 &nbsp;
-  const output = <span class="cstat-no" title="statement not covered" >[</span>
+  const output = [
     {
       'Deleted Containers:': deletedContainers,
       'Total reclaimed space:': reclaimedSpace,
     },
   ];
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return output;</span>
+  return output;
 }
 &nbsp;
 export function <span class="fstat-no" title="function not covered" >transformLogs(</span>stdout: string | Buffer) {
@@ -1042,7 +1042,7 @@ export default containerController;
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2023-06-30T19:05:16.827Z
+      at 2023-06-30T19:10:08.030Z
     </div>
     <script src="../prettify.js"></script>
     <script>
