@@ -22,12 +22,25 @@ type dataObject = {
   imageId: string;
 };
 
-type postgresData = {
-  cpu_per: number;
-  mem_per: number;
-  image_id: string;
-  num_entries: number;
+type Image = {
+  Containers: string;
+  CreatedAt: string;
+  CreatedSince: string;
+  Digest: string;
+  ID: string;
+  Repository: string;
+  SharedSize: string;
+  Size: string;
+  Tag: string;
+  UniqueSize: string;
+  VirtualSize: string;
 };
+// type postgresData = {
+//   cpu_per: number;
+//   mem_per: number;
+//   image_id: string;
+//   num_entries: number;
+// };
 
 const postgresController = {
   imageStats: async (data: dataObject[]) => {
@@ -39,7 +52,7 @@ const postgresController = {
           const { stdout, stderr } = await promisifyExec(
             `docker inspect --format='{{.Image}}' ${ele} | cut -d ':' -f 2 | cut -c 1-12`
           );
-          console.log(stderr);
+          console.log(stderr, 'image stats');
           const container = { ...data[index], imageId: stdout.trim() };
 
           const { CPUPerc, MemPerc, imageId } = container;
@@ -67,28 +80,42 @@ const postgresController = {
     return updatedData;
   },
 
-  // grabImageStats: async (
-  //   _req: Request,
-  //   res: Response,
-  //   next: NextFunction
-  // ) => {
+  grabImageStats: async (_req: Request, res: Response, next: NextFunction) => {
+    res.locals.averages = [];
 
-  //   //res.locals.images.map(ele=> {
-  //   //return query(`
-  //   // SELECT cpu_per, mem_per
-  //   // FROM image_stats
-  //   // WHERE image_id = ${ele.ID}`)
-  //   //})
-  //   const queryString: string = `
-  //   SELECT cpu_per, mem_per
-  //   FROM image_stats
-  //   WHERE image_id = ${imageId}`
+    try {
+      await Promise.all(
+        res.locals.images.map(async (ele: Image) => {
+          const queryString: string = `
+        SELECT cpu_per, mem_per
+        FROM image_stats
+        WHERE image_id = '${ele.ID}'
+      `;
+          // res.locals.averages.push('hi');
 
-  //   const queryStats = query(queryString);
+          await query(queryString, [], async (error: Error, queryData: any) => {
+            if (error) {
+              console.log('error in grabImage');
+              next({
+                log: 'error in the grabImageStats middleware',
+                err: error,
+              });
+            }
 
-  //   res.locals.averages = queryStats
-  //   return next()
-  // },
+            console.log('A', queryData.rows);
+
+            res.locals.averages.push(queryData.rows[0]);
+          });
+        })
+      );
+
+      console.log('B', res.locals.averages);
+
+      return next();
+    } catch (err) {
+      return next(err);
+    }
+  },
 };
 
 export default postgresController;

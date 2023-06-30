@@ -2,19 +2,18 @@ import express, { Request, Response } from 'express';
 import query from '../db';
 const router = express.Router();
 
-router.get('/', (_req: Request, res: Response) => {
+router.get('/', async (_req: Request, res: Response) => {
   const queryString = `
-  INSERT INTO image_stats(id, cpu_per, mem_per, image_name, num_entries) 
-  VALUES(1, 5.24, 2.14, 'test', 1)
-  ON CONFLICT (id) DO UPDATE
-  SET cpu_per = excluded.cpu_per,
-      mem_per = excluded.mem_per,
-      image_name = excluded.image_name,
-      num_entries = excluded.num_entries;
+  SELECT cpu_per, mem_per
+  FROM image_stats
+  WHERE image_id = '1dd850aa6693'
   `;
 
-  query(queryString).then((data) => console.log(data));
-  res.send('test');
+  await query(queryString, [], (error: Error, queryData: any) => {
+    if (error) res.status(500).send(error);
+    res.json(queryData.rows);
+    return;
+  });
 });
 
 router.get('/:id', (req: Request, res: Response) => {

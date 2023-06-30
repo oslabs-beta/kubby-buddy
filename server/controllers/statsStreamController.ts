@@ -37,7 +37,9 @@ const statsStreamController: StatsStreamController = {
 
           res.status(200);
           const newDataObject = parseData(stdout);
-          postgresController.imageStats(newDataObject);
+          if (newDataObject) {
+            postgresController.imageStats(newDataObject);
+          }
           const newData: string = JSON.stringify(newDataObject);
           // console.log(newData);
           res.write('data: ' + newData + '\n\n');
