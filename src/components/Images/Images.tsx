@@ -10,7 +10,7 @@ export const Images: FC = () => {
   const { availableImages, imageAverages } = useContext(UserContext);
 
   let images;
-
+  console.log('in images', imageAverages);
   const StoppedContainer: React.FC<{ el: Image; index: number }> = React.memo(
     ({ el, index }) => {
       return (
@@ -18,7 +18,20 @@ export const Images: FC = () => {
           <div className="image-info">
             <p className="image-title">{el.Repository}</p>
             <div className="image-subinfo">
-              <p>Avg Performance: {imageAverages[index]}</p>
+              <p>
+                Avg Mem:{' '}
+                {imageAverages[index]?.mem_per
+                  ? imageAverages[index]?.mem_per
+                  : 'NA'}
+              </p>
+              <p>
+                Avg CPU:{' '}
+                {imageAverages[index]?.cpu_per
+                  ? imageAverages[index]?.cpu_per
+                  : 'NA'}
+              </p>
+            </div>
+            <div className="image-subinfo">
               <p>Containers: {el.Containers}</p>
               <p>Time since created: {el.CreatedSince}</p>
             </div>

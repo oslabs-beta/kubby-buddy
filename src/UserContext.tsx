@@ -1,5 +1,5 @@
 import React, { createContext, useState, ReactNode } from 'react';
-import { Context, Container, Image, Volume } from './types';
+import { Context, Container, Image, Volume, ImageAvgStats } from './types';
 
 export const UserContext = createContext<Context>({
   runningContainers: [],
@@ -25,7 +25,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [availableVolumes, setAvailableVolumes] = useState<Volume[]>([]);
   const [statStream, setStatStream] = useState<Container[]>([]);
   const [showing, setShowing] = useState<string>('Images');
-  const [imageAverages, setImageAverages] = useState<[]>([]);
+  const [imageAverages, setImageAverages] = useState<ImageAvgStats[]>([]);
 
   const contextProps: Context = {
     runningContainers,

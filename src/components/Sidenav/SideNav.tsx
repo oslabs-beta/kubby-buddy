@@ -19,7 +19,7 @@ export const SideNav: FC = () => {
     setAvailableImages,
     setShowing,
     setAvailableVolumes,
-    // setImageAverages
+    setImageAverages,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -45,9 +45,9 @@ export const SideNav: FC = () => {
         const getURL = 'image/all-images';
         const fetchResponse = await fetch(getURL);
         const data = await fetchResponse.json();
-        console.log('frontend averages', data);
+        // console.log('frontend averages', data);
         setAvailableImages(data.images);
-        // setImageAverages(data.averages)
+        setImageAverages(data.averages);
       } catch (error) {
         setAvailableImages([]);
         console.log(error);
