@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "sourceMap": true,
     "outDir": "./dist/",
     "noImplicitAny": true,
     "noEmitOnError": true,
@@ -16,5 +15,5 @@
     "esModuleInterop": true
   },
   "exclude": ["node_modules"],
-  "types": ["react/next", "react-dom/next"]
+  "types": ["react/next", "react-dom/next", "cypress"]
 }

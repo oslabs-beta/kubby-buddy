@@ -12,7 +12,7 @@ export const MainNav: FC = () => {
   const { showing } = useContext(UserContext);
 
   return (
-    <div className="main-nav">
+    <div className="main-nav" data-testid="mainnav">
       <ul>{showing === 'Containers' ? <DockerContainers /> : <Images />}</ul>
     </div>
   );

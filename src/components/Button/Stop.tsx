@@ -52,7 +52,6 @@ const StopButton: React.FC<StopCommandProps> = ({
       className="stop"
       style={{ backgroundImage: `url(${stop})` }}
       onClick={command}
-      data-testid="stop-button"
     ></button>
   );
 };

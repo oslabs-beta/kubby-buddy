@@ -10,7 +10,8 @@
     "test": "jest --verbose --passWithNoTests",
     "backend": "tsnd --respawn --transpile-only ./server/server.ts",
     "lint": "prettier --check .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "cypress": "cypress open"
   },
   "author": "",
   "license": "ISC",
@@ -52,6 +53,7 @@
     "babel-loader": "^9.1.2",
     "concurrently": "^8.2.0",
     "css-loader": "^6.8.1",
+    "cypress": "^12.16.0",
     "electron": "^25.1.0",
     "electron-builder": "^24.4.0",
     "file-loader": "^6.2.0",

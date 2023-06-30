@@ -69,7 +69,7 @@ export const SideNav: FC = () => {
   }, []);
 
   return (
-    <div className="side-nav">
+    <div className="side-nav" data-testid="sidenav">
       <div className="favicon-holder">
         <img className="favicon" src={favicon} />
       </div>
