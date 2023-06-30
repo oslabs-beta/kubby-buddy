@@ -1,21 +1,17 @@
 version: '3'
 
 services:
-  dind:
+  controller_test:
     image: docker:dind
-    container_name: DIND
+    container_name: controller_test
     privileged: true
 
-  mock-container-1:
-    image: alpine
-    command: sleep 3600
-    container_name: TEST1
-    depends_on:
-      - dind
+  image_test:
+    image: docker:dind
+    container_name: image_test
+    privileged: true
 
   mock-container-2:
     image: alpine
     command: tail -f /dev/null
     container_name: TEST2
-    depends_on:
-      - dind

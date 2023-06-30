@@ -1,7 +1,5 @@
-// import { Docker } from 'node-docker-api';
 import express from 'express';
 import containerRouter from '../../server/routes/containerRoutes';
-// import request from 'supertest';
 import { Server } from 'http';
 
 import { execSync } from 'child_process';
@@ -30,7 +28,7 @@ beforeEach(async () => {
 
   // Start the containers
   execSync(
-    'docker exec -i DIND sh -c "docker run -d --name=my-container alpine sleep 3600 && docker run -d --name=my-container2 alpine sleep 3600"'
+    'docker exec -i controller_test sh -c "docker run -d --name=my-container alpine sleep 3600 && docker run -d --name=my-container2 alpine sleep 3600"'
   );
 
   // Delay for a certain amount of time to allow the containers to start
@@ -41,20 +39,23 @@ afterEach(async () => {
   server.close();
 
   execSync(
-    `docker exec -i DIND sh -c 'docker rm -f my-container; docker rm -f my-container2'`
+    `docker exec -i controller_test sh -c 'docker rm -f my-container; docker rm -f my-container2'`
   );
 });
 
-describe('Docker Tests', () => {
+describe('containerController tests', () => {
   test('GET /all-active-containers should return an array of containers', async () => {
-    // Get the list of active containers within the DIND container
-    execSync(`docker exec -i DIND sh -c "docker stop my-container"`, {
-      stdio: 'pipe',
-    });
+    // Get the list of active containers within the controller_test container
+    execSync(
+      `docker exec -i controller_test sh -c "docker stop my-container"`,
+      {
+        stdio: 'pipe',
+      }
+    );
     // console.log('TEST1', test1.toString());
     // Get the list of running containers
     const dindContainersResponse = execSync(
-      `docker exec -i DIND sh -c "${cmdGetAllRunningContainers}"`,
+      `docker exec -i controller_test sh -c "${cmdGetAllRunningContainers}"`,
       {
         stdio: 'pipe',
       }
@@ -66,7 +67,7 @@ describe('Docker Tests', () => {
     //   parseOutputContainers(dindContainersResponse)
     // );
 
-    // Make sure the my-container is running within the DIND container
+    // Make sure the my-container is running within the controller_test container
     expect(
       dindContainers.some(
         (container) =>
@@ -90,9 +91,9 @@ describe('Docker Tests', () => {
   });
 
   test('GET /all-active-containers-names should return an array of containers', async () => {
-    // Get the list of active containers within the DIND container
+    // Get the list of active containers within the controller_test container
     const dindContainersResponse = execSync(
-      `docker exec -i DIND sh -c "${cmdGetAllRunningContainersNames}"`,
+      `docker exec -i controller_test sh -c "${cmdGetAllRunningContainersNames}"`,
       { stdio: 'pipe' } // Added option to capture the command output
     );
 
@@ -101,7 +102,7 @@ describe('Docker Tests', () => {
     const dindContainers = parseOutputContainersNames(dindContainersResponse);
     // console.log('dindContainers:', parseOutputContainersNames(dindContainersResponse));
 
-    // Make sure the my-container is running within the DIND container
+    // Make sure the my-container is running within the controller_test container
     expect(
       dindContainers.some((container) => container.name === 'my-container')
     ).toBeTruthy();
@@ -119,7 +120,7 @@ describe('Docker Tests', () => {
 
   test('POST /stop should stop a specific container', async () => {
     const dindContainersResponse = execSync(
-      `docker exec -i DIND sh -c "${cmdStopASpecificContainer} my-container2"`,
+      `docker exec -i controller_test sh -c "${cmdStopASpecificContainer} my-container2"`,
       { stdio: 'pipe' } // Added option to capture the command output
     );
 
@@ -128,7 +129,7 @@ describe('Docker Tests', () => {
     const dindContainers = parseOutputStartStop(dindContainersResponse);
     // console.log('dindContainers:', parseOutputStartStop(dindContainersResponse));
 
-    // Make sure the my-container is running within the DIND container
+    // Make sure the my-container is running within the controller_test container
     expect(
       dindContainers.some((container) => container.message === 'my-container')
     ).toBeFalsy();
@@ -143,27 +144,27 @@ describe('Docker Tests', () => {
 
   test('POST /start should start a specific container', async () => {
     execSync(
-      `docker exec -i DIND sh -c "docker stop my-container my-container2"`,
+      `docker exec -i controller_test sh -c "docker stop my-container my-container2"`,
       {
         stdio: 'pipe',
       }
     );
     // console.log(
     //   'TEST1',
-    //   execSync(`docker exec -i DIND sh -c "docker ps"`).toString()
+    //   execSync(`docker exec -i controller_test sh -c "docker ps"`).toString()
     // );
     const dindContainersResponse = execSync(
-      `docker exec -i DIND sh -c "${cmdStartASpecificContainer} my-container"`,
+      `docker exec -i controller_test sh -c "${cmdStartASpecificContainer} my-container"`,
       { stdio: 'pipe' } // Added option to capture the command output
     );
     // console.log(
     //   'TEST2',
-    //   execSync(`docker exec -i DIND sh -c "docker ps"`).toString()
+    //   execSync(`docker exec -i controller_test sh -c "docker ps"`).toString()
     // );
 
     const dindContainers = parseOutputStartStop(dindContainersResponse);
 
-    // // Make sure the my-container is running within the DIND container
+    // // Make sure the my-container is running within the controller_test container
     expect(
       dindContainers.some((container) => container.message === 'my-container')
     ).toBeTruthy();
@@ -177,27 +178,30 @@ describe('Docker Tests', () => {
   });
 
   test('DELETE /prune-stopped-containers should delete all stopped containers', async () => {
-    execSync(`docker exec -i DIND sh -c "docker stop my-container"`, {
-      stdio: 'pipe',
-    });
+    execSync(
+      `docker exec -i controller_test sh -c "docker stop my-container"`,
+      {
+        stdio: 'pipe',
+      }
+    );
     // console.log(
     //   'TEST1',
-    //   execSync(`docker exec -i DIND sh -c "docker ps -a"`).toString()
+    //   execSync(`docker exec -i controller_test sh -c "docker ps -a"`).toString()
     // );
     const dindContainersResponse = execSync(
-      `docker exec -i DIND sh -c "${cmdPruneStoppedContainers}"`,
+      `docker exec -i controller_test sh -c "${cmdPruneStoppedContainers}"`,
       { stdio: 'pipe' } // Added option to capture the command output
     );
     // console.log(
     //   'TEST2',
-    //   execSync(`docker exec -i DIND sh -c "docker ps -a"`).toString()
+    //   execSync(`docker exec -i controller_test sh -c "docker ps -a"`).toString()
     // );
 
     const dindContainers = parseOutputPruneStoppedContainers(
       dindContainersResponse
     );
-    // console.log('DIND CONTAINERS', dindContainers);
-    // Make sure the my-container is running within the DIND container
+    // console.log('controller_test CONTAINERS', dindContainers);
+    // Make sure the my-container is running within the controller_test container
     expect(
       dindContainers.some((container) => container['Deleted Containers:'])
     ).toBeTruthy();
@@ -218,12 +222,12 @@ describe('Docker Tests', () => {
 
   test('GET /logs get logs for a specific container', async () => {
     const dindContainersResponse = execSync(
-      `docker exec -i DIND sh -c "${cmdGetSpecificLog} my-container2"`,
+      `docker exec -i controller_test sh -c "${cmdGetSpecificLog} my-container2"`,
       { stdio: 'pipe' } // Added option to capture the command output
     );
 
     const dindContainers = transformLogs(dindContainersResponse);
-    // console.log('DIND CONTAINERS', dindContainers);
+    // console.log('controller_test CONTAINERS', dindContainers);
 
     expect(Array.isArray(dindContainers)).toBeTruthy();
     expect(dindContainers.length).toBeGreaterThan(0);
@@ -231,20 +235,23 @@ describe('Docker Tests', () => {
   });
 
   test('DELETE /remove-specific-container removes stopped container by name', async () => {
-    execSync(`docker exec -i DIND sh -c "docker stop my-container2"`, {
-      stdio: 'pipe',
-    });
+    execSync(
+      `docker exec -i controller_test sh -c "docker stop my-container2"`,
+      {
+        stdio: 'pipe',
+      }
+    );
     // console.log(
     //   'TEST1',
-    //   execSync(`docker exec -i DIND sh -c "docker ps -a"`).toString()
+    //   execSync(`docker exec -i controller_test sh -c "docker ps -a"`).toString()
     // );
     const dindContainersResponse = execSync(
-      `docker exec -i DIND sh -c "${cmdRemoveSpecificContainer} my-container2"`,
+      `docker exec -i controller_test sh -c "${cmdRemoveSpecificContainer} my-container2"`,
       { stdio: 'pipe' } // Added option to capture the command output
     );
     // console.log(
     //   'TEST2',
-    //   execSync(`docker exec -i DIND sh -c "docker ps -a"`).toString()
+    //   execSync(`docker exec -i controller_test sh -c "docker ps -a"`).toString()
     // );
 
     const dindContainers = parseOutputRemoveSpecificContainer(

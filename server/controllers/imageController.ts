@@ -4,16 +4,26 @@ import { ImageController, ErrorDetails } from '../../types';
 import { promisify } from 'node:util';
 const promisifyExec = promisify(exec);
 
-const imageController: ImageController = {
+export const cmdGetAllImages: string = `docker images --format json`;
+
+export function parseOutputGetAllImages(data: string | Buffer) {
+  const parsedOutput = data
+    .toString()
+    .trim()
+    .split('\n')
+    .map((item) => JSON.parse(item, undefined));
+
+  return parsedOutput;
+}
+
+export const imageController: ImageController = {
   getAllImages: async (
     _req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
     try {
-      const { stdout, stderr } = await promisifyExec(
-        'docker images --format json'
-      );
+      const { stdout, stderr } = await promisifyExec(cmdGetAllImages);
       if (stderr) {
         const errorDetails: ErrorDetails = {
           log: 'error in exec of imageController.getAllImages',
@@ -22,11 +32,7 @@ const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      const dataArray = stdout
-        .trim()
-        .split('\n')
-        .map((item) => JSON.parse(item, undefined)); // Use undefined as the reviver
-      res.locals.images = dataArray;
+      res.locals.images = parseOutputGetAllImages(stdout);
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
