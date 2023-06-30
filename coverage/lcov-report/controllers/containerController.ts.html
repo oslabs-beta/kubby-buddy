@@ -23,27 +23,27 @@
         </h1>
         <div class="clearfix">
           <div class="fl pad1y space-right2">
-            <span class="strong">19.68% </span>
+            <span class="strong">21.25% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">25/127</span>
+            <span class="fraction">27/127</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">0% </span>
+            <span class="strong">9.09% </span>
             <span class="quiet">Branches</span>
-            <span class="fraction">0/11</span>
+            <span class="fraction">1/11</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">13.79% </span>
+            <span class="strong">17.24% </span>
             <span class="quiet">Functions</span>
-            <span class="fraction">4/29</span>
+            <span class="fraction">5/29</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">21% </span>
+            <span class="strong">22.68% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">25/119</span>
+            <span class="fraction">27/119</span>
           </div>
         </div>
         <p class="quiet">
@@ -421,14 +421,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -743,15 +743,15 @@ export function parseOutputContainersNames(data: string | Buffer) {
   return parsedOutput;
 }
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >parseOutputStartStop(</span>data: string | Buffer) {
-  const parsedOutput = <span class="cstat-no" title="statement not covered" >[</span>
+export function parseOutputStartStop(data: string | Buffer) {
+  const parsedOutput = [
     {
       message: Buffer.isBuffer(data)
         ? data.toString().replace(/[\r\n]+/gm, '')
-        : data.replace(/[\r\n]+/gm, ''),
+        : <span class="branch-1 cbranch-no" title="branch not covered" >data.replace(/[\r\n]+/gm, ''),</span>
     },
   ];
-<span class="cstat-no" title="statement not covered" >  return parsedOutput;</span>
+  return parsedOutput;
 }
 &nbsp;
 export function <span class="fstat-no" title="function not covered" >parseOutputPruneStoppedContainers(</span>stdout: string | Buffer) {
@@ -1042,7 +1042,7 @@ export default containerController;
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2023-06-30T18:30:59.926Z
+      at 2023-06-30T19:01:15.515Z
     </div>
     <script src="../prettify.js"></script>
     <script>
