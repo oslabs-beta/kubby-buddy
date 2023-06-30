@@ -7,14 +7,14 @@ import { Server } from 'http';
 import { execSync } from 'child_process';
 import {
   cmdGetAllRunningContainers,
-  // cmdGetAllRunningContainersNames,
+  cmdGetAllRunningContainersNames,
   // cmdStopASpecificContainer,
   // cmdStartASpecificContainer,
   // cmdPruneStoppedContainers,
   // cmdGetSpecificLog,
   // cmdRemoveSpecificContainer,
   parseOutputContainers,
-  // parseOutputContainersNames,
+  parseOutputContainersNames,
   // parseOutputStartStop,
   // parseOutputPruneStoppedContainers,
   // transformLogs,
@@ -79,6 +79,34 @@ describe('Docker Tests', () => {
         (container) =>
           container.Names === 'my-container2' && container.Status.includes('Up')
       )
+    ).toBeTruthy();
+    expect(dindContainers).toHaveLength(2);
+    expect(
+      dindContainers.some((container) => container.name === 'hungry_khorana')
+    ).toBeFalsy();
+    expect(Array.isArray(dindContainers)).toBeTruthy();
+    expect(dindContainers.length).toBeGreaterThan(0);
+    expect(typeof dindContainers[0]).toBe('object');
+  });
+
+  test('GET /all-active-containers-names should return an array of containers', async () => {
+    // Get the list of active containers within the DIND container
+    const dindContainersResponse = execSync(
+      `docker exec -i DIND sh -c "${cmdGetAllRunningContainersNames}"`,
+      { stdio: 'pipe' } // Added option to capture the command output
+    );
+
+    // console.log('dindContainersResponse:', dindContainersResponse.toString());
+
+    const dindContainers = parseOutputContainersNames(dindContainersResponse);
+    // console.log('dindContainers:', parseOutputContainersNames(dindContainersResponse));
+
+    // Make sure the my-container is running within the DIND container
+    expect(
+      dindContainers.some((container) => container.name === 'my-container')
+    ).toBeTruthy();
+    expect(
+      dindContainers.some((container) => container.name === 'my-container2')
     ).toBeTruthy();
     expect(dindContainers).toHaveLength(2);
     expect(
