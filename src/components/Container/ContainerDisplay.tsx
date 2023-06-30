@@ -2,7 +2,7 @@ import React, { FC, useContext, useEffect, useState, useMemo } from 'react';
 import { UserContext } from '../../UserContext';
 // import { StartCommands } from '../Button/Start';
 import { StopCommands } from '../Button/Stop';
-import { DeleteCommands } from '../Button/Delete';
+
 import { LogCommands } from '../Button/Logs';
 // import { Graph } from '../Graph/Graph';
 import LineGraph from '../LineGraph/Line';
@@ -45,16 +45,6 @@ export const DisplayRunning: FC = () => {
               fetchMethod="post"
             />
 
-            <DeleteCommands
-              name={el.Names}
-              cmdRoute={
-                new URL(
-                  '/container/remove-specific-container',
-                  window.location.href
-                )
-              }
-              fetchMethod="delete"
-            />
             <LogCommands
               name={el.Names}
               cmdRoute={
