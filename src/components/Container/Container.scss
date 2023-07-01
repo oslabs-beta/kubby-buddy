@@ -5,11 +5,14 @@
 
 .container {
   width: 90%;
+  min-width: 900px;
   // border: 1px solid #ff7c02;
+
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: space-between;
+  gap: 1em;
+  justify-content: space-evenly;
+  // align-items: space-between;
   font-weight: 300;
   color: black;
   padding: 1.5em;
@@ -38,7 +41,7 @@
   // font-size: 1.2em;
   word-wrap: break-word;
   word-break: break-all;
-  width: 25%;
+  width: 15%;
   // align-content: center;
   // text-align: center;
   // grid-area: 1 / 8 / 1 / 1;
@@ -100,18 +103,6 @@
   }
 }
 
-.dropdown {
-  grid-area: 4 / 1 / 7 / 8;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  // height:40px;
-  button {
-    flex-basis: calc(50% - 1em);
-    height: 2em;
-  }
-}
-
 .bargraph {
   display: block;
   width: 100px;
@@ -122,9 +113,9 @@
   align-items: center;
   justify-content: center;
   // border: 1px solid red;
-  width: 25%;
+  width: 20%;
   .bargraph {
-    width: 100%;
+    width: 60%;
     box-shadow: 0px 0px 5px black;
   }
   flex-wrap: wrap;

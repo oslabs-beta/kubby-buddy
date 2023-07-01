@@ -1,9 +1,12 @@
-module.exports = {
-  verbose: true,
-  preset: 'ts-jest',
-  testEnvironment: 'jsdom',
-  moduleNameMapper: {
-    '\\.(css|scss|sass|png)$': 'identity-obj-proxy',
-    '\\.(png)$': './__mocks__/fileMock.ts',
-  },
+import { Config } from '@jest/types';
+
+export default async (): Promise<Config.InitialOptions> => {
+  return {
+    verbose: true,
+    transform: {
+      '^.+\\.tsx?$': 'ts-jest',
+    },
+    moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
+    testMatch: ['**/__tests__/**/*.test.(js|jsx|ts|tsx)'],
+  };
 };
