@@ -12,13 +12,20 @@ describe('DisplayRunning', () => {
 
     // Wait for the DisplayRunning component to render
     cy.get('.dockercontainer', { timeout: 10000 }).should('exist');
+    cy.get('.container', { timeout: 10000 })
+      .eq(0)
+      .within(() => {
+        cy.get('.container-name').should('have.text', 'container1');
+        cy.get('.Imagename').should('have.text', 'Image: image1');
+        cy.get('.Port').should('have.text', 'Port: port1');
+      });
   });
 
   it('should render .container elements with correct content', () => {
     // Click the "Containers" menu item
     cy.contains('Containers').click();
 
-    cy.get('.container')
+    cy.get('.container', { timeout: 10000 })
       .eq(0)
       .within(() => {
         cy.get('.container-name').should('have.text', 'container1');
@@ -26,7 +33,7 @@ describe('DisplayRunning', () => {
         cy.get('.Port').should('have.text', 'Port: port1');
       });
 
-    cy.get('.container')
+    cy.get('.container', { timeout: 10000 })
       .eq(1)
       .within(() => {
         cy.get('.container-name').should('have.text', 'container2');
@@ -39,14 +46,14 @@ describe('DisplayRunning', () => {
     // Click the "Containers" menu item
     cy.contains('Containers').click();
 
-    cy.get('.container')
+    cy.get('.container', { timeout: 1000 })
       .eq(0)
       .within(() => {
         cy.get('.stopCommand-container').should('exist');
         cy.get('.startCommand-container').should('exist');
       });
 
-    cy.get('.container')
+    cy.get('.container', { timeout: 1000 })
       .eq(1)
       .within(() => {
         cy.get('.stopCommand-container').should('exist');
