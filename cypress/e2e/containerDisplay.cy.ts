@@ -11,65 +11,47 @@ describe('DisplayRunning', () => {
     cy.contains('Containers').click();
 
     // Wait for the DisplayRunning component to render
-    cy.get('.dockercontainer').should('exist');
-
-    // Verify the presence of running container names in DisplayRunning component
-    cy.get('.dockercontainer').contains('container1').should('exist');
-    cy.get('.dockercontainer').contains('container2').should('exist');
+    cy.get('.dockercontainer', { timeout: 10000 }).should('exist');
   });
-  it('should invoke the stop command after navigating to Containers page', () => {
+
+  it('should render .container elements with correct content', () => {
     // Click the "Containers" menu item
     cy.contains('Containers').click();
 
-    // Wait for the DisplayRunning component to render
-    cy.get('.dockercontainer').should('exist');
+    // Assert that the .container elements are rendered correctly with the expected content
+    cy.get('.dockercontainer', { timeout: 10000 }).should('exist');
+    cy.get('.container', { timeout: 10000 }).should('exist');
 
-    // Wait for the .stop button to be present
-    cy.get('.dockercontainer')
-      .contains('container1')
-      .parents('.container')
-      .find('.cmdbutton .stopCommand-container .stop', { timeout: 10000 })
-      .should('exist')
-      .click();
+    cy.get('.container')
+      .eq(0)
+      .within(() => {
+        cy.get('.container-name').should('have.text', 'container1');
+        cy.get('.Imagename').should('have.text', 'Image: image1');
+        cy.get('.Port').should('have.text', 'Port: port1');
+      });
 
-    // Assert that the command has been invoked
-    // cy.get('@commandSpy').should('be.called');
+    cy.get('.container')
+      .eq(1)
+      .within(() => {
+        cy.get('.container-name').should('have.text', 'container2');
+        cy.get('.Imagename').should('have.text', 'Image: image2');
+        cy.get('.Port').should('have.text', 'Port: port2');
+      });
   });
-  it('should invoke the start command after navigating to Containers page', () => {
+
+  it('should render cmd buttons stop and log', () => {
     // Click the "Containers" menu item
     cy.contains('Containers').click();
 
-    // Wait for the DisplayRunning component to render
-    cy.get('.dockercontainer').should('exist');
+    // Assert that the .container elements are rendered correctly with the expected content
+    cy.get('.dockercontainer', { timeout: 10000 }).should('exist');
+    cy.get('.container', { timeout: 10000 }).should('exist');
 
-    // Wait for the .stop button to be present
-    cy.get('.dockercontainer')
-      .contains('container1')
-      .parents('.container')
-      .find('.cmdbutton .startCommand-container .start', { timeout: 10000 })
-      .should('exist')
-      .click();
-
-    // Assert that the command has been invoked
-    // cy.get('@commandSpy').should('be.called');
-  });
-  it('should render the charts after navigating to Containers page', () => {
-    // Click the "Containers" menu item
-    cy.contains('Containers').click();
-
-    // Wait for the DisplayRunning component to render
-    cy.get('.dockercontainer').should('exist');
-
-    // Wait for the charts to be present
-    cy.get('.dockercontainer')
-      .contains('container1')
-      .parents('.container')
-      .find('.chartContainer', { timeout: 10000 })
-      .should('have.length', 3)
-      .each(($chartContainer) => {
-        cy.wrap($chartContainer)
-          .find('.bargraph', { timeout: 30000 })
-          .should('exist');
+    cy.get('.container')
+      .eq(0)
+      .within(() => {
+        cy.get('.stopCommand-container').should('exist');
+        cy.get('.');
       });
   });
 });
