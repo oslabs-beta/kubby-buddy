@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { FC, useContext, useEffect } from 'react';
 import './Container.scss';
 import { UserContext } from '../../UserContext';

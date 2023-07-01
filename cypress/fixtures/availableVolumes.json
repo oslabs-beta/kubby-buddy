@@ -1,0 +1,26 @@
+[
+  {
+    "Availability": "available",
+    "Driver": "driver1",
+    "Group": "group1",
+    "Labels": "label1",
+    "Links": "link1",
+    "Mountpoint": "/mountpoint1",
+    "Name": "volume1",
+    "Scope": "scope1",
+    "Size": "10GB",
+    "Status": "healthy"
+  },
+  {
+    "Availability": "available",
+    "Driver": "driver2",
+    "Group": "group2",
+    "Labels": "label2",
+    "Links": "link2",
+    "Mountpoint": "/mountpoint2",
+    "Name": "volume2",
+    "Scope": "scope2",
+    "Size": "5GB",
+    "Status": "healthy"
+  }
+]

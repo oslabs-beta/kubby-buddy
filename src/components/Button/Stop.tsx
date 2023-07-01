@@ -46,6 +46,7 @@ const StopButton: React.FC<StopCommandProps> = ({
       console.error(err);
     }
   };
+
   return (
     <button
       className="stop"
