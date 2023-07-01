@@ -3,30 +3,10 @@ import './Container.scss';
 import { UserContext } from '../../UserContext';
 import { DisplayRunning } from './ContainerDisplay';
 import { StoppedContainers } from './StoppedContainers';
-import { Container } from '../../types';
+// import { Container } from '../../types';
 
 export const DockerContainers: FC = () => {
-  const { setStoppedContainers, setRunningContainers, setStatStream } =
-    useContext(UserContext);
-
-  useEffect(() => {
-    async function getRunningContainers() {
-      try {
-        const url = 'container/all-active-containers';
-        const response = await fetch(url);
-        const data: Container[] = await response.json();
-        setRunningContainers(
-          data.filter((container) => container.State !== 'exited')
-        );
-        setStoppedContainers(
-          data.filter((container) => container.State === 'exited')
-        );
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    getRunningContainers();
-  }, []);
+  const { setStatStream } = useContext(UserContext);
 
   //Create EvenSource to stream docker stats
 
@@ -46,6 +26,7 @@ export const DockerContainers: FC = () => {
     sse.onerror = (event) => {
       // return sse.close();
       console.log('ERROR TRIPPED', event);
+      console.log('Error message:', event.target);
     };
     //Cleanup
     return () => {

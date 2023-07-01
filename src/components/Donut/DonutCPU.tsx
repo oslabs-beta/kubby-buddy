@@ -38,7 +38,7 @@ export default function Donut1(props: any) {
       <h1 className="header-linegraph">
         CPU Usage: {JSON.stringify(data.CPUPerc).replace(/"/g, '')}
       </h1>
-      <div>
+      <div className="donut">
         <Doughnut
           data={chartData}
           options={{
@@ -48,6 +48,7 @@ export default function Donut1(props: any) {
                 position: 'bottom',
               },
             },
+            responsive: true,
             maintainAspectRatio: false,
           }}
         />

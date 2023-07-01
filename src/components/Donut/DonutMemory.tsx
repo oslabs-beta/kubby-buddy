@@ -38,10 +38,12 @@ export default function Donut2(props: any) {
       <h1 className="header-linegraph">
         Memory Usage: {JSON.stringify(data.MemPerc).replace(/"/g, '')}
       </h1>
-      <div>
+      <div className="donut">
         <Doughnut
           data={chartData}
           options={{
+            responsive: true,
+            layout: {},
             plugins: {
               legend: {
                 display: true,

@@ -106,6 +106,7 @@ export function Graph(props: GraphProps) {
               },
             },
             responsive: true,
+            maintainAspectRatio: false,
             indexAxis: 'y',
           }}
         />
