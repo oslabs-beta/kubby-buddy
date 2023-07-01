@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { FC, useContext, useMemo } from 'react';
 import './Images.scss';
 import { UserContext } from '../../UserContext';
@@ -65,7 +66,7 @@ export const Images: FC = () => {
 
   if (typeof availableImages === 'string') {
     images = <Loader />;
-  } else {
+  } else if (availableImages) {
     images = useMemo(
       () =>
         availableImages.map((el, index) => (
@@ -73,6 +74,8 @@ export const Images: FC = () => {
         )),
       [availableImages]
     );
+  } else {
+    images = null;
   }
 
   return <div className="imagescontainer">{images}</div>;

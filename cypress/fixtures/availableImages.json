@@ -1,0 +1,28 @@
+[
+  {
+    "Containers": "2",
+    "CreatedAt": "2023-06-30T12:00:00Z",
+    "CreatedSince": "1h",
+    "Digest": "digest1",
+    "ID": "image1",
+    "Repository": "repository1",
+    "SharedSize": "10MB",
+    "Size": "20MB",
+    "Tag": "tag1",
+    "UniqueSize": "15MB",
+    "VirtualSize": "30MB"
+  },
+  {
+    "Containers": "1",
+    "CreatedAt": "2023-06-29T12:00:00Z",
+    "CreatedSince": "2h",
+    "Digest": "digest2",
+    "ID": "image2",
+    "Repository": "repository2",
+    "SharedSize": "5MB",
+    "Size": "15MB",
+    "Tag": "tag2",
+    "UniqueSize": "10MB",
+    "VirtualSize": "25MB"
+  }
+]

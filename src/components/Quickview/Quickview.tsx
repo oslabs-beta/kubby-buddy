@@ -1,5 +1,6 @@
 // display running containers as a list
 // onclick take user to scroll position in main view
+//@ts-ignore
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../UserContext';
 import './Quickview.scss';
