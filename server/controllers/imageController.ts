@@ -16,6 +16,31 @@ export function parseOutputGetAllImages(data: string | Buffer) {
   return parsedOutput;
 }
 
+export function setRmOption(remove: string) {
+  let rm;
+  // check if remove is provided
+  if (remove === 'yes') {
+    rm = '--rm';
+  } else {
+    rm = '';
+  }
+
+  return rm;
+}
+
+// export function setVolOption(volumeName: string) {
+//   if (volumeName && volumeName.trim() !== '') {
+//     // check if fileDirectory is provided
+//     if (fileDirectory && fileDirectory.trim() !== '') {
+//       vol = `-v ${volumeName}:${fileDirectory}`;
+//     } else {
+//       vol = `-v ${volumeName}:/App`;
+//     }
+//   } else {
+//     vol = '';
+//   }
+// }
+
 export const imageController: ImageController = {
   getAllImages: async (
     _req: Request,
@@ -50,26 +75,26 @@ export const imageController: ImageController = {
     next: NextFunction
   ): Promise<void> => {
     const { name, image, remove, volumeName, fileDirectory, port } = req.body;
-    let rm;
+
     let vol;
     let portNum;
 
-    // check if name and image is provided
-    if (!name || !image || name.trim() === '' || image.trim() === '') {
-      const errorDetails: ErrorDetails = {
-        log: 'error in containerController.runContainerFromImage',
-        err: null,
-        message: 'Missing name or image fields',
-      };
-      return next(errorDetails);
-    }
-
-    // check if remove is provided
-    if (remove === 'yes') {
-      rm = '--rm';
-    } else {
-      rm = '';
-    }
+    // // check if name and image is provided
+    // if (!name || !image || name.trim() === '' || image.trim() === '') {
+    //   const errorDetails: ErrorDetails = {
+    //     log: 'error in containerController.runContainerFromImage',
+    //     err: null,
+    //     message: 'Missing name or image fields',
+    //   };
+    //   return next(errorDetails);
+    // }
+    // let rm;
+    // // check if remove is provided
+    // if (remove === 'yes') {
+    //   rm = '--rm';
+    // } else {
+    //   rm = '';
+    // }
 
     // check if volume is provided
     if (volumeName && volumeName.trim() !== '') {
@@ -107,7 +132,9 @@ export const imageController: ImageController = {
 
     try {
       const { stdout, stderr } = await promisifyExec(
-        `docker run -d ${rm} ${vol} ${portNum} --name ${name} ${image}`
+        `docker run -d ${setRmOption(
+          remove
+        )} ${vol} ${portNum} --name ${name} ${image}`
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {
