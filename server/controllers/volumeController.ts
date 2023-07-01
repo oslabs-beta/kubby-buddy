@@ -7,28 +7,57 @@ const promisifyExec = promisify(exec);
 const volumeController: VolumeController = {
   getAllVolumes: async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      const { stdout, stderr } = await promisifyExec(
+      const { stdout: volumeOutput, stderr: volumeError } = await promisifyExec(
         'docker volume ls --format "{{json . }}"'
       );
-      if (stderr) {
-        const errorDetails: ErrorDetails = {
-          log: 'error in the volumeController.getAllVolumes exec call',
-          err: stderr,
-          message: 'error in the volumeController.getAllVolumes exec call',
+
+      if (volumeError) {
+        const errorDetails = {
+          log: 'Error in the volumeController.getAllVolumes exec call',
+          err: volumeError,
+          message: 'Error in the volumeController.getAllVolumes exec call',
         };
         next(errorDetails);
+        return;
       }
-      const dataArray = stdout
+
+      const volumeDataArray = volumeOutput
         .trim()
         .split('\n')
         .map((item) => JSON.parse(item, undefined));
-      res.locals.volumes = dataArray;
+
+      console.log('VOL DATA', volumeDataArray);
+
+      for (let i = 0; i < volumeDataArray.length; i++) {
+        const volumeData = volumeDataArray[i];
+        const { Name } = volumeData;
+        console.log('NAME', Name);
+        const { stdout: containerOutput } = await promisifyExec(
+          `docker ps --filter "volume=${Name}" --format "{{json . }}"`
+        );
+        console.log('CON OUT', containerOutput);
+        if (containerOutput !== '') {
+          const parsedOutput = containerOutput
+            .toString()
+            .trim()
+            .split('\n')
+            .map((item) => JSON.parse(item, undefined));
+
+          const stats = parsedOutput.length > 0 ? parsedOutput[0] : {};
+          console.log('STS', stats);
+
+          volumeDataArray[i].Stats = stats;
+        }
+      }
+      console.log('NEW', volumeDataArray);
+
+      res.locals.volumes = volumeDataArray;
       next();
     } catch (error) {
-      const errorDetails: ErrorDetails = {
-        log: 'error in the volumeController.getAllVolumes catch',
+      const errorDetails = {
+        log: 'Error in the volumeController.getAllVolumes catch',
         err: error,
-        message: 'error in the volumeController.getAllVolumes catch',
+        message: 'Error in the volumeController.getAllVolumes catch',
       };
       next(errorDetails);
     }
