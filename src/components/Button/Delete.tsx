@@ -27,11 +27,13 @@ const DeleteButton: React.FC<DeleteCommandProp> = ({
         body: JSON.stringify({ name: name }),
       });
       const data = await response.json();
-      console.log('test---->:' + data);
-      if (response.status !== 500) {
+
+      if (response.ok) {
         setStoppedContainers(
           stoppedContainers.filter((container) => container.Names !== name)
         );
+      } else {
+        throw new Error(data);
       }
     } catch (err) {
       console.error(err);
