@@ -402,14 +402,14 @@ export const imageController: ImageController = {
     res: Response,
     next: NextFunction
   ): Promise<void> => {
-    const { name } = req.body;
+    const { id } = req.body;
     try {
-      const { stdout, stderr } = await promisifyExec(`docker image rm ${name}`);
+      const { stdout, stderr } = await promisifyExec(`docker image rm ${id}`);
       if (stderr) {
         const errorDetails: ErrorDetails = {
-          log: `error in the imageController.removeSingleImage exec for ${name}`,
+          log: `error in the imageController.removeSingleImage exec for ${id}`,
           err: stderr,
-          message: `error in the imageController.removeSingleImage exec for ${name}`,
+          message: `error in the imageController.removeSingleImage exec for ${id}`,
         };
         next(errorDetails);
       }
@@ -419,9 +419,9 @@ export const imageController: ImageController = {
       next();
     } catch (error) {
       const errorDetails: ErrorDetails = {
-        log: `error in the imageController.removeSingleImage in the catch for ${name}`,
+        log: `error in the imageController.removeSingleImage in the catch for ${id}`,
         err: error,
-        message: `error in the imageController.removeSingleImage catch for ${name}`,
+        message: `error in the imageController.removeSingleImage catch for ${id}`,
       };
       next(errorDetails);
     }

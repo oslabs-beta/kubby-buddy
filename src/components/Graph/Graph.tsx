@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './Graph.scss';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
@@ -54,7 +54,10 @@ export function Graph(props: GraphProps) {
   );
   useEffect(() => {
     // const updateedNum = parseFloat(props.CPUPerc)
-    const parsedNet = netParser(props.data?.NetIO);
+    const parsedNet = useMemo(
+      () => netParser(props.data?.NetIO),
+      [props.data?.NetIO]
+    );
     console.log(parsedNet, 'useEffeect');
     setUserData({
       labels: ['CPU', 'Memory', 'Net I/O'],
