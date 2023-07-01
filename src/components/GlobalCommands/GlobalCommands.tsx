@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { FC } from 'react';
 import './GlobalCommands.scss';
 import { CommandButtonProps } from '../../types';

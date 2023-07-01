@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  controller_test:
+    image: docker:dind
+    container_name: controller_test
+    privileged: true
+
+  image_test:
+    image: docker:dind
+    container_name: image_test
+    privileged: true
+
+  mock-container-2:
+    image: alpine
+    command: tail -f /dev/null
+    container_name: TEST2
