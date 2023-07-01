@@ -18,10 +18,6 @@ describe('DisplayRunning', () => {
     // Click the "Containers" menu item
     cy.contains('Containers').click();
 
-    // Assert that the .container elements are rendered correctly with the expected content
-    cy.get('.dockercontainer', { timeout: 10000 }).should('exist');
-    cy.get('.container', { timeout: 10000 }).should('exist');
-
     cy.get('.container')
       .eq(0)
       .within(() => {
@@ -43,6 +39,24 @@ describe('DisplayRunning', () => {
     // Click the "Containers" menu item
     cy.contains('Containers').click();
 
+    cy.get('.container')
+      .eq(0)
+      .within(() => {
+        cy.get('.stopCommand-container').should('exist');
+        cy.get('.startCommand-container').should('exist');
+      });
+
+    cy.get('.container')
+      .eq(1)
+      .within(() => {
+        cy.get('.stopCommand-container').should('exist');
+        cy.get('.startCommand-container').should('exist');
+      });
+  });
+  it('should render three charts', () => {
+    // Click the "Containers" menu item
+    cy.contains('Containers').click();
+
     // Assert that the .container elements are rendered correctly with the expected content
     cy.get('.dockercontainer', { timeout: 10000 }).should('exist');
     cy.get('.container', { timeout: 10000 }).should('exist');
@@ -50,8 +64,9 @@ describe('DisplayRunning', () => {
     cy.get('.container')
       .eq(0)
       .within(() => {
-        cy.get('.stopCommand-container').should('exist');
-        cy.get('.');
+        cy.get('.chartContainer', { timeout: 10000 })
+          .should('exist')
+          .should('have.length', 3);
       });
   });
 });
