@@ -393,6 +393,37 @@ const imageController: ImageController = {
       next(errorDetails);
     }
   },
+
+  addImages: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    const { images } = req.body;
+    console.log('IMG', images);
+    try {
+      const { stdout, stderr } = await promisifyExec(`docker pull ${images}`);
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: `error in the imageController.addImages exec for ${images}`,
+          err: stderr,
+          message: `error in the imageController.addImages exec for ${images}`,
+        };
+        next(errorDetails);
+      }
+      const dataArray = stdout.trim().split('\n');
+      // .map((item) => JSON.parse(item, undefined));
+      res.locals.addImages = [{ Added: dataArray }];
+      next();
+    } catch (error) {
+      const errorDetails: ErrorDetails = {
+        log: `error in the imageController.addImages in the catch for ${images}`,
+        err: error,
+        message: `error in the imageController.addImages catch for ${images}`,
+      };
+      next(errorDetails);
+    }
+  },
 };
 
 export default imageController;
