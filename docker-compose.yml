@@ -1,0 +1,18 @@
+services:
+  postgres:
+    build:
+      context: .
+    image: 'kubby buddy db'
+    container_name: ${PG_CONTAINER_NAME}
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: ${PGDATA}
+    volumes:
+      - dbtuto:/data/postgres-tuto
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+volumes:
+  dbtuto:
