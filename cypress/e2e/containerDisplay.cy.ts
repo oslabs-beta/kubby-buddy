@@ -53,19 +53,23 @@ describe('DisplayRunning', () => {
     // Assert that the command has been invoked
     // cy.get('@commandSpy').should('be.called');
   });
-  it('should invoke the delete command after navigating to Containers page', () => {
+  it('should render the charts after navigating to Containers page', () => {
     // Click the "Containers" menu item
-    // cy.contains('Containers').click();
-    // // Wait for the DisplayRunning component to render
-    // cy.get('.dockercontainer').should('exist');
-    // // Wait for the .stop button to be present
-    // cy.get('.dockercontainer')
-    //   .contains('container1')
-    //   .parents('.container')
-    //   .find('.cmdbutton .deleteCommand-container .delete', { timeout: 10000 })
-    //   .should('exist')
-    //   .click();
-    // Assert that the command has been invoked
-    // cy.get('@commandSpy').should('be.called');
+    cy.contains('Containers').click();
+
+    // Wait for the DisplayRunning component to render
+    cy.get('.dockercontainer').should('exist');
+
+    // Wait for the charts to be present
+    cy.get('.dockercontainer')
+      .contains('container1')
+      .parents('.container')
+      .find('.chartContainer', { timeout: 10000 })
+      .should('have.length', 3)
+      .each(($chartContainer) => {
+        cy.wrap($chartContainer)
+          .find('.bargraph', { timeout: 30000 })
+          .should('exist');
+      });
   });
 });

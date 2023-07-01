@@ -8,7 +8,7 @@ const volumeController: VolumeController = {
   getAllVolumes: async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const { stdout, stderr } = await promisifyExec(
-        'docker volume ls --format json'
+        'docker volume ls --format "{{json . }}"'
       );
       if (stderr) {
         const errorDetails: ErrorDetails = {

@@ -8,13 +8,13 @@ import { CommandButtonProps } from '../../types';
 
 interface DeleteCommandProp extends CommandButtonProps {}
 
-const DeleteButton: React.FC<DeleteCommandProp> = ({
-  name,
+const DeleteImageButton: React.FC<DeleteCommandProp> = ({
+  id,
   cmdRoute,
   fetchMethod,
 }) => {
   //helper
-  const { setStoppedContainers, stoppedContainers } = useContext(UserContext);
+  const { setAvailableImages, availableImages } = useContext(UserContext);
 
   const command = async () => {
     try {
@@ -24,16 +24,12 @@ const DeleteButton: React.FC<DeleteCommandProp> = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: name }),
+        body: JSON.stringify({ id: id }),
       });
       const data = await response.json();
-
-      if (response.ok) {
-        setStoppedContainers(
-          stoppedContainers.filter((container) => container.Names !== name)
-        );
-      } else {
-        throw new Error(data);
+      console.log('test---->:' + data);
+      if (response.status !== 500) {
+        setAvailableImages(availableImages.filter((image) => image.ID !== id));
       }
     } catch (err) {
       console.error(err);
@@ -48,12 +44,12 @@ const DeleteButton: React.FC<DeleteCommandProp> = ({
   );
 };
 
-export const DeleteCommands: React.FC<DeleteCommandProp> = ({
-  name,
+export const DeleteImageCommands: React.FC<DeleteCommandProp> = ({
+  id,
   cmdRoute,
   fetchMethod,
 }) => {
   return (
-    <DeleteButton name={name} cmdRoute={cmdRoute} fetchMethod={fetchMethod} />
+    <DeleteImageButton id={id} cmdRoute={cmdRoute} fetchMethod={fetchMethod} />
   );
 };
