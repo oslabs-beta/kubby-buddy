@@ -8,14 +8,28 @@ const pool = new Pool({
   password: process.env.PGPASSWORD,
 });
 
-const startDB = async () => {
+const query = async (text: string, values?: any, callback?: any) => {
   try {
-    await pool.connect();
+    const client = await pool.connect();
+    console.log('Query sent.');
+    const result = await new Promise((resolve, reject) => {
+      client.query(text, values, (error: Error, queryData: any) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(queryData);
+        }
+        if (callback) {
+          callback(error, queryData);
+        }
+      });
+    });
+    client.release();
+    return result;
   } catch (err) {
     console.log(`Failed to connect to DB: ${err}`);
-  } finally {
-    console.log('Connected to Database.');
+    throw err;
   }
 };
 
-export default startDB;
+export default query;

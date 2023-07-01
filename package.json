@@ -26,6 +26,7 @@
     "@tanstack/react-query": "^4.29.17",
     "@types/express": "^4.17.17",
     "@types/node": "^20.2.5",
+    "@types/pg": "^8.10.2",
     "aws-sdk": "^2.1404.0",
     "chart.js": "^3.9.1",
     "chartjs-adapter-luxon": "^1.2.0",
@@ -34,7 +35,7 @@
     "dockerode": "^3.3.5",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
-    "pg": "^8.11.1",
+    "pg": "^8.11.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-dom": "^18.2.0"

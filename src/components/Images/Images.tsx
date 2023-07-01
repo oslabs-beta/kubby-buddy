@@ -7,7 +7,7 @@ import { Image } from '../../types';
 import Loader from '../Loader/Loader';
 
 export const Images: FC = () => {
-  const { availableImages } = useContext(UserContext);
+  const { availableImages, imageAverages } = useContext(UserContext);
 
   let images;
 
@@ -17,6 +17,20 @@ export const Images: FC = () => {
         <li className="listImage" key={index}>
           <div className="image-info">
             <p className="image-title">{el.Repository}</p>
+            <div className="image-subinfo">
+              <p>
+                Avg Mem:{' '}
+                {imageAverages[index]?.mem_per
+                  ? imageAverages[index]?.mem_per
+                  : 'NA'}
+              </p>
+              <p>
+                Avg CPU:{' '}
+                {imageAverages[index]?.cpu_per
+                  ? imageAverages[index]?.cpu_per
+                  : 'NA'}
+              </p>
+            </div>
             <div className="image-subinfo">
               <p>Containers: {el.Containers}</p>
               <p>Time since created: {el.CreatedSince}</p>

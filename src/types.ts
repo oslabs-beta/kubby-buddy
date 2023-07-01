@@ -14,6 +14,8 @@ export interface Context {
   setStatStream: React.Dispatch<React.SetStateAction<Container[]>>;
   availableVolumes: Volume[];
   setAvailableVolumes: React.Dispatch<React.SetStateAction<Volume[]>>;
+  imageAverages: ImageAvgStats[];
+  setImageAverages: React.Dispatch<React.SetStateAction<ImageAvgStats[]>>;
 }
 
 export interface Container {
@@ -32,6 +34,11 @@ export interface Container {
   Size: String;
   State: String;
   Status: String;
+}
+
+export interface ImageAvgStats {
+  mem_per: string;
+  cpu_per: string;
 }
 
 export interface Image {
