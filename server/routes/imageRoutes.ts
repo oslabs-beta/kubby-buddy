@@ -111,6 +111,14 @@ imageRouter.delete(
   }
 );
 
+imageRouter.post(
+  '/add-images',
+  imageController.addImages,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.addImages);
+  }
+);
+
 //test route
 imageRouter.use('/', (_req: Request, res: Response) => {
   res.send('imageRouter Test');

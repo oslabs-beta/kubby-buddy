@@ -39,6 +39,8 @@ export interface ImageController {
   pruneDanglingImages: MiddleWare;
 
   removeSingleImage: MiddleWare;
+
+  addImages: MiddleWare;
 }
 
 export interface StatsStreamController {
