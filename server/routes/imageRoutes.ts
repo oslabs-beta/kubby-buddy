@@ -1,5 +1,6 @@
 import express, { Request, Response, Router } from 'express';
 import imageController from '../controllers/imageController';
+import postgresController from '../controllers/postgresController';
 
 // create router for image path
 const imageRouter: Router = express.Router();
@@ -10,8 +11,9 @@ const imageRouter: Router = express.Router();
 imageRouter.get(
   '/all-images',
   imageController.getAllImages,
+  postgresController.grabImageStats,
   (_req: Request, res: Response) => {
-    res.status(200).json(res.locals.images);
+    res.status(200).json(res.locals);
   }
 );
 
