@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { FC } from 'react';
 // import './App';
 import { UserProvider } from './UserContext';
@@ -15,7 +16,7 @@ const App: FC = () => {
   return (
     <UserProvider>
       <QueryClientProvider client={queryClient}>
-        <div className="mainpage">
+        <div className="mainpage" data-testid="mainpage">
           <SideNav />
           <MainNav />
         </div>

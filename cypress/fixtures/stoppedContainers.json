@@ -1,0 +1,18 @@
+[
+  {
+    "Command": "command3",
+    "CreatedAt": "2023-06-30T09:30:00Z",
+    "ID": "container3",
+    "Image": "image3",
+    "Labels": ["label5", "label6"],
+    "LocalVolumes": "localVolume3",
+    "Mounts": "mount3",
+    "Names": "container3",
+    "Networks": "network3",
+    "Ports": "port3",
+    "RunningFor": "1d",
+    "Size": "50MB",
+    "State": "exited",
+    "Status": "exited (0)"
+  }
+]

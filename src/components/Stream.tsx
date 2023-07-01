@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { FC, useEffect, useState } from 'react';
 
 const Stream: FC = () => {

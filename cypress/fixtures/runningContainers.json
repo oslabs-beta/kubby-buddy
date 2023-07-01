@@ -1,0 +1,34 @@
+[
+  {
+    "Command": "command1",
+    "CreatedAt": "2023-06-30T12:00:00Z",
+    "ID": "container1",
+    "Image": "image1",
+    "Labels": ["label1", "label2"],
+    "LocalVolumes": "localVolume1",
+    "Mounts": "mount1",
+    "Names": "container1",
+    "Networks": "network1",
+    "Ports": "port1",
+    "RunningFor": "1h",
+    "Size": "10MB",
+    "State": "running",
+    "Status": "healthy"
+  },
+  {
+    "Command": "command2",
+    "CreatedAt": "2023-06-29T12:00:00Z",
+    "ID": "container2",
+    "Image": "image2",
+    "Labels": ["label3", "label4"],
+    "LocalVolumes": "localVolume2",
+    "Mounts": "mount2",
+    "Names": "container2",
+    "Networks": "network2",
+    "Ports": "port2",
+    "RunningFor": "2h",
+    "Size": "20MB",
+    "State": "running",
+    "Status": "healthy"
+  }
+]

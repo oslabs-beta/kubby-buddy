@@ -1,12 +1,12 @@
 // contain our containers
-
+//@ts-ignore
 import React, { FC, useContext, useEffect } from 'react';
 import './MainNav.scss';
 import { DockerContainers } from '../Container/DockerContainer';
 import { Images } from '../Images/Images';
 import { UserContext } from '../../UserContext';
 import Loader from '../Loader/Loader';
-import { Container, Image, Volume } from '../../types';
+import { Container, Image, Volume, ImageAvgStats } from '../../types';
 import { useQuery } from '@tanstack/react-query';
 
 //using a ternary based on booleans from useContext to switch the views
@@ -19,6 +19,7 @@ export const MainNav: FC = () => {
     setAvailableImages,
     setShowing,
     setAvailableVolumes,
+    setImageAverages,
     showing,
   } = useContext(UserContext);
 
@@ -43,7 +44,8 @@ export const MainNav: FC = () => {
       );
 
       const runningContainersResponse: Container[] = data[0];
-      const imagesResponse: Image[] = data[1];
+      const imagesResponse: Image[] = data[1].images;
+      const imageAveragesResponse: ImageAvgStats[] = data[1].averages;
       const volumesResponse: Volume[] = data[2];
 
       setRunningContainers(
@@ -57,6 +59,7 @@ export const MainNav: FC = () => {
         )
       );
       setAvailableImages(imagesResponse);
+      setImageAverages(imageAveragesResponse);
       setAvailableVolumes(volumesResponse);
       // needs to return something otherwise react query will error in console
       return {
@@ -102,7 +105,7 @@ export const MainNav: FC = () => {
   }
 
   return (
-    <div className="main-nav">
+    <div className="main-nav" data-testid="mainnav">
       <ul>{view}</ul>
     </div>
   );
