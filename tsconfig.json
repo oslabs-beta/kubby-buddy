@@ -14,6 +14,6 @@
     "moduleResolution": "node",
     "esModuleInterop": true
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "./cypress.config.ts", "cypress"],
   "types": ["react/next", "react-dom/next", "cypress"]
 }
