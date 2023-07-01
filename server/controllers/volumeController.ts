@@ -177,6 +177,37 @@ const volumeController: VolumeController = {
       next(errorDetails);
     }
   },
+
+  volumeStats: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { volume } = req.body;
+      const { stdout, stderr } = await promisifyExec(
+        `docker ps --filter "volume=${volume}" --format "{{json . }}"`
+      );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: 'error in the volumeController.volumeStats exec call',
+          err: stderr,
+          message: 'error in the volumeController.volumeStats exec call',
+        };
+        next(errorDetails);
+      }
+      const dataArray = stdout
+        .trim()
+        .split('\n')
+        .map((item) => JSON.parse(item, undefined));
+      res.locals.volumeStats = dataArray;
+      next();
+    } catch (error) {
+      const errorDetails: ErrorDetails = {
+        log: 'Input volume is not being used OR error in the volumeController.volumeStats catch',
+        err: error,
+        message:
+          'Input volume is not being used OR error in the volumeController.volumeStats catch',
+      };
+      next(errorDetails);
+    }
+  },
 };
 
 export default volumeController;

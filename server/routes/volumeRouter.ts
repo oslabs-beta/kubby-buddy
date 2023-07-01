@@ -53,4 +53,15 @@ volumeRouter.delete(
     res.status(200).json(res.locals.deletedAnonymous);
   }
 );
+
+// POST volume stats
+// INPUT: {volume: "volumeID"}
+// OUTPUT: array of objects [{}]
+volumeRouter.post(
+  '/volume-stats',
+  volumeController.volumeStats,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.volumeStats);
+  }
+);
 export default volumeRouter;
