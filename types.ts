@@ -53,6 +53,12 @@ export interface VolumeController {
   deleteAllVolumes: MiddleWare;
 
   deleteAllAnonymousVolumes: MiddleWare;
+
+  volumeStats: MiddleWare;
+
+  createVolume: MiddleWare;
+
+  deleteVolume: MiddleWare;
 }
 
 export interface ServerError {
