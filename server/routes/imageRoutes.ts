@@ -92,13 +92,13 @@ imageRouter.delete(
 // OUTPUT: array of objects containing property and array of values 
 // [{ "Deleted images:": ["deleted: sha256:dd6675b5cfea17abb655ea8229cbcfa5db9d0b041f839db0c24228c2e18a4bdf"], "Total reclaimed space:": ["Total reclaimed space: 305MB"]}]
 */
-imageRouter.delete(
-  '/prune-dangling',
-  imageController.pruneDanglingImages,
-  (_req: Request, res: Response) => {
-    res.status(200).json(res.locals.output);
-  }
-);
+// imageRouter.delete(
+//   '/prune-dangling',
+//   imageController.pruneDanglingImages,
+//   (_req: Request, res: Response) => {
+//     res.status(200).json(res.locals.output);
+//   }
+// );
 
 // remove image by name
 // INPUT: nothing

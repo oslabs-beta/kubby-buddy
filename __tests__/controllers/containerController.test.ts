@@ -24,7 +24,7 @@ app.use('/', containerRouter);
 let server: Server;
 
 beforeEach(async () => {
-  server = app.listen(3200); // Start the server
+  server = app.listen(9000); // Start the server
 
   // Start the containers
   execSync(
