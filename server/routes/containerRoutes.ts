@@ -60,8 +60,8 @@ containerRouter.delete(
 );
 
 // get logs for a specific container
-// INPUT: nothing
-// OUTPUT: Not finalized: Work in Progress
+// INPUT: query /log?name=myContainer
+// OUTPUT: array of objects [{}, {}]
 containerRouter.get(
   '/log',
   containerController.getSpecificLog,
@@ -73,7 +73,6 @@ containerRouter.get(
 // removes stopped container by name
 // INPUT: object with name value, {"name": "mongodb"}
 // OUTPUT: array of object [{"message": "container12345"}]
-// other tests: when you run docker ps -a, the container should be gone
 containerRouter.delete(
   '/remove-specific-container',
   containerController.removeSpecificContainer,

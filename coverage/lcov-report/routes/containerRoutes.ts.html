@@ -297,8 +297,8 @@ containerRouter.delete(
 );
 &nbsp;
 // get logs for a specific container
-// INPUT: nothing
-// OUTPUT: Not finalized: Work in Progress
+// INPUT: query /log?name=myContainer
+// OUTPUT: array of objects [{}, {}]
 containerRouter.get(
   '/log',
   containerController.getSpecificLog,
@@ -337,7 +337,7 @@ export default containerRouter;
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2023-07-01T18:51:22.128Z
+      at 2023-07-03T13:50:00.011Z
     </div>
     <script src="../prettify.js"></script>
     <script>

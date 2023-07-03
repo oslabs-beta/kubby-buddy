@@ -5,6 +5,7 @@ import { promisify } from 'util';
 import { ErrorDetails } from '../../types';
 const promisifyExec = promisify(exec);
 
+// export commands for testing
 export const cmdGetAllRunningContainers: string = `docker ps -a --format '{{json .}}'`;
 export const cmdGetAllRunningContainersNames: string = `docker container ls --format='{{json .Names}}'`;
 export const cmdStopASpecificContainer: string = `docker stop `;
@@ -13,7 +14,28 @@ export const cmdPruneStoppedContainers: string = `docker container prune --force
 export const cmdGetSpecificLog: string = `docker container logs`;
 export const cmdRemoveSpecificContainer: string = `docker rm `;
 
-export function parseOutputContainers(data: string | Buffer) {
+// ts interface
+interface ParseOutputContainers {
+  Names: string;
+  Status: string;
+}
+
+interface ParseOutputStartStop {
+  message: string;
+}
+
+interface ParseOutputPruneStoppedContainers {
+  'Deleted Containers:': string[];
+  'Total reclaimed space:': string[];
+}
+interface ParseOutputRemoveSpecificContainer {
+  message: string;
+}
+
+// export functions for testing
+export function parseOutputContainers(
+  data: string | Buffer
+): ParseOutputContainers[] {
   const parsedOutput = data
     .toString()
     .trim()
@@ -23,7 +45,9 @@ export function parseOutputContainers(data: string | Buffer) {
   return parsedOutput;
 }
 
-export function parseOutputContainersNames(data: string | Buffer) {
+export function parseOutputContainersNames(
+  data: string | Buffer
+): Array<{ name: string }> {
   const parsedOutput = data
     .toString()
     .trim()
@@ -36,7 +60,9 @@ export function parseOutputContainersNames(data: string | Buffer) {
   return parsedOutput;
 }
 
-export function parseOutputStartStop(data: string | Buffer) {
+export function parseOutputStartStop(
+  data: string | Buffer
+): ParseOutputStartStop[] {
   const parsedOutput = [
     {
       message: Buffer.isBuffer(data)
@@ -47,7 +73,9 @@ export function parseOutputStartStop(data: string | Buffer) {
   return parsedOutput;
 }
 
-export function parseOutputPruneStoppedContainers(stdout: string | Buffer) {
+export function parseOutputPruneStoppedContainers(
+  stdout: string | Buffer
+): ParseOutputPruneStoppedContainers[] {
   const data = stdout.toString().trim();
   const dataArray = data.split('\n');
   const deletedContainersIndex = dataArray.findIndex(
@@ -76,7 +104,7 @@ export function parseOutputPruneStoppedContainers(stdout: string | Buffer) {
   return output;
 }
 
-export function transformLogs(stdout: string | Buffer) {
+export function transformLogs(stdout: string | Buffer): Array<{}> {
   const dataArray = stdout.toString().trim().split('\n');
   let transformedLogs: any[];
 
@@ -96,14 +124,15 @@ export function transformLogs(stdout: string | Buffer) {
   return transformedLogs;
 }
 
-export function parseOutputRemoveSpecificContainer(stdout: string | Buffer) {
+export function parseOutputRemoveSpecificContainer(
+  stdout: string | Buffer
+): ParseOutputRemoveSpecificContainer[] {
   const output = stdout.toString().trim();
   return [{ message: output }];
 }
 
 export const containerController: ContainerController = {
-  //middleware to run CLI command to get list of active containers
-
+  // get all running containers
   getAllRunningContainers: async (
     _req: Request,
     res: Response,
@@ -153,7 +182,6 @@ export const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      // Use undefined as the reviver
       res.locals.containersNames = parseOutputContainersNames(stdout);
       next();
     } catch (error) {
@@ -166,8 +194,7 @@ export const containerController: ContainerController = {
     }
   },
 
-  //middleware to stop a specific container
-
+  // stop a conatiner
   stopASpecificContainer: async (
     req: Request,
     res: Response,
@@ -204,8 +231,7 @@ export const containerController: ContainerController = {
     }
   },
 
-  //middleware to start a specific container
-
+  // start a specific container
   startASpecificContainer: async (
     req: Request,
     res: Response,
@@ -237,8 +263,7 @@ export const containerController: ContainerController = {
     }
   },
 
-  //middleware to prune all stopped containers
-
+  // prune all stopped containers
   pruneStoppedContainers: async (
     _req: Request,
     res: Response,
@@ -269,8 +294,7 @@ export const containerController: ContainerController = {
     }
   },
 
-  //get log for a specific container
-
+  // log for a specific container
   getSpecificLog: async (req: Request, res: Response, next: NextFunction) => {
     console.log(req.query);
     const { name } = req.query;

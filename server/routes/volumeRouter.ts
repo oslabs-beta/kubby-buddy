@@ -4,7 +4,7 @@ import volumeController from '../controllers/volumeController';
 // create router for volume path
 const volumeRouter = express.Router();
 
-// get all volumes
+// get all volumes AND STATS if there is one
 // INPUT: nothing
 // OUTPUT: array of objects [{},{}]
 volumeRouter.get(

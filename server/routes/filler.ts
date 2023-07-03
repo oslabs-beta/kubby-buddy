@@ -6,7 +6,7 @@ router.get('/', async (_req: Request, res: Response) => {
   const queryString = `
   SELECT cpu_per, mem_per
   FROM image_stats
-  WHERE image_id = '1dd850aa6693'
+  WHERE image_id = '1'
   `;
 
   await query(queryString, [], (error: Error, queryData: any) => {

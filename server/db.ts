@@ -1,11 +1,11 @@
 import { Pool } from 'pg';
 
 const pool = new Pool({
-  host: process.env.PGHOST,
-  port: Number(process.env.PGPORT),
-  user: process.env.PGUSER,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
+  host: 'localhost',
+  port: 5432,
+  user: 'tuto',
+  database: 'tutos',
+  password: 'admingres',
 });
 
 const query = async (text: string, values?: any, callback?: any) => {

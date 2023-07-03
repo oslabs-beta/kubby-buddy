@@ -6,13 +6,25 @@ import { DeleteVolumeCommands } from '../Button/DeleteVolume';
 import { CreateVolumeCommands } from '../Button/CreateVolume';
 import { Volume } from '../../types';
 
+interface VolumeWithStats extends Volume {
+  Stats?: Record<string, string>;
+}
+
 export const Volumes: FC = () => {
   const { availableVolumes } = useContext(UserContext);
 
   let volumes;
 
-  const VolumeContainer: React.FC<{ el: Volume; index: number }> = React.memo(
-    ({ el, index }) => {
+  const VolumeContainer: React.FC<{ el: VolumeWithStats; index: number }> =
+    React.memo(({ el, index }) => {
+      const renderStatusOrStats = el.Stats ? (
+        <>
+          <p>Image: {el.Stats.Image}</p>
+          <p>Local Volumes: {el.Stats.LocalVolumes}</p>
+          <p>Names: {el.Stats.Names}</p>
+          <p>Ports: {el.Stats.Ports}</p>
+        </>
+      ) : null;
       return (
         <li className="listImage" key={index}>
           <div className="image-info">
@@ -24,6 +36,7 @@ export const Volumes: FC = () => {
             <div className="image-subinfo">
               <p>Size: {el.Size}</p>
               <p>Scope: {el.Scope}</p>
+              {renderStatusOrStats}
             </div>
             <div className="image-subinfo"></div>
           </div>
@@ -37,8 +50,7 @@ export const Volumes: FC = () => {
         </li>
       );
       56;
-    }
-  );
+    });
 
   volumes = useMemo(
     () =>
