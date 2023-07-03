@@ -5,9 +5,9 @@
   "main": "index.tsx",
   "scripts": {
     "build": "webpack --mode production",
-    "prestart": "docker-compose -f docker-compose-db.yml up",
+    "prestart": "docker-compose -f docker-compose-db.yml up -d",
     "start": "concurrently \"webpack-dev-server --mode development --hot\" \"tsnd --respawn --transpile-only ./server/server.ts\"",
-    "predev": "docker-compose -f docker-compose-db.yml up",
+    "predev": "docker-compose -f docker-compose-db.yml up -d",
     "dev": "concurrently \"webpack-dev-server --mode development --hot\" \"tsnd --respawn --transpile-only ./server/server.ts\"",
     "prepare": "husky install",
     "test": "docker-compose -p kubbybuddy-test up -d && jest --coverage; RESULT=$?; docker-compose -p kubbybuddy-test down; exit $RESULT",
