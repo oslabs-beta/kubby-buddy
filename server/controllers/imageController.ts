@@ -10,7 +10,31 @@ export const cmdRunContainerFromImage: string = `docker run -d`;
 export const cmdPruneUnusedImages: string = `docker image prune -a --force`;
 export const cmdRemoveSingleImage: string = `docker image rm `;
 
-export function parseOutputContainers(data: string | Buffer) {
+interface ParseOutputGetAllImages {
+  Repository: string;
+}
+
+interface ParseOutputContainers {
+  message: string;
+  Image: string;
+  LocalVolumes: string;
+  Mounts: string;
+  Names: string;
+  Ports: string;
+}
+
+interface ParseOutputPruneUnusedImages {
+  'Deleted Images:': string[];
+  'Total reclaimed space:': string[];
+}
+
+interface ParseOutputRemoveSingleImage {
+  Deleted: string[];
+}
+
+export function parseOutputContainers(
+  data: string | Buffer
+): ParseOutputContainers[] {
   const parsedOutput = data
     .toString()
     .trim()
@@ -20,7 +44,9 @@ export function parseOutputContainers(data: string | Buffer) {
   return parsedOutput;
 }
 
-export function parseOutputGetAllImages(data: string | Buffer) {
+export function parseOutputGetAllImages(
+  data: string | Buffer
+): ParseOutputGetAllImages[] {
   const parsedOutput = data
     .toString()
     .trim()
@@ -30,7 +56,7 @@ export function parseOutputGetAllImages(data: string | Buffer) {
   return parsedOutput;
 }
 
-export function setRmOption(remove: string) {
+export function setRmOption(remove: string): string {
   let rm;
   // check if remove is provided
   if (remove === 'yes') {
@@ -41,7 +67,10 @@ export function setRmOption(remove: string) {
   return rm;
 }
 
-export function setVolOption(volumeName: string, fileDirectory: string) {
+export function setVolOption(
+  volumeName: string,
+  fileDirectory: string
+): string {
   let vol;
   if (volumeName && volumeName.trim() !== '') {
     // check if fileDirectory is provided
@@ -56,7 +85,10 @@ export function setVolOption(volumeName: string, fileDirectory: string) {
   return vol;
 }
 
-export async function getPortMapping(port: string, image: string) {
+export async function getPortMapping(
+  port: string,
+  image: string
+): Promise<string> {
   let portNum = '';
 
   if (port && port.trim() !== '') {
@@ -83,12 +115,16 @@ export async function getPortMapping(port: string, image: string) {
   return portNum;
 }
 
-export function parseOutputrunContainerFromImage(stdout: string | Buffer) {
+export function parseOutputrunContainerFromImage(
+  stdout: string | Buffer
+): Array<{}> {
   const output = stdout.toString().trim();
   return [{ message: output }];
 }
 
-export function parseOutputPruneUnusedImages(stdout: string | Buffer) {
+export function parseOutputPruneUnusedImages(
+  stdout: string | Buffer
+): ParseOutputPruneUnusedImages[] {
   const data = stdout.toString().trim();
   const dataArray = data.split('\n');
   const deletedImagesIndex = dataArray.findIndex(
@@ -117,7 +153,9 @@ export function parseOutputPruneUnusedImages(stdout: string | Buffer) {
   return output;
 }
 
-export function parseOutputRemoveSingleImage(stdout: string | Buffer) {
+export function parseOutputRemoveSingleImage(
+  stdout: string | Buffer
+): ParseOutputRemoveSingleImage[] {
   const dataArray = stdout.toString().trim().split('\n');
   return [{ Deleted: dataArray }];
 }
@@ -157,60 +195,6 @@ export const imageController: ImageController = {
   ): Promise<void> => {
     const { name, image, remove, volumeName, fileDirectory, port } = req.body;
 
-    // let portNum;
-
-    // // check if name and image is provided
-    // if (!name || !image || name.trim() === '' || image.trim() === '') {
-    //   const errorDetails: ErrorDetails = {
-    //     log: 'error in containerController.runContainerFromImage',
-    //     err: null,
-    //     message: 'Missing name or image fields',
-    //   };
-    //   return next(errorDetails);
-    // }
-    // let rm;
-    // let vol;
-    // check if remove is provided
-    // if (remove === 'yes') {
-    //   rm = '--rm';
-    // } else {
-    //   rm = '';
-    // }
-
-    // check if volume is provided
-    // if (volumeName && volumeName.trim() !== '') {
-    //   // check if fileDirectory is provided
-    //   if (fileDirectory && fileDirectory.trim() !== '') {
-    //     vol = `-v ${volumeName}:${fileDirectory}`;
-    //   } else {
-    //     vol = `-v ${volumeName}:/App`;
-    //   }
-    // } else {
-    //   vol = '';
-    // }
-
-    // check if port is provided
-    // if (port && port.trim() !== '') {
-    //   try {
-    //     const { stdout } = await promisifyExec(
-    //       `docker inspect --format='{{.Config.ExposedPorts}}' ${image}`
-    //     );
-    //     const regex = /\[(\d+)\//;
-    //     const match = stdout.match(regex);
-    //     const result = match ? match[1] : null;
-    //     portNum = `-p ${port}:${result}`;
-    //   } catch (error) {
-    //     const errorDetails: ErrorDetails = {
-    //       log: 'error in imageController.runContainerFromImage PORT catch',
-    //       err: error,
-    //       message: `error in exec of imageController.runContainerFromImage PORT catch`,
-    //     };
-    //     next(errorDetails);
-    //   }
-    // } else {
-    //   portNum = '';
-    // }
-
     try {
       const portMapping = await getPortMapping(port, image); // Await the result of getPortMapping
       console.log(
@@ -245,136 +229,6 @@ export const imageController: ImageController = {
     }
   },
 
-  // runContainerFromImage: async (
-  //   req: Request,
-  //   res: Response,
-  //   next: NextFunction
-  // ): Promise<void> => {
-  //   const { name, image } = req.body;
-  //   try {
-  //     const { stdout, stderr } = await promisifyExec(
-  //       `docker run -d --name ${name} ${image}`
-  //     );
-  //     if (stderr) {
-  //       const errorDetails: ErrorDetails = {
-  //         log: 'error in the imageController.runContainerFromImage exec',
-  //         err: stderr,
-  //         message: 'error in the imageController.runContainerFromImage exec',
-  //       };
-  //       next(errorDetails);
-  //     }
-  //     const output = stdout.trim();
-  //     res.locals.ranContainer = [{ message: output }];
-  //     next();
-  //   } catch (error) {
-  //     const errorDetails: ErrorDetails = {
-  //       log: 'error in imageController.runContainerFromImage catch',
-  //       err: error,
-  //       message: `error in exec of imageController.runContainerFromImage catch`,
-  //     };
-  //     next(errorDetails);
-  //   }
-  // },
-
-  // // run container with remove when it stops
-  // runContainerFromImageWithRemove: async (
-  //   req: Request,
-  //   res: Response,
-  //   next: NextFunction
-  // ): Promise<void> => {
-  //   const { name, image } = req.body;
-  //   try {
-  //     const { stdout, stderr } = await promisifyExec(
-  //       `docker run -d --rm --name ${name} ${image}`
-  //     );
-  //     if (stderr) {
-  //       const errorDetails: ErrorDetails = {
-  //         log: 'error in the imageController.runContainerFromImage exec',
-  //         err: stderr,
-  //         message: 'error in the imageController.runContainerFromImage exec',
-  //       };
-  //       next(errorDetails);
-  //     }
-  //     res.locals.ranContainerWithRemove = [{ message: stdout.trim() }];
-  //     next();
-  //   } catch (error) {
-  //     const errorDetails: ErrorDetails = {
-  //       log: 'error in imageController.runContainerFromImageWithRemove catch',
-  //       err: error,
-  //       message: `error in exec of imageController.runContainerFromImageWithRemove catch`,
-  //     };
-  //     next(errorDetails);
-  //   }
-  // },
-
-  // // run container with named volume
-  // runContainerFromImageWithNamedVolume: async (
-  //   req: Request,
-  //   res: Response,
-  //   next: NextFunction
-  // ): Promise<void> => {
-  //   const { name, image, volumeName, fileDirectory } = req.body;
-  //   try {
-  //     const { stdout, stderr } = await promisifyExec(
-  //       `docker run -d --name ${name} -v ${volumeName}:${fileDirectory} ${image}`
-  //     );
-  //     if (stderr) {
-  //       const errorDetails: ErrorDetails = {
-  //         log: 'error in the imageController.runContainerFromImageWithNamedVolume exec',
-  //         err: stderr,
-  //         message:
-  //           'error in the imageController.runContainerFromImageWithNamedVolume exec',
-  //       };
-  //       next(errorDetails);
-  //     }
-  //     res.locals.ranContainerFromImageWithNamedVolume = [
-  //       { message: stdout.trim() },
-  //     ];
-  //     next();
-  //   } catch (error) {
-  //     const errorDetails: ErrorDetails = {
-  //       log: 'error in imageController.unContainerFromImageWithNamedVolume catch',
-  //       err: error,
-  //       message: `error in exec of imageController.unContainerFromImageWithNamedVolume catch`,
-  //     };
-  //     next(errorDetails);
-  //   }
-  // },
-
-  // // run container with named volume and remove
-  // runContainerFromImageWithNamedVolumeAndRemove: async (
-  //   req: Request,
-  //   res: Response,
-  //   next: NextFunction
-  // ): Promise<void> => {
-  //   const { name, image, volumeName, fileDirectory } = req.body;
-  //   try {
-  //     const { stdout, stderr } = await promisifyExec(
-  //       `docker run -d --rm --name ${name} -v ${volumeName}:${fileDirectory} ${image}`
-  //     );
-  //     if (stderr) {
-  //       const errorDetails: ErrorDetails = {
-  //         log: 'error in the imageController.runContainerFromImageWithNamedVolumeAndRemove exec',
-  //         err: stderr,
-  //         message:
-  //           'error in the imageController.runContainerFromImageWithNamedVolumeAndRemove exec',
-  //       };
-  //       next(errorDetails);
-  //     }
-  //     res.locals.ranContainerFromImageWithNamedVolumeAndRemove = [
-  //       { message: stdout.trim() },
-  //     ];
-  //     next();
-  //   } catch (error) {
-  //     const errorDetails: ErrorDetails = {
-  //       log: 'error in imageController.runContainerFromImageWithNamedVolumeAndRemove catch',
-  //       err: error,
-  //       message: `error in exec of imageController.runContainerFromImageWithNamedVolumeAndRemove catch`,
-  //     };
-  //     next(errorDetails);
-  //   }
-  // },
-
   // prune unused images (ones not actively connected with a container)
   pruneUnusedImages: async (
     _req: Request,
@@ -391,30 +245,6 @@ export const imageController: ImageController = {
         };
         next(errorDetails);
       }
-      // const dataArray = stdout.trim().split('\n');
-      // const deletedImagesIndex = dataArray.findIndex(
-      //   (item) => item === 'Deleted Images:'
-      // );
-      // const reclaimedSpaceIndex = dataArray.findIndex((item) =>
-      //   item.startsWith('Total reclaimed space:')
-      // );
-
-      // const deletedImages = dataArray
-      //   .slice(deletedImagesIndex + 1, reclaimedSpaceIndex)
-      //   .map((item) => item.trim())
-      //   .filter((item) => item !== ''); // Filter out empty strings
-
-      // const reclaimedSpace = dataArray
-      //   .slice(reclaimedSpaceIndex)
-      //   .map((item) => item.trim());
-
-      // const output = [
-      //   {
-      //     'Deleted Images:': deletedImages,
-      //     'Total reclaimed space:': reclaimedSpace,
-      //   },
-      // ];
-
       res.locals.output = parseOutputPruneUnusedImages(stdout);
       next();
     } catch (error) {
@@ -426,60 +256,6 @@ export const imageController: ImageController = {
       next(errorDetails);
     }
   },
-
-  // //prune only dangling images (ones without a tag)
-  // pruneDanglingImages: async (
-  //   _req: Request,
-  //   res: Response,
-  //   next: NextFunction
-  // ): Promise<void> => {
-  //   try {
-  //     const { stdout, stderr } = await promisifyExec(
-  //       'docker image prune --force'
-  //     );
-  //     if (stderr) {
-  //       const errorDetails: ErrorDetails = {
-  //         log: 'error in the exec of imageController.pruneDanglingImages',
-  //         err: stderr,
-  //         message: 'error in the exec of imageController.pruneDanglingImages',
-  //       };
-  //       next(errorDetails);
-  //     }
-  //     const dataArray = stdout.trim().split('\n');
-  //     const deletedImagesIndex = dataArray.findIndex(
-  //       (item) => item === 'Deleted Images:'
-  //     );
-  //     const reclaimedSpaceIndex = dataArray.findIndex((item) =>
-  //       item.startsWith('Total reclaimed space:')
-  //     );
-
-  //     const deletedImages = dataArray
-  //       .slice(deletedImagesIndex + 1, reclaimedSpaceIndex)
-  //       .map((item) => item.trim())
-  //       .filter((item) => item !== ''); // Filter out empty strings
-
-  //     const reclaimedSpace = dataArray
-  //       .slice(reclaimedSpaceIndex)
-  //       .map((item) => item.trim());
-
-  //     const output = [
-  //       {
-  //         'Deleted Images:': deletedImages,
-  //         'Total reclaimed space:': reclaimedSpace,
-  //       },
-  //     ];
-
-  //     res.locals.output = output;
-  //     next();
-  //   } catch (error) {
-  //     const errorDetails: ErrorDetails = {
-  //       log: 'error in the imageController.pruneDanglingImages catch',
-  //       err: error,
-  //       message: 'error in the imageController.pruneDanglingImages catch',
-  //     };
-  //     next(errorDetails);
-  //   }
-  // },
 
   //remove single image
 

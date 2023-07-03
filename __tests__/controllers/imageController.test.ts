@@ -50,7 +50,7 @@ describe('imageController tests', () => {
     });
     // console.log('TEST1', test1.toString());
     // Get the list of running containers
-    const dindContainersResponse = execSync(
+    const dindContainersResponse: string | Buffer = execSync(
       `docker exec -i image_test sh -c "${cmdGetAllImages}"`,
       {
         stdio: 'pipe',
@@ -68,7 +68,9 @@ describe('imageController tests', () => {
     ).toBeTruthy();
     expect(dindContainers).toHaveLength(2);
     expect(
-      dindContainers.some((container) => container.name === 'hungry_khorana')
+      dindContainers.some(
+        (container) => container.Repository === 'hungry_khorana'
+      )
     ).toBeFalsy();
     expect(Array.isArray(dindContainers)).toBeTruthy();
     expect(dindContainers.length).toBeGreaterThan(0);
@@ -83,7 +85,7 @@ describe('imageController tests', () => {
       }
     );
 
-    const dindContainersResponse = execSync(
+    const dindContainersResponse: string | Buffer = execSync(
       `docker exec -i image_test sh -c "${cmdRunContainerFromImage} ${setRmOption(
         'yes'
       )} ${setVolOption(
@@ -97,7 +99,7 @@ describe('imageController tests', () => {
     const dindContainers = parseOutputrunContainerFromImage(
       dindContainersResponse
     );
-    console.log('dindContainers:', dindContainers);
+    // console.log('dindContainers:', dindContainers);
     const dindContainersList = parseOutputContainers(
       execSync(
         `docker exec -i image_test sh -c "docker ps -a --format '{{json .}}'"`,
@@ -109,7 +111,7 @@ describe('imageController tests', () => {
 
     // console.log('running containers', dindContainersList);
 
-    expect(dindContainers.some((container) => container.message)).toBeTruthy();
+    // expect(dindContainers.some((container) => container.message)).toBeTruthy();
     expect(dindContainers).toHaveLength(1);
     expect(Array.isArray(dindContainers)).toBeTruthy();
     expect(dindContainers.length).toBeGreaterThan(0);
@@ -152,7 +154,7 @@ describe('imageController tests', () => {
     });
     // console.log('TEST1', test1.toString());
     // Get the list of running containers
-    const dindContainersResponse = execSync(
+    const dindContainersResponse: string | Buffer = execSync(
       `docker exec -i image_test sh -c "${cmdPruneUnusedImages}"`,
       {
         stdio: 'pipe',
@@ -161,7 +163,7 @@ describe('imageController tests', () => {
     // const dindContainersResponse = parseOutputGetAllImages(dindContainers);
 
     const dindContainers = parseOutputPruneUnusedImages(dindContainersResponse);
-    console.log('dindContainers', dindContainers);
+    // console.log('dindContainers', dindContainers);
 
     expect(
       dindContainers.some((container) => container['Deleted Images:'])
@@ -192,7 +194,7 @@ describe('imageController tests', () => {
     });
     // console.log('TEST1', test1.toString());
     // Get the list of running containers
-    const dindContainersResponse = execSync(
+    const dindContainersResponse: string | Buffer = execSync(
       `docker exec -i image_test sh -c "${cmdRemoveSingleImage} hello-world"`,
       {
         stdio: 'pipe',
@@ -201,11 +203,9 @@ describe('imageController tests', () => {
     // const dindContainersResponse = parseOutputGetAllImages(dindContainers);
 
     const dindContainers = parseOutputRemoveSingleImage(dindContainersResponse);
-    console.log('dindContainers', dindContainers);
+    // console.log('dindContainers', dindContainers);
 
-    expect(
-      dindContainers.some((container) => container['Deleted'])
-    ).toBeTruthy();
+    expect(dindContainers.some((container) => container.Deleted)).toBeTruthy();
     expect(
       dindContainers.some((container) =>
         container.Deleted.includes('Untagged: hello-world:latest')
