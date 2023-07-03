@@ -50,26 +50,47 @@ And you're done, enjoy the simplicity of using your new container management bud
 
 ```
 .
+├── LICENSE
+├── README.md
 ├── __mocks__
+│   ├── dockerode.ts
+│   ├── fileMock.ts
+│   ├── node-fetch.ts
+│   └── urlMock.ts
 ├── __tests__
 │   ├── controllers
 │   └── routes
-├── coverage
-│   └── lcov-report
+├── babel.config.js
 ├── cypress
 │   ├── e2e
 │   ├── fixtures
 │   ├── integration
 │   └── support
-├── grafana
-│   └── data
+├── cypress.config.ts
+├── docker-compose.yml
+├── jest.config.ts
+├── package-lock.json
+├── package.json
 ├── server
 │   ├── controllers
+│   ├── db.ts
 │   ├── models
-│   └── routes
-└── src
-    ├── assets
-    └── components
+│   ├── routes
+│   ├── server.ts
+│   └── util.ts
+├── src
+│   ├── App.scss
+│   ├── App.tsx
+│   ├── UserContext.tsx
+│   ├── assets
+│   ├── components
+│   ├── global.d.ts
+│   ├── index.html
+│   ├── index.tsx
+│   └── types.ts
+├── tsconfig.json
+├── types.ts
+└── webpack.config.cjs
 ```
 
 ## Contibuting
