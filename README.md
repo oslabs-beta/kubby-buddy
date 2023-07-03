@@ -30,7 +30,7 @@ Contributing is what makes the open source community great. If you want to contr
 
 - Fork and clone the repository.
 - Branch off the dev branch, with a branch name starting in feat, fix, bug, docs, test, wip or merge, then adding a new folder named whatever it is you are adding. (ex. feat/database)
-- When you commit, be sure to follow [conventional commit](www.conventionalcommits.org/en/v1.0.0/) standards.
+- When you commit, be sure to follow [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) standards.
 - Once your new feture is built out, you can submit a pull request to dev.
 
 ## Meet the Team!
