@@ -1,6 +1,6 @@
 {
-  "/Users/jg/CTRI 16/Github/Week 10/kubby-buddy/server/controllers/containerController.ts": {
-    "path": "/Users/jg/CTRI 16/Github/Week 10/kubby-buddy/server/controllers/containerController.ts",
+  "/Users/kasu/Documents/Codesmith/Github/kubby-buddy/server/controllers/containerController.ts": {
+    "path": "/Users/kasu/Documents/Codesmith/Github/kubby-buddy/server/controllers/containerController.ts",
     "statementMap": {
       "0": {
         "start": { "line": 2, "column": 0 },
@@ -1131,8 +1131,8 @@
       "8": [0]
     }
   },
-  "/Users/jg/CTRI 16/Github/Week 10/kubby-buddy/server/controllers/imageController.ts": {
-    "path": "/Users/jg/CTRI 16/Github/Week 10/kubby-buddy/server/controllers/imageController.ts",
+  "/Users/kasu/Documents/Codesmith/Github/kubby-buddy/server/controllers/imageController.ts": {
+    "path": "/Users/kasu/Documents/Codesmith/Github/kubby-buddy/server/controllers/imageController.ts",
     "statementMap": {
       "0": {
         "start": { "line": 2, "column": 0 },
@@ -2162,8 +2162,8 @@
       "12": [0]
     }
   },
-  "/Users/jg/CTRI 16/Github/Week 10/kubby-buddy/server/routes/containerRoutes.ts": {
-    "path": "/Users/jg/CTRI 16/Github/Week 10/kubby-buddy/server/routes/containerRoutes.ts",
+  "/Users/kasu/Documents/Codesmith/Github/kubby-buddy/server/routes/containerRoutes.ts": {
+    "path": "/Users/kasu/Documents/Codesmith/Github/kubby-buddy/server/routes/containerRoutes.ts",
     "statementMap": {
       "0": {
         "start": { "line": 1, "column": 0 },

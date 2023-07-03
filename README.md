@@ -13,6 +13,51 @@ Follow these steps for easy setup.
 3. Run 'npm start' in your terminal.
 4. In your browser open 'http://localhost:8080/'.
 
-And you're done, enjoy the simplicity of using docker with our application.
+And you're done, enjoy the simplicity of using your new container management buddy.
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/123416896?v=4" width="100"/>
+      <br />
+      <sub><b>Chang Moon</b></sub>
+      <br />
+      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
+      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/github-favicon.png" width="20"/></a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/126903033?v=4" width="100"/>
+      <br />
+      <sub><b>Josh Goo</b></sub>
+      <br />
+      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
+      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/github-favicon.png" width="20"/></a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/108921232?v=4" width="100"/>
+      <br />
+      <sub><b>Steve Lemlek</b></sub>
+      <br />
+      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
+      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/github-favicon.png" width="20"/></a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/22490059?v=4" width="100"/>
+      <br />
+      <sub><b>Trey Walker</b></sub>
+      <br />
+      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
+      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/github-favicon.png" width="20"/></a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/127268892?v=4" width="100"/>
+      <br />
+      <sub><b>William Reilly</b></sub>
+      <br />
+      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
+      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/github-favicon.png" width="20"/></a>
+    </td>
+  </tr>
+</table>
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
