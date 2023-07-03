@@ -60,8 +60,8 @@ containerRouter.delete(
 );
 
 // get logs for a specific container
-// INPUT: nothing
-// OUTPUT: Not finalized: Work in Progress
+// INPUT: query /log?name=myContainer
+// OUTPUT: array of objects [{}, {}]
 containerRouter.get(
   '/log',
   containerController.getSpecificLog,
