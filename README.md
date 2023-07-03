@@ -2,6 +2,7 @@
 
 - [About](#about)
 - [Setup](#setup)
+- [File Structure](#file-structure)
 - [Contributing](#contibuting)
 - [Meet the Team](#meet-the-team)
 
@@ -18,11 +19,58 @@
 Follow these steps for easy setup.
 
 1. Fork and clone this repository.
+
+```bash
+git clone https://github.com/<your-github-username>/kubby-buddy.git
+```
+
 2. Navigate to the directory of the cloned repository.
-3. Run 'npm start' in your terminal.
-4. In your browser open 'http://localhost:8080/'.
+
+```bash
+cd kubby-buddy
+```
+
+3. Install the npm packages.
+
+```bash
+npm install
+```
+
+4. Start kubby buddy in your terminal.
+
+```bash
+npm start
+```
+
+5. In your browser open 'http://localhost:8080/'.
 
 And you're done, enjoy the simplicity of using your new container management buddy.
+
+## File Structure
+
+```
+.
+├── __mocks__
+├── __tests__
+│   ├── controllers
+│   └── routes
+├── coverage
+│   └── lcov-report
+├── cypress
+│   ├── e2e
+│   ├── fixtures
+│   ├── integration
+│   └── support
+├── grafana
+│   └── data
+├── server
+│   ├── controllers
+│   ├── models
+│   └── routes
+└── src
+    ├── assets
+    └── components
+```
 
 ## Contibuting
 
