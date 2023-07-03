@@ -5,6 +5,7 @@
   "main": "index.tsx",
   "scripts": {
     "build": "webpack --mode production",
+    "start": "concurrently \"webpack-dev-server --mode development --hot\" \"tsnd --respawn --transpile-only ./server/server.ts\"",
     "dev": "concurrently \"webpack-dev-server --mode development --hot\" \"tsnd --respawn --transpile-only ./server/server.ts\"",
     "prepare": "husky install",
     "test": "docker-compose -p kubbybuddy-test up -d && jest --coverage; RESULT=$?; docker-compose -p kubbybuddy-test down; exit $RESULT",
