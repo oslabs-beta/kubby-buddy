@@ -177,6 +177,91 @@ const volumeController: VolumeController = {
       next(errorDetails);
     }
   },
+
+  volumeStats: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { volume } = req.body;
+      const { stdout, stderr } = await promisifyExec(
+        `docker ps --filter "volume=${volume}" --format "{{json . }}"`
+      );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: 'error in the volumeController.volumeStats exec call',
+          err: stderr,
+          message: 'error in the volumeController.volumeStats exec call',
+        };
+        next(errorDetails);
+      }
+      const dataArray = stdout
+        .trim()
+        .split('\n')
+        .map((item) => JSON.parse(item, undefined));
+      res.locals.volumeStats = dataArray;
+      next();
+    } catch (error) {
+      const errorDetails: ErrorDetails = {
+        log: 'Input volume is not being used OR error in the volumeController.volumeStats catch',
+        err: error,
+        message:
+          'Input volume is not being used OR error in the volumeController.volumeStats catch',
+      };
+      next(errorDetails);
+    }
+  },
+
+  createVolume: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { name } = req.body;
+      const { stdout, stderr } = await promisifyExec(
+        `docker volume create ${name}`
+      );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: 'error in the volumeController.createVolume exec call',
+          err: stderr,
+          message: 'error in the volumeController.createVolume exec call',
+        };
+        next(errorDetails);
+      }
+      const output = stdout.trim();
+      res.locals.createVolume = [{ message: output }];
+      next();
+    } catch (error) {
+      const errorDetails: ErrorDetails = {
+        log: 'error in the volumeController.createVolume catch',
+        err: error,
+        message: 'error in the volumeController.createVolume catch',
+      };
+      next(errorDetails);
+    }
+  },
+
+  deleteVolume: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { name } = req.body;
+      const { stdout, stderr } = await promisifyExec(
+        `docker volume rm ${name}`
+      );
+      if (stderr) {
+        const errorDetails: ErrorDetails = {
+          log: 'error in the volumeController.deleteVolume exec call',
+          err: stderr,
+          message: 'error in the volumeController.deleteVolume exec call',
+        };
+        next(errorDetails);
+      }
+      const output = stdout.trim();
+      res.locals.deleteVolume = [{ message: output }];
+      next();
+    } catch (error) {
+      const errorDetails: ErrorDetails = {
+        log: 'error in the volumeController.deleteVolume catch',
+        err: error,
+        message: 'error in the volumeController.deleteVolume catch',
+      };
+      next(errorDetails);
+    }
+  },
 };
 
 export default volumeController;

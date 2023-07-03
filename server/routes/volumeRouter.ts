@@ -53,4 +53,37 @@ volumeRouter.delete(
     res.status(200).json(res.locals.deletedAnonymous);
   }
 );
+
+// POST volume stats
+// INPUT: {volume: "volumeID"}
+// OUTPUT: array of objects [{}]
+volumeRouter.post(
+  '/volume-stats',
+  volumeController.volumeStats,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.volumeStats);
+  }
+);
+
+// POST create a volume
+// INPUT: {name: "volumeName"}
+// OUTPUT: array of objects [{}]
+volumeRouter.post(
+  '/create-volume',
+  volumeController.createVolume,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.createVolume);
+  }
+);
+
+// DELETE delete colume
+// INPUT: {volume: "volumeName"}
+// OUTPUT: array of objects [{}]
+volumeRouter.delete(
+  '/delete-volume',
+  volumeController.deleteVolume,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.deleteVolume);
+  }
+);
 export default volumeRouter;

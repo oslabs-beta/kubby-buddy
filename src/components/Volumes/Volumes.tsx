@@ -30,12 +30,13 @@ export const Volumes: FC = () => {
           <div className="cmdbutton">
             <DeleteVolumeCommands
               id={el.Name}
-              cmdRoute={new URL('/image/volume-by-name', window.location.href)}
+              cmdRoute={new URL('/volume/delete-volume', window.location.href)}
               fetchMethod="delete"
             />
           </div>
         </li>
       );
+      56;
     }
   );
 
@@ -51,8 +52,8 @@ export const Volumes: FC = () => {
     <div className="imagescontainer">
       <div className="createVolume">
         <CreateVolumeCommands
-          cmdRoute={new URL('/image/volume-by-name', window.location.href)}
-          fetchMethod={'s'}
+          cmdRoute={new URL('/volume/create-volume', window.location.href)}
+          fetchMethod={'post'}
         />
       </div>
       {volumes}

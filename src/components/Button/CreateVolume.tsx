@@ -1,12 +1,13 @@
 // /prune-stopped-containers
 
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import create from '../../assets/add-document.png';
 import * as Popover from '@radix-ui/react-popover';
 
 import './CreatePopover.scss';
 import { Cross2Icon, CheckIcon } from '@radix-ui/react-icons';
 import { CommandButtonProps } from '../../types';
+import { UserContext } from '../../UserContext';
 
 interface CreateCommandProp extends CommandButtonProps {}
 
@@ -14,8 +15,8 @@ const CreateVolumeButton: React.FC<CreateCommandProp> = ({
   cmdRoute,
   fetchMethod,
 }) => {
+  const { setAvailableVolumes } = useContext(UserContext);
   const volumeName = useRef<HTMLInputElement>(null);
-
   const [status, setStatus] = useState<undefined | string>(undefined);
 
   const command = async () => {
@@ -33,6 +34,11 @@ const CreateVolumeButton: React.FC<CreateCommandProp> = ({
       const data = await response.json();
 
       setStatus('Creation Successful!');
+      const volumesURL = 'volume/all-volumes';
+      const getVolumes = await fetch(volumesURL);
+      const volumesData = await getVolumes.json();
+      setAvailableVolumes(volumesData);
+
       if (!response.ok) throw new Error(data);
     } catch (err) {
       setStatus(err instanceof Error ? err.message : String(err));

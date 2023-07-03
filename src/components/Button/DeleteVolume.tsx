@@ -24,7 +24,7 @@ const DeleteVolumeButton: React.FC<DeleteCommandProp> = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id: id }),
+        body: JSON.stringify({ name: id }),
       });
       const data = await response.json();
       console.log('test---->:' + data);
