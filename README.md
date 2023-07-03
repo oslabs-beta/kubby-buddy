@@ -1,6 +1,15 @@
+## Table of Contents
+
+- [About](#about)
+- [Setup](#setup)
+- [Contributing](#contibuting)
+- [Meet the Team](#meet-the-team)
+
 <p align="center">
   <img src="./src/assets/logo.png">
 </p>
+
+## ABOUT
 
 **Kubby Buddy** is your container manegment buddy, giving you an easy to use GUI for all your Docker needs. All you need to do is launch our application, and your local images will load into our app, from there you can easily view, launch, stop and even delete your containers and images straight from our app. We also include metrics and even averages of your CPU and memory usgage utilizing a containerized database running on your local machine.
 
@@ -8,14 +17,25 @@
 
 Follow these steps for easy setup.
 
-1. Fork and clone this repo.
-2. Navigate to the directory of the cloned repo.
+1. Fork and clone this repository.
+2. Navigate to the directory of the cloned repository.
 3. Run 'npm start' in your terminal.
 4. In your browser open 'http://localhost:8080/'.
 
 And you're done, enjoy the simplicity of using your new container management buddy.
 
-<table>
+## Contibuting
+
+Contributing is what makes the open source community great. If you want to contribute to this project, you can follow these guidelines.
+
+- Fork and clone the repository.
+- Branch off the dev branch, with a branch name starting in feat, fix, bug, docs, test, wip or merge, then adding a new folder named whatever it is you are adding. (ex. feat/database)
+- When you commit, be sure to follow [conventional commit](www.conventionalcommits.org/en/v1.0.0/) standards.
+- Once your new feture is built out, you can submit a pull request to dev.
+
+## Meet the Team!
+
+<table align="center">
   <tr>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/123416896?v=4" width="100"/>
