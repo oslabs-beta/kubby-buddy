@@ -13,7 +13,26 @@ export const cmdPruneStoppedContainers: string = `docker container prune --force
 export const cmdGetSpecificLog: string = `docker container logs`;
 export const cmdRemoveSpecificContainer: string = `docker rm `;
 
-export function parseOutputContainers(data: string | Buffer) {
+interface ParseOutputContainers {
+  Names: string;
+  Status: string;
+}
+
+interface ParseOutputStartStop {
+  message: string;
+}
+
+interface ParseOutputPruneStoppedContainers {
+  'Deleted Containers:': string[];
+  'Total reclaimed space:': string[];
+}
+interface ParseOutputRemoveSpecificContainer {
+  message: string;
+}
+
+export function parseOutputContainers(
+  data: string | Buffer
+): ParseOutputContainers[] {
   const parsedOutput = data
     .toString()
     .trim()
@@ -23,7 +42,9 @@ export function parseOutputContainers(data: string | Buffer) {
   return parsedOutput;
 }
 
-export function parseOutputContainersNames(data: string | Buffer) {
+export function parseOutputContainersNames(
+  data: string | Buffer
+): Array<{ name: string }> {
   const parsedOutput = data
     .toString()
     .trim()
@@ -36,7 +57,9 @@ export function parseOutputContainersNames(data: string | Buffer) {
   return parsedOutput;
 }
 
-export function parseOutputStartStop(data: string | Buffer) {
+export function parseOutputStartStop(
+  data: string | Buffer
+): ParseOutputStartStop[] {
   const parsedOutput = [
     {
       message: Buffer.isBuffer(data)
@@ -47,7 +70,9 @@ export function parseOutputStartStop(data: string | Buffer) {
   return parsedOutput;
 }
 
-export function parseOutputPruneStoppedContainers(stdout: string | Buffer) {
+export function parseOutputPruneStoppedContainers(
+  stdout: string | Buffer
+): ParseOutputPruneStoppedContainers[] {
   const data = stdout.toString().trim();
   const dataArray = data.split('\n');
   const deletedContainersIndex = dataArray.findIndex(
@@ -76,7 +101,7 @@ export function parseOutputPruneStoppedContainers(stdout: string | Buffer) {
   return output;
 }
 
-export function transformLogs(stdout: string | Buffer) {
+export function transformLogs(stdout: string | Buffer): Array<{}> {
   const dataArray = stdout.toString().trim().split('\n');
   let transformedLogs: any[];
 
@@ -96,7 +121,9 @@ export function transformLogs(stdout: string | Buffer) {
   return transformedLogs;
 }
 
-export function parseOutputRemoveSpecificContainer(stdout: string | Buffer) {
+export function parseOutputRemoveSpecificContainer(
+  stdout: string | Buffer
+): ParseOutputRemoveSpecificContainer[] {
   const output = stdout.toString().trim();
   return [{ message: output }];
 }

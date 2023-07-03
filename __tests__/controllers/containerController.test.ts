@@ -54,7 +54,7 @@ describe('containerController tests', () => {
     );
     // console.log('TEST1', test1.toString());
     // Get the list of running containers
-    const dindContainersResponse = execSync(
+    const dindContainersResponse: string | Buffer = execSync(
       `docker exec -i controller_test sh -c "${cmdGetAllRunningContainers}"`,
       {
         stdio: 'pipe',
@@ -83,7 +83,7 @@ describe('containerController tests', () => {
     ).toBeTruthy();
     expect(dindContainers).toHaveLength(2);
     expect(
-      dindContainers.some((container) => container.name === 'hungry_khorana')
+      dindContainers.some((container) => container.Names === 'hungry_khorana')
     ).toBeFalsy();
     expect(Array.isArray(dindContainers)).toBeTruthy();
     expect(dindContainers.length).toBeGreaterThan(0);
@@ -92,7 +92,7 @@ describe('containerController tests', () => {
 
   test('GET /all-active-containers-names should return an array of containers', async () => {
     // Get the list of active containers within the controller_test container
-    const dindContainersResponse = execSync(
+    const dindContainersResponse: string | Buffer = execSync(
       `docker exec -i controller_test sh -c "${cmdGetAllRunningContainersNames}"`,
       { stdio: 'pipe' } // Added option to capture the command output
     );
@@ -119,7 +119,7 @@ describe('containerController tests', () => {
   });
 
   test('POST /stop should stop a specific container', async () => {
-    const dindContainersResponse = execSync(
+    const dindContainersResponse: string | Buffer = execSync(
       `docker exec -i controller_test sh -c "${cmdStopASpecificContainer} my-container2"`,
       { stdio: 'pipe' } // Added option to capture the command output
     );
@@ -153,7 +153,7 @@ describe('containerController tests', () => {
     //   'TEST1',
     //   execSync(`docker exec -i controller_test sh -c "docker ps"`).toString()
     // );
-    const dindContainersResponse = execSync(
+    const dindContainersResponse: string | Buffer = execSync(
       `docker exec -i controller_test sh -c "${cmdStartASpecificContainer} my-container"`,
       { stdio: 'pipe' } // Added option to capture the command output
     );
@@ -188,7 +188,7 @@ describe('containerController tests', () => {
     //   'TEST1',
     //   execSync(`docker exec -i controller_test sh -c "docker ps -a"`).toString()
     // );
-    const dindContainersResponse = execSync(
+    const dindContainersResponse: string | Buffer = execSync(
       `docker exec -i controller_test sh -c "${cmdPruneStoppedContainers}"`,
       { stdio: 'pipe' } // Added option to capture the command output
     );
@@ -221,7 +221,7 @@ describe('containerController tests', () => {
   });
 
   test('GET /logs get logs for a specific container', async () => {
-    const dindContainersResponse = execSync(
+    const dindContainersResponse: string | Buffer = execSync(
       `docker exec -i controller_test sh -c "${cmdGetSpecificLog} my-container2"`,
       { stdio: 'pipe' } // Added option to capture the command output
     );
@@ -245,7 +245,7 @@ describe('containerController tests', () => {
     //   'TEST1',
     //   execSync(`docker exec -i controller_test sh -c "docker ps -a"`).toString()
     // );
-    const dindContainersResponse = execSync(
+    const dindContainersResponse: string | Buffer = execSync(
       `docker exec -i controller_test sh -c "${cmdRemoveSpecificContainer} my-container2"`,
       { stdio: 'pipe' } // Added option to capture the command output
     );

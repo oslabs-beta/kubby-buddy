@@ -10,7 +10,31 @@ export const cmdRunContainerFromImage: string = `docker run -d`;
 export const cmdPruneUnusedImages: string = `docker image prune -a --force`;
 export const cmdRemoveSingleImage: string = `docker image rm `;
 
-export function parseOutputContainers(data: string | Buffer) {
+interface ParseOutputGetAllImages {
+  Repository: string;
+}
+
+interface ParseOutputContainers {
+  message: string;
+  Image: string;
+  LocalVolumes: string;
+  Mounts: string;
+  Names: string;
+  Ports: string;
+}
+
+interface ParseOutputPruneUnusedImages {
+  'Deleted Images:': string[];
+  'Total reclaimed space:': string[];
+}
+
+interface ParseOutputRemoveSingleImage {
+  Deleted: string[];
+}
+
+export function parseOutputContainers(
+  data: string | Buffer
+): ParseOutputContainers[] {
   const parsedOutput = data
     .toString()
     .trim()
@@ -20,7 +44,9 @@ export function parseOutputContainers(data: string | Buffer) {
   return parsedOutput;
 }
 
-export function parseOutputGetAllImages(data: string | Buffer) {
+export function parseOutputGetAllImages(
+  data: string | Buffer
+): ParseOutputGetAllImages[] {
   const parsedOutput = data
     .toString()
     .trim()
@@ -30,7 +56,7 @@ export function parseOutputGetAllImages(data: string | Buffer) {
   return parsedOutput;
 }
 
-export function setRmOption(remove: string) {
+export function setRmOption(remove: string): string {
   let rm;
   // check if remove is provided
   if (remove === 'yes') {
@@ -41,7 +67,10 @@ export function setRmOption(remove: string) {
   return rm;
 }
 
-export function setVolOption(volumeName: string, fileDirectory: string) {
+export function setVolOption(
+  volumeName: string,
+  fileDirectory: string
+): string {
   let vol;
   if (volumeName && volumeName.trim() !== '') {
     // check if fileDirectory is provided
@@ -56,7 +85,10 @@ export function setVolOption(volumeName: string, fileDirectory: string) {
   return vol;
 }
 
-export async function getPortMapping(port: string, image: string) {
+export async function getPortMapping(
+  port: string,
+  image: string
+): Promise<string> {
   let portNum = '';
 
   if (port && port.trim() !== '') {
@@ -83,12 +115,16 @@ export async function getPortMapping(port: string, image: string) {
   return portNum;
 }
 
-export function parseOutputrunContainerFromImage(stdout: string | Buffer) {
+export function parseOutputrunContainerFromImage(
+  stdout: string | Buffer
+): Array<{}> {
   const output = stdout.toString().trim();
   return [{ message: output }];
 }
 
-export function parseOutputPruneUnusedImages(stdout: string | Buffer) {
+export function parseOutputPruneUnusedImages(
+  stdout: string | Buffer
+): ParseOutputPruneUnusedImages[] {
   const data = stdout.toString().trim();
   const dataArray = data.split('\n');
   const deletedImagesIndex = dataArray.findIndex(
@@ -117,7 +153,9 @@ export function parseOutputPruneUnusedImages(stdout: string | Buffer) {
   return output;
 }
 
-export function parseOutputRemoveSingleImage(stdout: string | Buffer) {
+export function parseOutputRemoveSingleImage(
+  stdout: string | Buffer
+): ParseOutputRemoveSingleImage[] {
   const dataArray = stdout.toString().trim().split('\n');
   return [{ Deleted: dataArray }];
 }
