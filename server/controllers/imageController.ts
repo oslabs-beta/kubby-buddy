@@ -4,12 +4,14 @@ import { ImageController, ErrorDetails } from '../../types';
 import { promisify } from 'node:util';
 const promisifyExec = promisify(exec);
 
+// export commands for testing
 export const cmdGetAllImages: string = `docker images --format json`;
 export const cmdRunContainerFromImageName: string = `--name `;
 export const cmdRunContainerFromImage: string = `docker run -d`;
 export const cmdPruneUnusedImages: string = `docker image prune -a --force`;
 export const cmdRemoveSingleImage: string = `docker image rm `;
 
+// ts interface
 interface ParseOutputGetAllImages {
   Repository: string;
 }
@@ -32,6 +34,7 @@ interface ParseOutputRemoveSingleImage {
   Deleted: string[];
 }
 
+// export functions for testing
 export function parseOutputContainers(
   data: string | Buffer
 ): ParseOutputContainers[] {
@@ -161,6 +164,7 @@ export function parseOutputRemoveSingleImage(
 }
 
 export const imageController: ImageController = {
+  // get all iamges
   getAllImages: async (
     _req: Request,
     res: Response,
@@ -188,6 +192,7 @@ export const imageController: ImageController = {
     }
   },
 
+  // run container from image
   runContainerFromImage: async (
     req: Request,
     res: Response,
@@ -229,7 +234,7 @@ export const imageController: ImageController = {
     }
   },
 
-  // prune unused images (ones not actively connected with a container)
+  // prune unused images
   pruneUnusedImages: async (
     _req: Request,
     res: Response,
@@ -257,8 +262,7 @@ export const imageController: ImageController = {
     }
   },
 
-  //remove single image
-
+  // remove single image
   removeSingleImage: async (
     req: Request,
     res: Response,
