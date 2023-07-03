@@ -5,6 +5,7 @@ import { promisify } from 'util';
 import { ErrorDetails } from '../../types';
 const promisifyExec = promisify(exec);
 
+// export commands for testing
 export const cmdGetAllRunningContainers: string = `docker ps -a --format '{{json .}}'`;
 export const cmdGetAllRunningContainersNames: string = `docker container ls --format='{{json .Names}}'`;
 export const cmdStopASpecificContainer: string = `docker stop `;
@@ -13,6 +14,7 @@ export const cmdPruneStoppedContainers: string = `docker container prune --force
 export const cmdGetSpecificLog: string = `docker container logs`;
 export const cmdRemoveSpecificContainer: string = `docker rm `;
 
+// ts interface
 interface ParseOutputContainers {
   Names: string;
   Status: string;
@@ -30,6 +32,7 @@ interface ParseOutputRemoveSpecificContainer {
   message: string;
 }
 
+// export functions for testing
 export function parseOutputContainers(
   data: string | Buffer
 ): ParseOutputContainers[] {
@@ -129,8 +132,7 @@ export function parseOutputRemoveSpecificContainer(
 }
 
 export const containerController: ContainerController = {
-  //middleware to run CLI command to get list of active containers
-
+  // get all running containers
   getAllRunningContainers: async (
     _req: Request,
     res: Response,
@@ -180,7 +182,6 @@ export const containerController: ContainerController = {
         };
         next(errorDetails);
       }
-      // Use undefined as the reviver
       res.locals.containersNames = parseOutputContainersNames(stdout);
       next();
     } catch (error) {
@@ -193,8 +194,7 @@ export const containerController: ContainerController = {
     }
   },
 
-  //middleware to stop a specific container
-
+  // stop a conatiner
   stopASpecificContainer: async (
     req: Request,
     res: Response,
@@ -231,8 +231,7 @@ export const containerController: ContainerController = {
     }
   },
 
-  //middleware to start a specific container
-
+  // start a specific container
   startASpecificContainer: async (
     req: Request,
     res: Response,
@@ -264,8 +263,7 @@ export const containerController: ContainerController = {
     }
   },
 
-  //middleware to prune all stopped containers
-
+  // prune all stopped containers
   pruneStoppedContainers: async (
     _req: Request,
     res: Response,
@@ -296,8 +294,7 @@ export const containerController: ContainerController = {
     }
   },
 
-  //get log for a specific container
-
+  // log for a specific container
   getSpecificLog: async (req: Request, res: Response, next: NextFunction) => {
     console.log(req.query);
     const { name } = req.query;

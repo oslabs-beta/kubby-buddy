@@ -22,7 +22,6 @@ imageRouter.get(
 // INPUT: object with name, image, value, remove, volumeName, fileDirectory, port values 
   {"name": "container1", "image": "mongo", "remove": "yes", "volumeName": "vol1", "fileDirectory": "/App", "port": "3000"}
 // OUTPUT: array of object containing ID of container [{"message": "cf29432706cdabfd550b37561311d8f56fe18c8de25ae0f1069d501900ecc49a"}]
-// other tests: container actually runs... maybe you can use another route to test?
 */
 
 imageRouter.post(
