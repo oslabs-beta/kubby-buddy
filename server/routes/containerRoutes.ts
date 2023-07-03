@@ -73,7 +73,6 @@ containerRouter.get(
 // removes stopped container by name
 // INPUT: object with name value, {"name": "mongodb"}
 // OUTPUT: array of object [{"message": "container12345"}]
-// other tests: when you run docker ps -a, the container should be gone
 containerRouter.delete(
   '/remove-specific-container',
   containerController.removeSpecificContainer,
