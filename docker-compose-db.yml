@@ -1,0 +1,19 @@
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: postgres.dockerfile
+    image: 'postgres-tutorials'
+    container_name: 'postgres_tuto'
+    environment:
+      POSTGRES_DB: 'tutos'
+      POSTGRES_USER: 'tuto'
+      POSTGRES_PASSWORD: 'admingres'
+      PGDATA: '/data/postgres-tuto'
+    volumes:
+      - dbtuto:/data/postgres-tuto
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+volumes:
+  dbtuto:

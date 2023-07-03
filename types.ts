@@ -36,7 +36,7 @@ export interface ImageController {
 
   pruneUnusedImages: MiddleWare;
 
-  pruneDanglingImages: MiddleWare;
+  // pruneDanglingImages: MiddleWare;
 
   removeSingleImage: MiddleWare;
 }
@@ -53,6 +53,12 @@ export interface VolumeController {
   deleteAllVolumes: MiddleWare;
 
   deleteAllAnonymousVolumes: MiddleWare;
+
+  volumeStats: MiddleWare;
+
+  createVolume: MiddleWare;
+
+  deleteVolume: MiddleWare;
 }
 
 export interface ServerError {
