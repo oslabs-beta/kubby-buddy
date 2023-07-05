@@ -8,6 +8,7 @@ import { UserContext } from '../../UserContext';
 import Loader from '../Loader/Loader';
 import { Container, Image, Volume, ImageAvgStats } from '../../types';
 import { useQuery } from '@tanstack/react-query';
+import { Volumes } from '../Volumes/Volumes';
 
 //using a ternary based on booleans from useContext to switch the views
 
@@ -98,6 +99,9 @@ export const MainNav: FC = () => {
       break;
     case 'Loading':
       view = <Loader />;
+      break;
+    case 'Volumes':
+      view = <Volumes />;
       break;
     default:
       view = null;

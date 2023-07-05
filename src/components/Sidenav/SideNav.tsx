@@ -25,6 +25,7 @@ export const SideNav: FC = () => {
       <ul>
         <li onClick={() => setShowing('Images')}>Images</li>
         <li onClick={() => setShowing('Containers')}>Containers</li>
+        <li onClick={() => setShowing('Volumes')}>Volumes</li>
       </ul>
       <GlobalCommands />
       {/* <Quickview /> */}
