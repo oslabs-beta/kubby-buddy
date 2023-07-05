@@ -1,9 +1,11 @@
 ## Table of Contents
 
 - [About](#about)
+- [Demo](#demo)
 - [Setup](#setup)
 - [File Structure](#file-structure)
 - [Contributing](#contibuting)
+- [Progress](#progress)
 - [Meet the Team](#meet-the-team)
 - [License](#license)
 
@@ -32,6 +34,17 @@
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/>
 </div>
+
+## Demo
+
+Here we can see creating a container from an image.
+<img src="./src/assets/Main_App_Images.gif"/>
+
+Here we can see our running containers, starting and stopping those containers as well as the logs for those containers.
+<img src="./src/assets/Main_App_Containers.gif"/>
+
+Here we create a new volume, then delete it.
+<img src="./src/assets/Main_App_Volumes.gif"/>
 
 ## SETUP
 
@@ -121,6 +134,19 @@ Contributing is what makes the open source community great. If you want to contr
 - When you commit, be sure to follow [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) standards.
 - Once your new feture is built out, you can submit a pull request to dev.
 
+## Progress
+
+| Feature | Status |
+| ------- | ------ |
+|         | ✅     |
+|         | ✅     |
+|         | ✅     |
+|         | ✅     |
+|         | ⏳     |
+|         | ⏳     |
+|         | ⏳     |
+|         | 🙏🏻     |
+
 ## Meet the Team!
 
 <table align="center">
@@ -167,8 +193,6 @@ Contributing is what makes the open source community great. If you want to contr
     </td>
   </tr>
 </table>
-
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## License
 
