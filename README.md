@@ -161,24 +161,24 @@ Contributing is what makes the open source community great. If you want to contr
       <br />
       <sub><b>Chang Moon</b></sub>
       <br />
-      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
-      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/github-favicon.png" width="20"/></a>
+      <a href="https://www.linkedin.com/in/chang-moon-6b2b91278/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
+      <a href="https://github.com/ThickCorgi"><img src="./src/assets/github-favicon.png" width="20"/></a>
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/126903033?v=4" width="100"/>
       <br />
       <sub><b>Josh Goo</b></sub>
       <br />
-      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
-      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/github-favicon.png" width="20"/></a>
+      <a href="https://www.linkedin.com/in/joshgoo/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
+      <a href="https://github.com/YeChanGoo"><img src="./src/assets/github-favicon.png" width="20"/></a>
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/108921232?v=4" width="100"/>
       <br />
       <sub><b>Steve Lemlek</b></sub>
       <br />
-      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
-      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/github-favicon.png" width="20"/></a>
+      <a href="https://www.linkedin.com/in/steve-lemlek/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
+      <a href="https://github.com/CoachSteveMichael"><img src="./src/assets/github-favicon.png" width="20"/></a>
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/22490059?v=4" width="100"/>
@@ -186,15 +186,15 @@ Contributing is what makes the open source community great. If you want to contr
       <sub><b>Trey Walker</b></sub>
       <br />
       <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
-      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/github-favicon.png" width="20"/></a>
+      <a href="https://github.com/kasualkid12"><img src="./src/assets/github-favicon.png" width="20"/></a>
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/127268892?v=4" width="100"/>
       <br />
       <sub><b>William Reilly</b></sub>
       <br />
-      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
-      <a href="https://www.linkedin.com/in/kasualkid12/"><img src="./src/assets/github-favicon.png" width="20"/></a>
+      <a href="https://www.linkedin.com/in/william-reilly-338a5788/"><img src="./src/assets/linkedin-favicon.png" width="20"/></a>
+      <a href="https://github.com/Wills-Git"><img src="./src/assets/github-favicon.png" width="20"/></a>
     </td>
   </tr>
 </table>
