@@ -136,16 +136,21 @@ Contributing is what makes the open source community great. If you want to contr
 
 ## Progress
 
-| Feature | Status |
-| ------- | ------ |
-|         | ✅     |
-|         | ✅     |
-|         | ✅     |
-|         | ✅     |
-|         | ⏳     |
-|         | ⏳     |
-|         | ⏳     |
-|         | 🙏🏻     |
+| Feature                                                | Status                                                |
+| ------------------------------------------------------ | ----------------------------------------------------- |
+| Image page                                             | <img src="./src/assets/bear-party.webp" width="20"/>  |
+| Container page                                         | <img src="./src/assets/bear-party.webp" width="20"/>  |
+| Volume page                                            | <img src="./src/assets/bear-party.webp" width="20"/>  |
+| Fix containerized database                             | <img src="./src/assets/bear-bongo.webp" width="20"/>  |
+| Impliment Grafana                                      | <img src="./src/assets/bear-bongo.webp" width="20"/>  |
+| Bring extention to feature parody                      | <img src="./src/assets/bear-bongo.webp" width="20"/>  |
+| Add alerts for when buttons fail to load               | <img src="./src/assets/bear-snooze.webp" width="20"/> |
+| Fix container not loading when started outside the app | <img src="./src/assets/bear-snooze.webp" width="20"/> |
+| Add more diverse and costomizable commands             | <img src="./src/assets/bear-snooze.webp" width="20"/> |
+
+- <img src="./src/assets/bear-party.webp" width="20"/> = Finished feature
+- <img src="./src/assets/bear-bongo.webp" width="20"/> = Work in progress feature
+- <img src="./src/assets/bear-snooze.webp" width="20"/> = Not yet started feature
 
 ## Meet the Team!
 
