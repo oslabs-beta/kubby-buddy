@@ -8,7 +8,7 @@ import { Image } from '../../types';
 import Loader from '../Loader/Loader';
 
 export const Images: FC = () => {
-  const { availableImages, imageAverages } = useContext(UserContext);
+  const { availableImages /*, imageAverages */ } = useContext(UserContext);
 
   let images;
 
@@ -21,15 +21,15 @@ export const Images: FC = () => {
             <div className="image-subinfo">
               <p>
                 Avg Mem:{' '}
-                {imageAverages[index]?.mem_per
+                {/* {imageAverages[index]?.mem_per
                   ? imageAverages[index]?.mem_per
-                  : 'NA'}
+                  : 'NA'} */}
               </p>
               <p>
                 Avg CPU:{' '}
-                {imageAverages[index]?.cpu_per
+                {/* {imageAverages[index]?.cpu_per
                   ? imageAverages[index]?.cpu_per
-                  : 'NA'}
+                  : 'NA'} */}
               </p>
             </div>
             <div className="image-subinfo">

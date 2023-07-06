@@ -1,4 +1,4 @@
--- DROP TABLE IF EXISTS image_data;
+-- DROP TABLE IF EXISTS image_stats;
 CREATE TABLE image_stats (
   cpu_per NUMERIC(10,2),
   mem_per NUMERIC(10,2),

@@ -6,7 +6,7 @@ import { DockerContainers } from '../Container/DockerContainer';
 import { Images } from '../Images/Images';
 import { UserContext } from '../../UserContext';
 import Loader from '../Loader/Loader';
-import { Container, Image, Volume, ImageAvgStats } from '../../types';
+import { Container, Image, Volume } from '../../types';
 import { useQuery } from '@tanstack/react-query';
 import { Volumes } from '../Volumes/Volumes';
 
@@ -20,7 +20,7 @@ export const MainNav: FC = () => {
     setAvailableImages,
     setShowing,
     setAvailableVolumes,
-    setImageAverages,
+    /* setImageAverages, */
     showing,
   } = useContext(UserContext);
 
@@ -46,7 +46,7 @@ export const MainNav: FC = () => {
 
       const runningContainersResponse: Container[] = data[0];
       const imagesResponse: Image[] = data[1].images;
-      const imageAveragesResponse: ImageAvgStats[] = data[1].averages;
+      // const imageAveragesResponse: ImageAvgStats[] = data[1].averages;
       const volumesResponse: Volume[] = data[2];
 
       setRunningContainers(
@@ -60,7 +60,7 @@ export const MainNav: FC = () => {
         )
       );
       setAvailableImages(imagesResponse);
-      setImageAverages(imageAveragesResponse);
+      // setImageAverages(imageAveragesResponse);
       setAvailableVolumes(volumesResponse);
       // needs to return something otherwise react query will error in console
       return {

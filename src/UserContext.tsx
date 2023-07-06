@@ -1,6 +1,11 @@
 // @ts-ignore
 import React, { createContext, useState, ReactNode } from 'react';
-import { Context, Container, Image, Volume, ImageAvgStats } from './types';
+import {
+  Context,
+  Container,
+  Image,
+  Volume /*, ImageAvgStats */,
+} from './types';
 
 export const UserContext = createContext<Context>({
   runningContainers: [],
@@ -15,8 +20,8 @@ export const UserContext = createContext<Context>({
   setStatStream: () => {},
   showing: '',
   setShowing: () => {},
-  imageAverages: [],
-  setImageAverages: () => {},
+  // imageAverages: [],
+  // setImageAverages: () => {},
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -26,7 +31,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [availableVolumes, setAvailableVolumes] = useState<Volume[]>([]);
   const [statStream, setStatStream] = useState<Container[]>([]);
   const [showing, setShowing] = useState<string>('Images');
-  const [imageAverages, setImageAverages] = useState<ImageAvgStats[]>([]);
+  // const [imageAverages, setImageAverages] = useState<ImageAvgStats[]>([]);
 
   const contextProps: Context = {
     runningContainers,
@@ -41,8 +46,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setShowing,
     availableVolumes,
     setAvailableVolumes,
-    imageAverages,
-    setImageAverages,
+    // imageAverages,
+    // setImageAverages,
   };
 
   return (

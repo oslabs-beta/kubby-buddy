@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { exec } from 'node:child_process';
 import { StatsStreamController, ErrorDetails } from '../../types';
 import { promisify } from 'node:util';
-import postgresController from './postgresController';
+// import postgresController from './postgresController';
 const promisifyExec = promisify(exec);
 
 const parseData = (stdout: string) => {
@@ -38,7 +38,7 @@ const statsStreamController: StatsStreamController = {
           res.status(200);
           const newDataObject = parseData(stdout);
           if (newDataObject) {
-            postgresController.imageStats(newDataObject);
+            // postgresController.fimageStats(newDataObject);
           }
           const newData: string = JSON.stringify(newDataObject);
           // console.log(newData);
