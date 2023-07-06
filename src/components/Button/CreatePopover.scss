@@ -1,0 +1,269 @@
+.PopoverContent {
+  .Fieldset {
+    border: none;
+  }
+  border-radius: 4px;
+  padding: 20px;
+  width: 400px;
+  background-color: white;
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+.PopoverContent:focus {
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px, 0 0 0 2px var(--violet7);
+}
+.PopoverContent[data-state='open'][data-side='top'] {
+  animation-name: slideDownAndFade;
+}
+.PopoverContent[data-state='open'][data-side='right'] {
+  animation-name: slideLeftAndFade;
+}
+.PopoverContent[data-state='open'][data-side='bottom'] {
+  animation-name: slideUpAndFade;
+}
+.PopoverContent[data-state='open'][data-side='left'] {
+  animation-name: slideRightAndFade;
+}
+
+.PopoverArrow {
+  fill: white;
+}
+
+.submitCheck {
+  border-radius: 100%;
+  height: 2em;
+  width: 2em;
+  align-self: flex-end;
+  color: black;
+  &:hover {
+    background-color: #ff7c02;
+  }
+  &:active {
+    color: #ff7c02;
+    transform: translateY(2px);
+  }
+}
+
+.PopoverClose {
+  font-family: inherit;
+  background-color: transparent;
+  border: none;
+  border-radius: 100%;
+  height: 25px;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.PopoverClose:hover {
+  background-color: #ff7c02;
+}
+.PopoverClose:focus {
+  box-shadow: 0 0 0 2px var(--violet7);
+}
+
+.IconButton {
+  font-family: inherit;
+  border-radius: 100%;
+  height: 35px;
+  width: 35px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  box-shadow: 0 2px 10px var(--blackA7);
+}
+.IconButton:hover {
+  background-color: var(--violet3);
+}
+.IconButton:focus {
+  box-shadow: 0 0 0 2px black;
+}
+
+.Fieldset {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.statusCreation {
+  border: none;
+  font-size: 13px;
+}
+
+.Label {
+  font-size: 13px;
+  color: var(--violet11);
+  width: 75px;
+}
+
+.Input {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  border-radius: 4px;
+  padding: 0.5em;
+
+  font-size: 13px;
+  line-height: 1;
+  color: var(--violet11);
+  box-shadow: 0 0 0 1px var(--violet7);
+  height: 2.8em;
+}
+.Input:focus {
+  box-shadow: 0 0 0 2px var(--violet8);
+}
+
+.Text {
+  margin: 0;
+  color: var(--mauve12);
+  font-size: 15px;
+  line-height: 19px;
+  font-weight: 500;
+}
+
+@keyframes slideUpAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideRightAndFade {
+  from {
+    opacity: 0;
+    transform: translateX(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideDownAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeftAndFade {
+  from {
+    opacity: 0;
+    transform: translateX(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.VolumeSelectTrigger {
+  display: inline-flex;
+  margin-left: 0.6em;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0.5em;
+  font-size: 13px;
+  line-height: 1;
+  height: fit-content;
+  gap: 5px;
+  background-color: white;
+  word-break: break-all;
+
+  &:hover {
+    background-color: #ff7c02;
+  }
+  &:focus {
+    box-shadow: 0 0 0 2px black;
+  }
+  &[data-placeholder] {
+    color: grey;
+  }
+}
+.VolumeSelect {
+  overflow: hidden;
+  background-color: white;
+
+  border-radius: 6px;
+  box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35),
+    0px 10px 20px -15px rgba(22, 23, 24, 0.2);
+  button {
+    all: unset;
+  }
+
+  .VolumeSelectViewport {
+    background-color: white;
+    padding: 5px;
+  }
+
+  .SelectItem {
+    font-size: 13px;
+    line-height: 1;
+    color: var(--violet11);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 0 35px 0 25px;
+    position: relative;
+    user-select: none;
+  }
+  .SelectItem[data-disabled] {
+    color: lightcoral;
+    pointer-events: none;
+  }
+  .SelectItem[data-highlighted] {
+    outline: none;
+    background-color: lightblue;
+  }
+
+  .VolumeSelectLabel {
+    color: rgba(22, 23, 24, 0.2);
+    padding: 0 25px;
+    font-size: 12px;
+    line-height: 25px;
+  }
+}
+
+.CheckboxRoot {
+  background-color: white;
+  width: 25px;
+  height: 25px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #ff7c02;
+  }
+  &:focus {
+    box-shadow: 0 0 0 2px black;
+  }
+  .CheckboxIndicator {
+    padding-top: 5px;
+  }
+}
+.CheckLabel {
+  font-size: 13px;
+}

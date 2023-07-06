@@ -1,0 +1,126 @@
+.dockercontainer {
+  width: 100%;
+  display: grid;
+}
+
+.container {
+  width: 90%;
+  min-width: 900px;
+  // border: 1px solid #ff7c02;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  justify-content: space-evenly;
+  // align-items: space-between;
+  font-weight: 300;
+  color: black;
+  padding: 1.5em;
+  margin: 1em auto 1em auto;
+  box-sizing: border-box p {
+    // border: 1px solid pink;
+    font-weight: 300;
+  }
+}
+// .list {
+//   background-color: hsl(0, 0%, 85%);
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   // grid-template-columns: repeat(13, minmax(0, 1fr));
+//   // grid-template-rows: repeat(6, minmax(0, 1fr));
+//   // grid-column-gap: 0px;
+//   // grid-row-gap: 0px;
+// }
+
+.container-info {
+  // color: hsl(29, 100%, 50%);
+  // font-family: sans-serif;
+
+  font-kerning: normal;
+  // font-size: 1.2em;
+  word-wrap: break-word;
+  word-break: break-all;
+  width: 15%;
+  // align-content: center;
+  // text-align: center;
+  // grid-area: 1 / 8 / 1 / 1;
+  display: flex;
+  // gap: 10px;
+  padding-right: 1em;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.subinfo {
+  font-size: 0.75em;
+}
+.cmdbutton {
+  // border: solid black 1px;
+  // grid-area: 4 / 1 / 2 / 8;
+  padding-right: 1em;
+  padding-left: 0em;
+  display: flex;
+  justify-content: space-around;
+  // gap: calc(1em + 5%);
+  align-self: center;
+  justify-self: center;
+  width: 35%;
+
+  button {
+    min-width: 2em;
+    width: 2em;
+    height: 2em;
+    margin: 0.1em 0.5em 0.1em 0.5em;
+    border: none;
+
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    cursor: pointer;
+    transition: 100ms;
+  }
+
+  button:hover {
+    filter: invert(77%) sepia(75%) saturate(5665%) hue-rotate(358deg)
+      brightness(99%) contrast(103%);
+  }
+  button:active {
+    transform: translateY(2px);
+    filter: invert(80%) sepia(75%) saturate(5665%) hue-rotate(358deg)
+      brightness(99%) contrast(103%);
+  }
+
+  :nth-child(2) {
+    color: red;
+  }
+  :nth-child(3) {
+    color: red;
+  }
+  :nth-child(4) {
+    color: red;
+  }
+}
+
+.bargraph {
+  display: block;
+  width: 100px;
+}
+
+.chartContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // border: 1px solid red;
+  width: 20%;
+  .bargraph {
+    width: 60%;
+    box-shadow: 0px 0px 5px black;
+  }
+  flex-wrap: wrap;
+}
+
+.category {
+  font-weight: 100px;
+}

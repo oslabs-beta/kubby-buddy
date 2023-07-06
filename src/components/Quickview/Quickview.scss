@@ -1,0 +1,47 @@
+.quickview-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.goto-button {
+  margin-left: 0.3em;
+  border: none;
+
+  background-color: transparent;
+  margin-bottom: -2px;
+  font-size: medium;
+}
+
+.goto-button:active {
+  transform: translateX(2px);
+}
+
+.goto-button:hover {
+  color: hsl(29, 100%, 50%);
+}
+
+.quickview-header {
+  font-family: sans-serif;
+  align-self: center;
+  margin-bottom: 0.2em;
+  border-radius: 0.5em;
+  width: 100%;
+  text-align: center;
+  border-top: 2px hsl(29, 100%, 50%) solid;
+}
+
+.quickview-item {
+  color: green;
+  font-family: sans-serif;
+  padding: 0.3em;
+  border-radius: 0.25em;
+  text-align: center;
+  margin: auto;
+  list-style: none;
+  background-color: white;
+  width: 90%;
+  height: fit-content;
+  padding-bottom: -2px;
+  margin-bottom: 0.3em;
+}
