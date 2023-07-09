@@ -1,5 +1,3 @@
-// /prune-stopped-containers
-
 import React, { useContext, useRef, useState } from 'react';
 import create from '../../assets/add-document.png';
 import * as Popover from '@radix-ui/react-popover';
@@ -35,6 +33,7 @@ const CreateVolumeButton: React.FC<CreateCommandProp> = ({
 
       setStatus('Creation Successful!');
       const volumesURL = 'volume/all-volumes';
+      //refetches volumes now that new volume has been created
       const getVolumes = await fetch(volumesURL);
       const volumesData = await getVolumes.json();
       setAvailableVolumes(volumesData);
