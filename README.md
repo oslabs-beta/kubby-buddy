@@ -9,6 +9,8 @@
 - [Meet the Team](#meet-the-team)
 - [License](#license)
 
+### Visit our docker extenstion repository [here](https://github.com/oslabs-beta/kubby-buddy-extension)
+
 <p align="center">
   <img src="./src/assets/logo.png">
 </p>
