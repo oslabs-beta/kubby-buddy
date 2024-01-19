@@ -1,4 +1,4 @@
-## Table of Contents
+# Table of Contents
 
 - [About](#about)
 - [Demo](#demo)
