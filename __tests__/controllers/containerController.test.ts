@@ -26,21 +26,35 @@ let server: Server;
 beforeEach(async () => {
   server = app.listen(9000); // Start the server
 
-  // Start the containers
+  // Clean up any existing containers first
+  try {
+    execSync(
+      'docker exec -i controller_test sh -c "docker rm -f my-container my-container2 2>/dev/null || true"'
+    );
+  } catch (error) {
+    // Ignore cleanup errors
+  }
+
+  // Start the containers with unique names
   execSync(
     'docker exec -i controller_test sh -c "docker run -d --name=my-container alpine sleep 3600 && docker run -d --name=my-container2 alpine sleep 3600"'
   );
 
   // Delay for a certain amount of time to allow the containers to start
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 });
 
 afterEach(async () => {
   server.close();
 
-  execSync(
-    `docker exec -i controller_test sh -c 'docker rm -f my-container; docker rm -f my-container2'`
-  );
+  // Clean up containers
+  try {
+    execSync(
+      'docker exec -i controller_test sh -c "docker rm -f my-container my-container2 2>/dev/null || true"'
+    );
+  } catch (error) {
+    // Ignore cleanup errors
+  }
 });
 
 describe('containerController tests', () => {

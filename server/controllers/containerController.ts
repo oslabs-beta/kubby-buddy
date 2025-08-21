@@ -36,10 +36,16 @@ interface ParseOutputRemoveSpecificContainer {
 export function parseOutputContainers(
   data: string | Buffer
 ): ParseOutputContainers[] {
-  const parsedOutput = data
-    .toString()
-    .trim()
+  const stringData = data.toString().trim();
+
+  // Handle empty input
+  if (!stringData) {
+    return [];
+  }
+
+  const parsedOutput = stringData
     .split('\n')
+    .filter((item) => item.trim() !== '') // Filter out empty lines
     .map((item) => JSON.parse(item, undefined));
 
   return parsedOutput;
@@ -48,10 +54,16 @@ export function parseOutputContainers(
 export function parseOutputContainersNames(
   data: string | Buffer
 ): Array<{ name: string }> {
-  const parsedOutput = data
-    .toString()
-    .trim()
+  const stringData = data.toString().trim();
+
+  // Handle empty input
+  if (!stringData) {
+    return [];
+  }
+
+  const parsedOutput = stringData
     .split('\n')
+    .filter((item) => item.trim() !== '') // Filter out empty lines
     .map((item) => {
       const name = JSON.parse(item, undefined);
       return { name };
@@ -63,11 +75,13 @@ export function parseOutputContainersNames(
 export function parseOutputStartStop(
   data: string | Buffer
 ): ParseOutputStartStop[] {
+  const stringData = Buffer.isBuffer(data)
+    ? data.toString().replace(/[\r\n]+/gm, '')
+    : data.replace(/[\r\n]+/gm, '');
+
   const parsedOutput = [
     {
-      message: Buffer.isBuffer(data)
-        ? data.toString().replace(/[\r\n]+/gm, '')
-        : data.replace(/[\r\n]+/gm, ''),
+      message: stringData.trim(),
     },
   ];
   return parsedOutput;
@@ -77,6 +91,17 @@ export function parseOutputPruneStoppedContainers(
   stdout: string | Buffer
 ): ParseOutputPruneStoppedContainers[] {
   const data = stdout.toString().trim();
+
+  // Handle empty input
+  if (!data) {
+    return [
+      {
+        'Deleted Containers:': [],
+        'Total reclaimed space:': [],
+      },
+    ];
+  }
+
   const dataArray = data.split('\n');
   const deletedContainersIndex = dataArray.findIndex(
     (item) => item === 'Deleted Containers:'
@@ -85,14 +110,20 @@ export function parseOutputPruneStoppedContainers(
     item.startsWith('Total reclaimed space:')
   );
 
-  const deletedContainers = dataArray
-    .slice(deletedContainersIndex + 1, reclaimedSpaceIndex)
-    .map((item) => item.trim())
-    .filter((item) => item !== ''); // Filter out empty strings
+  let deletedContainers: string[] = [];
+  if (deletedContainersIndex !== -1 && reclaimedSpaceIndex !== -1) {
+    deletedContainers = dataArray
+      .slice(deletedContainersIndex + 1, reclaimedSpaceIndex)
+      .map((item) => item.trim())
+      .filter((item) => item !== ''); // Filter out empty strings
+  }
 
-  const reclaimedSpace = dataArray
-    .slice(reclaimedSpaceIndex)
-    .map((item) => item.trim());
+  let reclaimedSpace: string[] = [];
+  if (reclaimedSpaceIndex !== -1) {
+    reclaimedSpace = dataArray
+      .slice(reclaimedSpaceIndex)
+      .map((item) => item.trim());
+  }
 
   const output = [
     {
@@ -104,21 +135,19 @@ export function parseOutputPruneStoppedContainers(
   return output;
 }
 
-export function transformLogs(stdout: string | Buffer): Array<{}> {
-  const dataArray = stdout.toString().trim().split('\n');
-  let transformedLogs: any[];
+export function transformLogs(
+  stdout: string | Buffer
+): Array<{ message: string }> {
+  const stringData = stdout.toString().trim();
 
-  transformedLogs = dataArray.map((item) => {
-    try {
-      return JSON.parse(item, undefined);
-    } catch (error) {
-      if (item.includes('=')) {
-        const keyValuePairs = item.split(' ').map((pair) => pair.split('='));
-        return Object.fromEntries(keyValuePairs);
-      } else {
-        return { [item]: null };
-      }
-    }
+  // Handle empty input
+  if (!stringData) {
+    return [{ message: '' }];
+  }
+
+  const dataArray = stringData.split('\n');
+  const transformedLogs = dataArray.map((item) => {
+    return { message: item.trim() };
   });
 
   return transformedLogs;

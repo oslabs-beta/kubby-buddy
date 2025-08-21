@@ -50,10 +50,16 @@ export function parseOutputContainers(
 export function parseOutputGetAllImages(
   data: string | Buffer
 ): ParseOutputGetAllImages[] {
-  const parsedOutput = data
-    .toString()
-    .trim()
+  const stringData = data.toString().trim();
+
+  // Handle empty input
+  if (!stringData) {
+    return [];
+  }
+
+  const parsedOutput = stringData
     .split('\n')
+    .filter((item) => item.trim() !== '') // Filter out empty lines
     .map((item) => JSON.parse(item, undefined));
 
   return parsedOutput;
@@ -129,6 +135,17 @@ export function parseOutputPruneUnusedImages(
   stdout: string | Buffer
 ): ParseOutputPruneUnusedImages[] {
   const data = stdout.toString().trim();
+
+  // Handle empty input
+  if (!data) {
+    return [
+      {
+        'Deleted Images:': [],
+        'Total reclaimed space:': [],
+      },
+    ];
+  }
+
   const dataArray = data.split('\n');
   const deletedImagesIndex = dataArray.findIndex(
     (item) => item === 'Deleted Images:'
@@ -137,14 +154,20 @@ export function parseOutputPruneUnusedImages(
     item.startsWith('Total reclaimed space:')
   );
 
-  const deletedImages = dataArray
-    .slice(deletedImagesIndex + 1, reclaimedSpaceIndex)
-    .map((item) => item.trim())
-    .filter((item) => item !== ''); // Filter out empty strings
+  let deletedImages: string[] = [];
+  if (deletedImagesIndex !== -1 && reclaimedSpaceIndex !== -1) {
+    deletedImages = dataArray
+      .slice(deletedImagesIndex + 1, reclaimedSpaceIndex)
+      .map((item) => item.trim())
+      .filter((item) => item !== ''); // Filter out empty strings
+  }
 
-  const reclaimedSpace = dataArray
-    .slice(reclaimedSpaceIndex)
-    .map((item) => item.trim());
+  let reclaimedSpace: string[] = [];
+  if (reclaimedSpaceIndex !== -1) {
+    reclaimedSpace = dataArray
+      .slice(reclaimedSpaceIndex)
+      .map((item) => item.trim());
+  }
 
   const output = [
     {
@@ -159,7 +182,14 @@ export function parseOutputPruneUnusedImages(
 export function parseOutputRemoveSingleImage(
   stdout: string | Buffer
 ): ParseOutputRemoveSingleImage[] {
-  const dataArray = stdout.toString().trim().split('\n');
+  const stringData = stdout.toString().trim();
+
+  // Handle empty input
+  if (!stringData) {
+    return [{ Deleted: [] }];
+  }
+
+  const dataArray = stringData.split('\n').filter((item) => item.trim() !== '');
   return [{ Deleted: dataArray }];
 }
 
